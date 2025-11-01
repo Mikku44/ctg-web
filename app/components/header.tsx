@@ -1,18 +1,49 @@
-import { Link, NavLink } from "react-router";
+import { Link, useLocation } from 'react-router'
+import { MENU_LIST } from '~/const/app';
 
 
-export default function Header() {
+
+export default function Navigator () {
+  
+   const location = useLocation()
   return (
-    <header className="border-b border-gray-200 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold ">Creative Tour Guru (Thailand)</Link>
-        <nav className="space-x-6">
-          {/* <NavLink to="/" className={({ isActive }) => isActive ? ' font-semibold' : 'hover:'}>Home</NavLink> */}
-          {/* <NavLink to="/tours" className={({ isActive }) => isActive ? ' font-semibold' : 'hover:'}>Tours</NavLink>
-          <NavLink to="/blog" className={({ isActive }) => isActive ? ' font-semibold' : 'hover:'}>Blog</NavLink>
-          <NavLink to="/about" className={({ isActive }) => isActive ? ' font-semibold' : 'hover:'}>About</NavLink> */}
-        </nav>
-      </div>
+    <header className='fixed  z-[99] top-0 w-full  px-4 mx-auto bg-white shadow'>
+      <nav className='box-container py-4 flex items-center justify-between w-full'>
+        {/* logo */}
+        <div className='md:w-[60px] w-[40px]'>
+          <Link to="/">
+          {/* <img src='/logo.png' alt='homsleepsalon logo' /> */}
+          Logo
+          </Link>
+        </div>
+        {/* menu */}
+        <div className='md:flex hidden mc-hd items-center gap-5 text-sm'>
+          <div className='flex gap-5 nav-item items-center '>
+            {MENU_LIST.map(menu =>  location.pathname === menu.path ? (
+              <Link to={menu.path} className='nav-lnk-active' key={menu.name}> {(menu.name)}</Link>
+            ) : 
+            (
+              <Link to={menu.path} className='nav-lnk ' key={menu.name}> {(menu.name)}</Link>
+            )
+          )}
+          </div>
+          {/* Lang */}
+          {/* <div className='rounded-full size-[40px] bg-[var(--primary-color)] '>
+            <LangSelector />
+           
+          </div> */}
+          {/* CTA */}
+          <Link to="/book"
+            className='font-medium h-[40px] w-[100px] bg-[var(--primary-color)] 
+            text-black/80 flex items-center justify-center rounded-xl'
+          >
+            {("Book Now")}
+          </Link>
+
+           
+        </div>
+        {/* <Drawer /> */}
+      </nav>
     </header>
   )
 }
