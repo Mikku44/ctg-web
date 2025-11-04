@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router'
+import Footer from '~/components/footer'
 import Header from '~/components/header'
 import NavigationMenuBase from '~/components/navigator'
 import SidebarMenu from '~/components/sidebar'
@@ -12,6 +13,8 @@ export default function Layout() {
             {/* <NavigationMenuBase items={menuItems} /> */}
             {/* <Header /> */}
             <Outlet />
+
+            <Footer />
         </main>
     )
 }

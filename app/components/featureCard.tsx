@@ -1,6 +1,7 @@
 import { Star } from "lucide-react";
 
 type TourCardProps = {
+  className ? :string;
   image: string;
   title: string;
   description: string;
@@ -16,9 +17,10 @@ export default function TourCard({
   price,
   rating,
   duration,
+  className
 }: TourCardProps) {
   return (
-    <div className="w-full bg-white shadow hover:shadow-lg transition-shadow duration-300">
+    <div className={`w-full bg-white shadow hover:shadow-lg transition-shadow duration-300 ${className}`}>
       <div className="relative">
         <img
           src={image}
@@ -57,8 +59,13 @@ export default function TourCard({
         </div>
 
         {/* CTA */}
-        <div className="w-full bg-[var(--primary-color)] text-center text-white
-         py-2 mt-2 hover:bg-white hover:text-[var(--primary-color)] hover:border-[var(--primary-color)] border-2 duration-200">Explore</div>
+        <a href={`/tours/${"tour-id-slug"}`}>
+          <div className="w-full bg-[var(--primary-color)] text-center text-white
+           py-2 mt-2 hover:bg-white hover:text-[var(--primary-color)] hover:border-[var(--primary-color)]
+            border-2 duration-200">
+            Explore
+          </div>
+        </a>
       </div>
     </div>
   );

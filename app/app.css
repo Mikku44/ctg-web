@@ -12,6 +12,27 @@
   --text-color: #111827;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  position: absolute;;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff1d; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #000000; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #212121; 
+}
+
+
 html,
 body {
   @apply bg-white dark:bg-gray-950;

@@ -1,4 +1,5 @@
-import { Menu, X } from "lucide-react";
+import { Facebook, Menu, Phone, X } from "lucide-react";
+import { FaLine } from "react-icons/fa6";
 import { useState } from "react";
 import { NavLink } from "react-router";
 import { MENU_LIST } from "~/const/app";
@@ -8,11 +9,31 @@ export default function SidebarMenu() {
 
     return (
         <>
+            <div className="from-[var(--primary-color)] to-[var(--secondary-color)]
+        text-white bg-linear-120 py-2 flex gap-2 justify-end px-6">
+                <a href="line.me" target="_blank" className="text-sm size-8 bg-white rounded-full  
+              flex gap-2 justify-center items-center">
+                    <FaLine  className="fill-[var(--primary-color)] size-5 text-transparent " />
+
+                </a>
+                <a href="facebook.com" target="_blank" className="text-sm size-8 bg-white rounded-full  
+              flex gap-2 justify-center items-center">
+                    <Facebook className="fill-[var(--primary-color)] text-transparent " />
+
+                </a>
+                <a href="tel:+668-000-0000" target="_blank" className="text-sm flex gap-2 items-center">
+                    <Phone className="fill-white text-transparent" />
+                    <span className="font-medium">+668-000-0000</span>
+                </a>
+
+
+            </div>
             {/* Top Navbar */}
-            <header className="fixed top-0 left-0 right-0 bg-black/70 text-white h-[60px] flex flex-row-reverse items-center justify-between px-4 z-50">
+            <header className=" top-0 left-0 right-0 bg-white h-[60px] 
+            flex flex-row-reverse items-center justify-between px-4 z-50">
                 <h2 className="text-xl font-bold">CTG</h2>
                 <button
-                    className="text-white p-2 rounded-md hover:bg-white/10"
+                    className=" p-2 rounded-md hover:bg-white/10"
                     onClick={() => setOpen(!open)}
                 >
                     {open ? <X size={24} /> : <Menu size={24} />}

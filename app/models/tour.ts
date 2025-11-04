@@ -4,8 +4,19 @@ export interface Tour {
   slug: string
   description: string
   duration: string
+  location: string
   price_from: number
-  location_id: string
+
+  // detail
+  note: string[]
+  itinerary:string[]
+  program_detail : string
+  tour_include : string[]
+  not_include : string[]
+  cancellation_policy : string[]
+
+  // 
+
   category_id: string
   featured_image: string
   status: 'draft' | 'published'
