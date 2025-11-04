@@ -18,12 +18,12 @@ export default function TourCard({
   duration,
 }: TourCardProps) {
   return (
-    <div className="w-full bg-white rounded-xl shadow hover:shadow-lg transition-shadow duration-300">
+    <div className="w-full bg-white shadow hover:shadow-lg transition-shadow duration-300">
       <div className="relative">
         <img
           src={image}
           alt={title}
-          className="w-full h-[180px] object-cover rounded-t-xl"
+          className="w-full h-[180px] object-cover "
         />
         <div className="absolute bottom-2 left-2 bg-white/80 text-gray-800 text-xs px-2 py-1 rounded-md backdrop-blur-sm">
           {duration}
@@ -34,7 +34,7 @@ export default function TourCard({
         <h3 className="text-base font-semibold text-gray-900">{title}</h3>
         <p className="text-sm text-gray-600 mt-1 line-clamp-2">{description}</p>
 
-        <div className="flex items-center justify-between mt-3">
+        <div className="flex md:flex-row flex-col md:items-center justify-between mt-3">
           <div className="flex items-center gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
@@ -55,6 +55,10 @@ export default function TourCard({
             <p className="text-lg font-semibold text-[var(--primary-color)]">{price}</p>
           </div>
         </div>
+
+        {/* CTA */}
+        <div className="w-full bg-[var(--primary-color)] text-center text-white
+         py-2 mt-2 hover:bg-white hover:text-[var(--primary-color)] hover:border-[var(--primary-color)] border-2 duration-200">Explore</div>
       </div>
     </div>
   );
