@@ -3,6 +3,7 @@ import type { Route } from "./+types/home";
 import TourCard from "~/components/featureCard";
 import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
+import { useLocation, useNavigate } from "react-router";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -19,6 +20,9 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export default function Home() {
+
+  const router = useNavigate()
+
   return (
     <main className="">
       {/* hero */}
@@ -37,7 +41,7 @@ export default function Home() {
         ]} />
       </section>
 
-      <section className="container-x ">
+      <section className="container-x mb-20">
         {/* featured */}
         <div className="">
           <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Featured Tours</h2>
@@ -46,7 +50,7 @@ export default function Home() {
             {[1, 2, 3, 4, 5, 6, 7].map((tour, index) =>
               <TourCard image={"https://images.unsplash.com/photo-1546228139-87f5312cac42?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"}
                 key={index}
-                title="Phuket Beach Escape"
+                title="Bangkok temple Thailand"
                 description="Relax on the beautiful beaches of Phuket and explore the local markets."
                 price="฿5,900"
                 rating={4.7}
@@ -64,6 +68,35 @@ export default function Home() {
                 title={"Thailand"} description={""} />)}
           </div>
         </div>
+        {/* Promotions */}
+        <div className="">
+          <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Promotions</h2>
+          {/* Promotion Card */}
+          <div className=" gap-10 group bg-white border border-zinc-50 overflow-hidden shadow flex h-[320px]">
+            <div className="w-full flex items-center justify-center overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1704550124683-d2bf614a0be8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1331"
+                alt="beach promotion cover "
+                className="w-full h-full object-cover group-hover:scale-105 duration-200"
+              />
+            </div>
+            {/* promotion detail */}
+
+            <div className="w-full flex  flex-col justify-center">
+              <h3 className="text-xl font-bold">Summer Sale</h3>
+              <p className="font-thin text-lg">Get up to 30% off on selected tours this summer.</p>
+              <button onClick={()=> router("/contact")} className="w-[150px] py-2 mt-5">Book now</button>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Explore */}
+        <div className="flex items-center h-[350px] justify-center flex-col">
+
+          <h2 className="text-4xl font-bold">Ready for your next adventure?</h2>
+          <div className="mt-3 text-zinc-500 text-sm">Browse our extensive collection of tours and activities worldwide.</div>
+          <button onClick={()=> router("/tours")} className=" py-3  px-5 mt-5">Explore All Tours</button>
+        </div>
+
       </section>
 
     </main>

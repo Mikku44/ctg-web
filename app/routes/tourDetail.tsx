@@ -168,7 +168,7 @@ export default function TourDetail({ params }: Route.MetaArgs) {
             <TourCard image={"https://images.unsplash.com/photo-1546228139-87f5312cac42?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"}
               key={index}
               className="min-w-[340px]"
-              title="Phuket Beach Escape"
+              title="Bangkok temple Thailand"
               description="Relax on the beautiful beaches of Phuket and explore the local markets."
               price="฿5,900"
               rating={4.7}

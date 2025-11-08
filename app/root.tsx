@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -61,7 +62,19 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     stack = error.stack;
   }
 
+  const customTheme = createTheme({
+  palette: {
+    
+    primary: {
+      main: '#f96706', 
+      contrastText: '#FFFFFF',
+    },
+   
+  },
+});
+
   return (
+    <ThemeProvider theme={customTheme}>
     <main className="pt-16 p-4 container mx-auto">
       <h1>{message}</h1>
       <p>{details}</p>
@@ -71,5 +84,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         </pre>
       )}
     </main>
+    </ThemeProvider>
   );
 }

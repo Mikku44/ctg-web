@@ -7,7 +7,7 @@ export default function Footer() {
                 {/* left */}
 
                 <div className="">
-                    <div className="text-lg">Creative Tour Group</div>
+                    <div className="text-lg">Creative Tour Guru</div>
 
                 </div>
                 {/* right */}

@@ -6,8 +6,8 @@
 }
 
 :root {
-  --primary-color: #3b82f6;
-  --secondary-color: #2563eb;
+  --primary-color: #f96706;
+  --secondary-color: #ce5605;
   --background-color: #f9fafb;
   --text-color: #111827;
 }
@@ -37,9 +37,7 @@ html,
 body {
   @apply bg-white dark:bg-gray-950;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+  
 }
 
 
@@ -94,4 +92,8 @@ body {
     color: var(--primary-color);
     background-color: var(--color-gray-100);
   }
+}
+
+button {
+  @apply bg-[var(--primary-color)] text-white rounded-md shadow hover:opacity-80 duration-200;
 }
