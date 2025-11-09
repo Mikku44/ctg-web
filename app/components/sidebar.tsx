@@ -21,17 +21,17 @@ export default function SidebarMenu() {
                     <Facebook className="fill-[var(--primary-color)] text-transparent " />
 
                 </a>
-                <a href="tel:+668-000-0000" target="_blank" className="text-sm flex gap-2 items-center">
+                <a href="tel:+66615097533" target="_blank" className="text-sm flex gap-2 items-center">
                     <Phone className="fill-white text-transparent" />
-                    <span className="font-medium">+668-000-0000</span>
+                    <span className="font-medium">+66 (0) 61-509-7533</span>
                 </a>
 
 
             </div>
             {/* Top Navbar */}
-            <header className=" top-0 left-0 right-0 bg-white h-[60px] 
+            <header className=" top-0 left-0 right-0 bg-white min-h-[60px] 
             flex flex-row-reverse items-center justify-between px-4 z-50">
-                <h2 className="text-xl font-bold">CTG</h2>
+                 <img src="/logo/logo.jpg" className="h-[72px]" alt="creative tour guru" />
                 <button
                     className=" p-2 rounded-md hover:bg-white/10"
                     onClick={() => setOpen(!open)}

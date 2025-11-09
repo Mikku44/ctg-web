@@ -33,7 +33,7 @@ export default function NavigationMenuBase({ items }: Props) {
             className="rounded-full px-5 py-2 bg-amber-100"
             to="/">
             {/* <img src='/logo.png' alt='homsleepsalon logo' /> */}
-            Logo
+            
           </NavLink>
         </div>
         <NavigationMenu.List className={styles.List}>

@@ -4,6 +4,7 @@ import TourCard from "~/components/featureCard";
 import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
 import { useLocation, useNavigate } from "react-router";
+import { tourList } from "~/const/app";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -47,14 +48,17 @@ export default function Home() {
           <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Featured Tours</h2>
           <div className="grid md:grid-cols-4 grid-cols-1 px-2 gap-6 overflow-x-auto pb-4">
             {/* Tour cards would go here */}
-            {[1, 2, 3, 4, 5, 6, 7].map((tour, index) =>
-              <TourCard image={"https://images.unsplash.com/photo-1546228139-87f5312cac42?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"}
-                key={index}
-                title="Bangkok temple Thailand"
-                description="Relax on the beautiful beaches of Phuket and explore the local markets."
-                price="฿5,900"
-                rating={4.7}
-                duration="3 Days 2 Nights" />)}
+            {tourList.map((tour) => (
+              <TourCard
+                key={tour.id}
+                image={tour.image}
+                title={tour.title}
+                description={tour.description}
+                price={tour.price}
+                rating={tour.rating}
+                duration={tour.duration}
+              />
+            ))}
           </div>
         </div>
         {/* Popular Destinations */}
@@ -84,7 +88,7 @@ export default function Home() {
             <div className="w-full flex  flex-col justify-center">
               <h3 className="text-xl font-bold">Summer Sale</h3>
               <p className="font-thin text-lg">Get up to 30% off on selected tours this summer.</p>
-              <button onClick={()=> router("/contact")} className="w-[150px] py-2 mt-5">Book now</button>
+              <button onClick={() => router("/contact")} className="w-[150px] py-2 mt-5">Book now</button>
             </div>
           </div>
         </div>
@@ -94,7 +98,7 @@ export default function Home() {
 
           <h2 className="text-4xl font-bold">Ready for your next adventure?</h2>
           <div className="mt-3 text-zinc-500 text-sm">Browse our extensive collection of tours and activities worldwide.</div>
-          <button onClick={()=> router("/tours")} className=" py-3  px-5 mt-5">Explore All Tours</button>
+          <button onClick={() => router("/tours")} className=" py-3  px-5 mt-5">Explore All Tours</button>
         </div>
 
       </section>

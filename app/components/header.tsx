@@ -12,9 +12,9 @@ export default function Navigator () {
         {/* logo */}
         <div className='md:w-[60px] w-[40px]'>
           <Link to="/">
-          {/* <img src='/logo.png' alt='homsleepsalon logo' /> */}
+          {/* <img src='/logo.png' alt='creative tour logo' /> */}
           Logo
-          </Link>
+          </Link> 
         </div>
         {/* menu */}
         <div className='md:flex hidden mc-hd items-center gap-5 text-sm'>
