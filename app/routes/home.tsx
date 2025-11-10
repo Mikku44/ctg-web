@@ -34,12 +34,18 @@ export default function Home() {
             alt="hero ctg page" />
         </div> */}
         <AutoFadeImage images={[
-          "https://images.unsplash.com/photo-1580327942498-53a877c6d0ce?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
-          "https://plus.unsplash.com/premium_photo-1693149386423-2e4e264712e5?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1332",
-          "https://images.unsplash.com/photo-1589932896376-5244c8898269?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1332",
-          "https://plus.unsplash.com/premium_photo-1664910039021-a1bfcc6574b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1172",
+          "/images/thailand6 (9).jpg",
+          "/images/thailand6 (4).jpg",
+          "/images/thailand8 (8).jpg",
 
-        ]} />
+        ]} 
+        
+        titles={[
+          "Thailand",
+          "Thailand",
+          "Thailand",
+        ]}
+        />
       </section>
 
       <section className="container-x mb-20">
@@ -88,7 +94,7 @@ export default function Home() {
             <div className="w-full flex  flex-col justify-center">
               <h3 className="text-xl font-bold">Summer Sale</h3>
               <p className="font-thin text-lg">Get up to 30% off on selected tours this summer.</p>
-              <button onClick={() => router("/contact")} className="w-[150px] py-2 mt-5">Book now</button>
+              <button onClick={() => router("/contact")} className="w-[150px] button py-2 mt-5">Book now</button>
             </div>
           </div>
         </div>
@@ -98,7 +104,7 @@ export default function Home() {
 
           <h2 className="text-4xl font-bold">Ready for your next adventure?</h2>
           <div className="mt-3 text-zinc-500 text-sm">Browse our extensive collection of tours and activities worldwide.</div>
-          <button onClick={() => router("/tours")} className=" py-3  px-5 mt-5">Explore All Tours</button>
+          <button onClick={() => router("/tours")} className=" py-3 button px-5 mt-5">Explore All Tours</button>
         </div>
 
       </section>

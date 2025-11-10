@@ -94,6 +94,10 @@ body {
   }
 }
 
-button {
+.button {
   @apply bg-[var(--primary-color)] text-white rounded-md shadow hover:opacity-80 duration-200;
+}
+
+button {
+  @apply   hover:opacity-80 duration-200;
 }

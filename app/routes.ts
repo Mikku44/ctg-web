@@ -8,6 +8,7 @@ export default [
         
         route("/about","routes/about.tsx"),
         route("/tours","routes/tours.tsx"),
+        route("/search","routes/search.tsx"),
         route("/tours/:tour_id","routes/tourDetail.tsx"),
         route("*", "components/NotFound.tsx"),
     ]),

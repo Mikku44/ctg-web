@@ -1,11 +1,19 @@
-import { Facebook, Menu, Phone, X } from "lucide-react";
+import { Facebook, Menu, Phone, Search, X } from "lucide-react";
 import { FaLine } from "react-icons/fa6";
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { MENU_LIST } from "~/const/app";
 
 export default function SidebarMenu() {
     const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState("");
+
+    const router = useNavigate()
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (search.trim()) router(`/search?query=${encodeURIComponent(search)}`);
+    };
 
     return (
         <>
@@ -13,7 +21,7 @@ export default function SidebarMenu() {
         text-white bg-linear-120 py-2 flex gap-2 justify-end px-6">
                 <a href="line.me" target="_blank" className="text-sm size-8 bg-white rounded-full  
               flex gap-2 justify-center items-center">
-                    <FaLine  className="fill-[var(--primary-color)] size-5 text-transparent " />
+                    <FaLine className="fill-[var(--primary-color)] size-5 text-transparent " />
 
                 </a>
                 <a href="facebook.com" target="_blank" className="text-sm size-8 bg-white rounded-full  
@@ -29,15 +37,40 @@ export default function SidebarMenu() {
 
             </div>
             {/* Top Navbar */}
-            <header className=" top-0 left-0 right-0 bg-white min-h-[60px] 
-            flex flex-row-reverse items-center justify-between px-4 z-50">
-                 <img src="/logo/logo.jpg" className="h-[72px]" alt="creative tour guru" />
-                <button
-                    className=" p-2 rounded-md hover:bg-white/10"
-                    onClick={() => setOpen(!open)}
-                >
-                    {open ? <X size={24} /> : <Menu size={24} />}
-                </button>
+            <header className=" top-0 left-0 right-0 bg-white min-h-[180px] 
+            flex flex-row-reverse items-center justify-between px-4 z-50 relative">
+                <form onSubmit={handleSubmit} className="relative">
+                    <input
+                        id="search"
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="py-2 px-3 border border-zinc-300 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                        placeholder="Search for tour"
+                    />
+                    <button
+                        type="submit"
+                        className="absolute right-2 bottom-2 text-zinc-700 hover:text-zinc-900"
+                    >
+                        <Search className="w-5 h-5" />
+                    </button>
+                </form>
+
+
+                <Link to="/"><img src="/logo/logo.jpg" className="h-[180px] top-0 absolute" alt="creative tour guru" /></Link>
+
+
+                <div className="flex gap-2 flex-row-reverse">
+
+                    <button
+                        className="bg-transparent p-2 rounded-md hover:bg-white/10"
+                        onClick={() => setOpen(!open)}
+                    >
+                        {open ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
+
+
             </header>
 
             {/* Overlay when drawer is open */}
