@@ -37,7 +37,7 @@ html,
 body {
   font-family: "Noto Sans Thai", sans-serif;;
 
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white ;
 
   
 }

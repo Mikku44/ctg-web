@@ -113,7 +113,8 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="md:p-6 pb-6 bg-white border border-zinc-100 shadow rounded-xl overflow-hidden relative grid md:grid-cols-2 grid-cols-1 gap-8">
+        <div className="md:p-6 pb-6 bg-white border border-zinc-100 shadow rounded-xl overflow-hidden 
+        relative grid md:grid-cols-2 grid-cols-1 justify-center gap-8">
           {/* Image Section */}
           <div className="relative md:static md:block md:-translate-x-7 scale-110">
             <div className="absolute md:relative top-0 left-0 w-full md:w-auto h-[250px]
@@ -131,7 +132,8 @@ export default function Home() {
           {/* List Section */}
           <div className="relative z-10 mt-[270px] md:mt-0">
             
-            <div className="grid sm:grid-cols-2 gap-4 items-center justify-center">
+            <div className="grid sm:grid-cols-2 gap-4 items-center
+             justify-items-center justify-center">
               {tours.map((tour, i) => (
                 <motion.div
                   key={tour}
