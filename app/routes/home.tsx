@@ -4,8 +4,10 @@ import TourCard from "~/components/featureCard";
 import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
 import { useLocation, useNavigate } from "react-router";
-import { tourList } from "~/const/app";
+import { popularDestinations, tourList } from "~/const/app";
 import FadeImageSlideshow from "~/components/FadeImage";
+import { motion } from "framer-motion";
+import { EqualApproximately } from "lucide-react";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -21,14 +23,29 @@ export function meta({ }: Route.MetaArgs) {
   { name: "twitter:description", content: "Discover Thailand through creative and local adventures." },];
 }
 
+
+const tours = [
+  "Unseen Thailand Tour",
+  "Local Living Journey",
+  "Heritage & Culture Trails",
+  "Floating Market & Canal Life",
+  "Temple & Spiritual Tour",
+  "Nature Escape Adventure",
+  "Gastronomy Experience",
+  "Soft Power Journey",
+  "Luxury Private Tour",
+  "Photography & Hidden Gems Tour",
+];
+
 export default function Home() {
 
   const router = useNavigate()
 
   return (
     <main className="">
-      <section className="md:min-h-[560px]  flex justify-between md:flex-row flex-col md:px-0 px-4 py-2 items-center  container-x">
-        <img src="/images/background.jpg" className="w-full md:h-[800px] absolute left-0 top-0" alt="" />
+      <section className="md:min-h-[560px]  flex justify-between md:flex-row flex-col-reverse gap-5
+       md:px-0 px-4 py-2 items-center  container-x">
+        {/* <img src="/images/background.jpg" className="w-full md:h-[800px] absolute left-0 top-0" alt="" /> */}
         {/* left side */}
         <div className="flex flex-col justify-center relative z-1">
 
@@ -38,15 +55,18 @@ export default function Home() {
             Meaningful Journeys by Creative Tour Guru Thailand
           </h2>
 
-          <h3 className="text-sm text-zinc-600">By Dr. Prawit (Audi) Charoennuam</h3>
+          <div className="grid gap-2">
+            <img src="/licenese/drp.png" className="w-[100px]" alt="dr.prawit" />
+            <h3 className="text-sm text-zinc-600">By Dr. Prawit (Audi) Charoennuam</h3>
+          </div>
 
           <div className="flex gap-4 items-center">
 
             <img src="/logo/payments.svg"
-              className="w-[380px] mt-5"
+              className="md:w-[380px] w-[200px] mt-5"
               alt="thailand-tourism-award-creative-tour-guru" />
-            <img src="/logo/2011-thailand-tourism-award.png"
-              className="max-w-[60px] h-[70px] w-full mt-5"
+            <img src="/images/9-awards.png"
+              className="md:max-w-[150px] max-w-[100px] mt-5"
               alt="thailand-tourism-award-creative-tour-guru" />
 
           </div>
@@ -55,7 +75,7 @@ export default function Home() {
 
         {/* right side */}
         <div className="">
-         <FadeImageSlideshow />
+          <FadeImageSlideshow />
         </div>
 
       </section>
@@ -83,6 +103,57 @@ export default function Home() {
         />
       </section>
 
+      <section className="container-x mx-auto md:px-0 px-4 py-20">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            Explore Thailand Like Never Before
+          </h2>
+          <p className="text-gray-500 mt-3">
+            Choose from our signature travel themes — from local living to luxury escapes.
+          </p>
+        </div>
+
+        <div className="md:p-6 pb-6 bg-white border border-zinc-100 shadow rounded-xl overflow-hidden relative grid md:grid-cols-2 grid-cols-1 gap-8">
+          {/* Image Section */}
+          <div className="relative md:static md:block md:-translate-x-7 scale-110">
+            <div className="absolute md:relative top-0 left-0 w-full md:w-auto h-[250px]
+             md:h-full overflow-hidden md:overflow-visible flex items-center justify-center">
+              <div className="w-full h-full md:w-[130%] md:h-[130%] bg-black overflow-clip flex items-center justify-center">
+                <img
+                  src="/images/thailand1 (4).jpg"
+                  alt="list"
+                  className="object-cover  w-full h-[320px] md:scale-110"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* List Section */}
+          <div className="relative z-10 mt-[270px] md:mt-0">
+            
+            <div className="grid sm:grid-cols-2 gap-4 items-center justify-center">
+              {tours.map((tour, i) => (
+                <motion.div
+                  key={tour}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: i * 0.05,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-2"
+                >
+                  <EqualApproximately className="text-[var(--primary-color)] text-2xl shrink-0" />
+                  <h3 className="text-gray-800 text-base font-light">{tour}</h3>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="container-x mb-20">
         {/* featured */}
         <div className="">
@@ -107,35 +178,16 @@ export default function Home() {
           <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Popular Destinations</h2>
           <div className="grid md:grid-cols-4 grid-cols-2 gap-6 overflow-x-auto pb-4">
             {/* Tour cards would go here */}
-            {[1, 2, 3].map((tour, index) =>
-              <DesCard image={"https://images.unsplash.com/photo-1592117984084-15bc78969be2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1268"}
+            {popularDestinations?.map((tour, index) =>
+              <DesCard image={tour.image || "https://images.unsplash.com/photo-1592117984084-15bc78969be2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1268"}
                 key={index}
-                title={"Thailand"} description={""} />)}
+                title={tour.title} description={tour.description} />)}
           </div>
         </div>
-        {/* Promotions */}
-        <div className="">
-          <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Promotions</h2>
-          {/* Promotion Card */}
-          <div className=" gap-10 group bg-white border border-zinc-50 overflow-hidden shadow flex h-[320px]">
-            <div className="w-full flex items-center justify-center overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1704550124683-d2bf614a0be8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1331"
-                alt="beach promotion cover "
-                className="w-full h-full object-cover group-hover:scale-105 duration-200"
-              />
-            </div>
-            {/* promotion detail */}
-
-            <div className="w-full flex  flex-col justify-center">
-              <h3 className="text-xl font-bold">Summer Sale</h3>
-              <p className="font-thin text-lg">Get up to 30% off on selected tours this summer.</p>
-              <button onClick={() => router("/contact")} className="w-[150px] button py-2 mt-5">Book now</button>
-            </div>
-          </div>
-        </div>
+        
 
         {/* CTA Explore */}
-        <div className="flex items-center h-[350px] justify-center flex-col">
+        <div className="flex md:items-center h-[350px] justify-center flex-col">
 
           <h2 className="text-4xl font-bold">Ready for your next adventure?</h2>
           <div className="mt-3 text-zinc-500 text-sm">Browse our extensive collection of tours and activities worldwide.</div>

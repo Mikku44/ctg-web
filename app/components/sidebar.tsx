@@ -37,7 +37,7 @@ export default function SidebarMenu() {
 
             </div>
             {/* Top Navbar */}
-            <header className=" top-0 left-0 right-0 bg-white min-h-[180px] 
+            <header className=" top-0 left-0 right-0 bg-white md:min-h-[180px]  min-h-[100px]
             flex flex-row-reverse items-center justify-between px-4 z-50 relative">
                 <form onSubmit={handleSubmit} className="relative md:block hidden">
                     <input
@@ -57,7 +57,7 @@ export default function SidebarMenu() {
                 </form>
 
 
-                <Link to="/"><img src="/logo/logo.jpg" className="h-[180px] top-0 md:absolute" alt="creative tour guru" /></Link>
+                <Link to="/"><img src="/logo/logo.jpg" className="md:h-[180px] h-[100px] top-0 md:absolute" alt="creative tour guru" /></Link>
 
 
                 <div className="flex gap-2 flex-row-reverse">

@@ -93,6 +93,44 @@ export const menuItems =[
 ];
 
 
+export const popularDestinations = [
+  {
+    image: "/popular/bangkok.jpg",
+    title: "Bangkok",
+    description: "Thailand's spiritual, cultural, and commercial heart. Famous for its glittering temples like Wat Arun & Wat Pho, bustling markets, and the Chao Phraya River.",
+    link: "/destinations/bangkok",
+  },
+  {
+    image: "/popular/chaingmai.jpg",
+    title: "Chiang Mai",
+    description: "A city blending Lanna culture with modern flair. Known for its mountainous scenery, Doi Suthep, night markets, and elephant sanctuaries.",
+    link: "/destinations/chiang-mai",
+  },
+  {
+    image: "/popular/phuket.jpg",
+    title: "Phuket",
+    description: "Thailand's largest island, famed for its magnificent beaches, clear seas, diverse nightlife, and historic Sino-Portuguese architecture in Old Town.",
+    link: "/destinations/phuket",
+  },
+  {
+    image: "/popular/Kanchanaburi.jpg",
+    title: "Kanchanaburi",
+    description: "Rich in WWII history, including the Bridge over the River Kwai and the Death Railway. Also home to stunning natural beauty like Erawan Waterfall.",
+    link: "/destinations/kanchanaburi",
+  },
+  {
+    image: "/popular/pattaya.jpg",
+    title: "Pattaya",
+    description: "A popular resort city on the east coast of the Gulf of Thailand, known for its beaches, numerous entertainment options, and the intricate Sanctuary of Truth temple.",
+    link: "/destinations/pattaya",
+  },
+  {
+    image: "/popular/Ayutthaya.jpg",
+    title: "Ayutthaya",
+    description: "The second Siamese capital, a UNESCO World Heritage Site featuring magnificent ruins of colossal monasteries and prangs (reliquary towers) from the Ayutthaya Kingdom.",
+    link: "/destinations/ayuthaya",
+  },
+];
 
 
 // mock up tour data
