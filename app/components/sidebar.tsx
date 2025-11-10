@@ -17,7 +17,7 @@ export default function SidebarMenu() {
 
     return (
         <>
-            <div className="from-[var(--primary-color)] to-[var(--secondary-color)]
+            <div className="relative z-99 from-[var(--primary-color)] to-[var(--secondary-color)]
         text-white bg-linear-120 py-2 flex gap-2 justify-end px-6">
                 <a href="line.me" target="_blank" className="text-sm size-8 bg-white rounded-full  
               flex gap-2 justify-center items-center">

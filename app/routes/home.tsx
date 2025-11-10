@@ -5,6 +5,7 @@ import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
 import { useLocation, useNavigate } from "react-router";
 import { tourList } from "~/const/app";
+import FadeImageSlideshow from "~/components/FadeImage";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -26,6 +27,40 @@ export default function Home() {
 
   return (
     <main className="">
+      <section className="md:min-h-[560px]  flex justify-between md:flex-row flex-col md:px-0 px-4 py-2 items-center  container-x">
+        <img src="/images/background.jpg" className="w-full md:h-[800px] absolute left-0 top-0" alt="" />
+        {/* left side */}
+        <div className="flex flex-col justify-center relative z-1">
+
+          <div className="rounded-full bg-[var(--primary-color)] w-fit text-white mb-3 font-medium px-4 py-2">Online Booking | Local Guide</div>
+          <h1 className="md:text-5xl text-4xl font-semibold text-zinc-900">Travel with Heart,<br /> Explore with Meaning</h1>
+          <h2 className="text-2xl  mt-2 font-[300]">
+            Meaningful Journeys by Creative Tour Guru Thailand
+          </h2>
+
+          <h3 className="text-sm text-zinc-600">By Dr. Prawit (Audi) Charoennuam</h3>
+
+          <div className="flex gap-4 items-center">
+
+            <img src="/logo/payments.svg"
+              className="w-[380px] mt-5"
+              alt="thailand-tourism-award-creative-tour-guru" />
+            <img src="/logo/2011-thailand-tourism-award.png"
+              className="max-w-[60px] h-[70px] w-full mt-5"
+              alt="thailand-tourism-award-creative-tour-guru" />
+
+          </div>
+
+        </div>
+
+        {/* right side */}
+        <div className="">
+         <FadeImageSlideshow />
+        </div>
+
+      </section>
+
+      <section className=""></section>
       {/* hero */}
       <section className="w-full md:h-[680px] h-full overflow-hidden">
         {/* <div className=" h-[500px] overflow-hidden w-full flex flex-col md:flex-row items-center gap-6">
@@ -38,13 +73,13 @@ export default function Home() {
           "/images/thailand6 (4).jpg",
           "/images/thailand8 (8).jpg",
 
-        ]} 
-        
-        titles={[
-          "Thailand",
-          "Thailand",
-          "Thailand",
         ]}
+
+          titles={[
+            "Thailand",
+            "Thailand",
+            "Thailand",
+          ]}
         />
       </section>
 
