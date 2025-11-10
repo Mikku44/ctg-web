@@ -39,7 +39,7 @@ export default function SidebarMenu() {
             {/* Top Navbar */}
             <header className=" top-0 left-0 right-0 bg-white min-h-[180px] 
             flex flex-row-reverse items-center justify-between px-4 z-50 relative">
-                <form onSubmit={handleSubmit} className="relative">
+                <form onSubmit={handleSubmit} className="relative md:block hidden">
                     <input
                         id="search"
                         type="text"
@@ -57,7 +57,7 @@ export default function SidebarMenu() {
                 </form>
 
 
-                <Link to="/"><img src="/logo/logo.jpg" className="h-[180px] top-0 absolute" alt="creative tour guru" /></Link>
+                <Link to="/"><img src="/logo/logo.jpg" className="h-[180px] top-0 md:absolute" alt="creative tour guru" /></Link>
 
 
                 <div className="flex gap-2 flex-row-reverse">
