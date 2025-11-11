@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import TourCard from "~/components/featureCard";
 import { tourList } from "~/const/app";
 import type { Route } from "./+types/tours";
+import { TourCard } from "~/components/featureCard";
 
 const filterItems = [
     { label: "All destination", key: "" },
@@ -29,7 +29,7 @@ export default function Tours() {
     const itemsPerPage = 8;
     const totalPages = Math.ceil(tourList.length / itemsPerPage);
     const filteredTours = filterOptions
-        ? tourList.filter((tour) => tour.category.toLocaleLowerCase()?.includes(filterOptions))
+        ? tourList.filter((tour) => tour.category?.toLocaleLowerCase()?.includes(filterOptions))
         : tourList;
 
     const paginatedTours = filteredTours.slice(
