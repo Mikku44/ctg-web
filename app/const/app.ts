@@ -29,34 +29,52 @@ export const menuConfig = [
     ],
   },
   {
-    label: "Specialty Tours & Services",
+    label: "Specialty Tours",
     layout: "flex", // Good for a mixed list of unique tours
     links: [
       { href: "/tours/specialty/walking", title: "Walking Tour", description: "Discover hidden local neighborhoods." },
       { href: "/tours/specialty/local-transport", title: "Local Transport Tour", description: "Experience Bangkok like a local." },
       { href: "/tours/specialty/food-tuk-tuk", title: "Food Tour with Tuk Tuk", description: "Night market hopping on a Tuk Tuk." },
-      { href: "/tours/specialty/unseen", title: "Unseen Tour", description: "Explore off-the-beaten-path destinations." },
-      { href: "/tours/specialty/night", title: "Night Tour", description: "Temples, markets, and neon lights after dark." },
-      { href: "/services/guide", title: "Private Guide Service", description: "Hire a certified personal tour guide." },
+
     ],
   },
   {
-    label: "Around Thailand & Cruises",
+    label: "Unseen Tours & Services",
     layout: "grid",
     links: [
-      { href: "/tours/around-thailand", title: "Around Thailand Tour", description: "Multi-day trips across regions." },
+      {
+        href: "/tours/unseen/night-tour",
+        title: "Night Tour",
+        description: "Discover hidden temples, local eateries, and markets that only come alive after dark."
+      },
+      {
+        href: "/tours/unseen/around-thailand-tour",
+        title: "Around Thailand Tour",
+        description: "Curated multi-day journeys exploring remote provinces, hidden beaches, and authentic regional culture."
+      },
+      {
+        href: "/guide-service",
+        title: "Your Private Local Expert",
+        description: "Hire a certified, dedicated guide to customize your itinerary and unlock local secrets."
+      },
+    ],
+  },
+  {
+    label: "Dinner Cruises",
+    layout: "grid",
+    links: [
       { href: "/tours/dinner-cruise/bangkok", title: "Dinner Cruise: Bangkok", description: "Fine dining on the Chao Phraya River." },
       { href: "/tours/dinner-cruise/ayuthaya", title: "Dinner Cruise: Ayuthaya", description: "Sunset dining among ancient ruins." },
     ],
   },
   // You can keep a direct link, perhaps to a main booking page or contacts
-  { label: "Book Now", href: "/contact" }, 
+  { label: "Book Now", href: "/contact" },
 ];
 
 
 
 
-export const menuItems =[
+export const menuItems = [
   {
     label: "Destinations",
     links: [
@@ -221,86 +239,66 @@ export const popularDestinations = [
 
 
 // mock up tour data
-
 export const tourList = [
   // --- Classic Temple & History Tours (Full/Half Day) ---
+
   {
+    // ID added for consistency
     id: 1,
-    image: "https://cdn.prod.website-files.com/5c729f15fd0819dbaf8e66c6/66fac4a19aed9295ee21490c_bangkok2.webp",
-    title: "Grand Palace, Wat Pho & Wat Arun Temple Tour",
-    description: "The essential Bangkok experience! Visit the revered Emerald Buddha at the Grand Palace, the Reclining Buddha at Wat Pho, and the iconic Temple of Dawn (Wat Arun).",
-    price: "฿1,500",
-    priceUSD: "$42",
-    rating: 4.8,
-    duration: "4 Hours (Morning)",
-    category: "Culture & History",
-  },
-  {
-    id: 2,
-    image: "https://images.pexels.com/photos/19054297/pexels-photo-19054297/free-photo-of-wat-chaiwatthanaram-in-ayutthaya.jpeg",
-    title: "Ayutthaya Historical Park Day Trip by River Cruise",
-    description: "Explore the ancient capital of Thailand, Ayutthaya, and its majestic ruins. Includes round-trip transport and a scenic return via the Chao Phraya River.",
-    price: "฿2,200",
-    priceUSD: "$60",
+    image: "https://images.unsplash.com/photo-1546228139-87f5312cac42?ixlib=rb-4.1.0&auto=format&fit=crop&q=80&w=687",
+    title: "Bangkok Temple Thailand",
+    // Corrected Description to match the Bangkok title
+    description: "Explore the Grand Palace, Wat Arun (Temple of Dawn), and the city's ancient temples.",
+    price: "฿5,900",
     rating: 4.7,
-    duration: "9 Hours (Full Day)",
-    category: "Day Trip",
+    route: "Bangkok to Chiangmai",
+    maxPeople: 18,
+    duration: "3 Days 2 Nights"
   },
   {
+    // ID added for consistency
+    id: 2,
+    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=500",
+    title: "Road Trip: Bangkok to Chiangmai",
+    description: "Experience the ultimate road trip adventure from Bangkok to Chiangmai.",
+    price: "฿12,900",
+    rating: 4.8,
+    duration: "5 Days",
+    route: "Bangkok to Chiangmai",
+    maxPeople: 18,
+    tourType: "Private"
+  },
+  {
+    // ID added for consistency
     id: 3,
-    image: "https://www.jammingthailand.com/wp-content/uploads/2022/07/98.jpg",
-    title: "Maeklong Railway & Damnoen Saduak Floating Markets",
-    description: "Witness the train passing through the Maeklong 'Umbrella Pulldown' Market, then paddle a boat through the colorful Damnoen Saduak Floating Market.",
-    price: "฿1,350",
-    priceUSD: "$37",
+    image: "https://images.unsplash.com/photo-1528181304800-259b08848526?w=500",
+    title: "Phuket Beach Paradise",
+    description: "Discover pristine beaches, crystal clear waters, and vibrant nightlife.",
+    price: "฿7,500",
     rating: 4.6,
-    duration: "6 Hours (Morning)",
-    category: "Markets & Day Trip",
+    duration: "4 Days 3 Nights"
   },
+
   {
-    id: 4,
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/c2/2c/95/caption.jpg?w=1200&h=-1&s=1",
-    title: "Bangkok Canal (Klong) Longtail Boat Tour",
-    description: "Discover the 'Venice of the East.' Glide along the winding canals of Thonburi, seeing traditional wooden homes and local life away from the city bustle.",
-    price: "฿850",
-    priceUSD: "$23",
-    rating: 4.5,
-    duration: "2 Hours (Afternoon)",
-    category: "Local Life & River",
-  },
-  // --- Food & Nightlife Tours ---
-  {
-    id: 5,
-    image: "https://media.tacdn.com/media/attractions-splice-spp-360x240/15/71/e8/01.jpg",
-    title: "Chinatown Street Food Midnight Tuk-Tuk Tour",
-    description: "An exhilarating evening ride through Bangkok by Tuk-Tuk, stopping to sample the best of Yaowarat's famous street food and hidden local eateries.",
-    price: "฿2,400",
-    priceUSD: "$65",
-    rating: 4.9,
-    duration: "4 Hours (Evening)",
-    category: "Food & Night",
-  },
-  {
+    // ID added for consistency
     id: 6,
-    image: "https://taotailangthai.com/wp-content/uploads/2019/01/ttl-chaophraya-princess-1.jpg",
-    title: "Chao Phraya Princess Dinner Cruise (International Buffet)",
-    description: "A luxurious evening cruise on the Chao Phraya River, featuring a grand international buffet, live music, and stunning views of illuminated temples.",
-    price: "฿1,300",
-    priceUSD: "$36",
+    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=500",
+    title: "Chiang Rai Golden Triangle",
+    description: "Explore the mysterious Golden Triangle and visit local hill tribes.",
+    price: "฿6,800",
     rating: 4.4,
-    duration: "2 Hours (Evening)",
-    category: "River & Night",
+    duration: "2 Days 1 Night"
   },
   {
+    // ID added for consistency
     id: 7,
-    image: "https://tourscanner.com/blog/wp-content/uploads/ghost-move/ghost/food-tour-in-Bangkok.jpg",
-    title: "Local Bangkok Food & Backstreets Walking Tour",
-    description: "A deep dive into local flavors. Explore hidden alleys, century-old markets, and taste 10+ authentic Thai dishes and desserts in the Old Town area.",
-    price: "฿1,800",
-    priceUSD: "$50",
-    rating: 4.9,
-    duration: "3.5 Hours (Afternoon)",
-    category: "Food & Local Life",
+    image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=500",
+    title: "Koh Samui Luxury Escape",
+    description: "Indulge in luxury resorts, pristine beaches, and world-class dining.",
+    price: "฿15,900",
+    rating: 4.8,
+    duration: "5 Days 4 Nights",
+    tourType: "Private"
   },
   // --- Active & Unique Experiences ---
   {
@@ -348,5 +346,4 @@ export const tourList = [
     duration: "10 Hours (Full Day)",
     category: "Day Trip & History",
   },
-  
 ];

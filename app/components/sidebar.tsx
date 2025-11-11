@@ -15,7 +15,8 @@ export default function SidebarMenu() {
     const router = useNavigate()
 
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+        // e.preventDefault();
+        alert(`=${encodeURIComponent(search)}`)
         if (search.trim()) router(`/search?query=${encodeURIComponent(search)}`);
     };
 
@@ -30,8 +31,7 @@ export default function SidebarMenu() {
 
     return (
         <>
-            <div className="relative z-[50] from-[var(--primary-color)] to-[var(--secondary-color)]
-        text-white bg-linear-120 py-2 flex gap-2 justify-end px-6">
+            {/* <div className="relative z-[50] bg-zinc-500 py-2 flex gap-2 justify-end items-center px-6">
                 <a href="line.me" target="_blank" className="text-sm size-8 bg-white rounded-full  
               flex gap-2 justify-center items-center">
                     <FaLine className="fill-[var(--primary-color)] size-5 text-transparent " />
@@ -43,30 +43,42 @@ export default function SidebarMenu() {
 
                 </a>
                 <a href="tel:+66615097533" target="_blank" className="text-sm flex gap-2 items-center">
-                    <Phone className="fill-white text-transparent" />
-                    <span className="font-medium">+66 (0) 61-509-7533</span>
+                    <div className="bg-[var(--primary-color)] rounded-full size-[36px] flex items-center justify-center">
+                        <Phone className="fill-white size-5 text-transparent" />
+                    </div>
+                    <span className="font-bold momo-trust-display text-xl">+66 (0)615097533</span>
                 </a>
 
 
-            </div>
+            </div> */}
             {/* Top Navbar */}
             <header className="container-x top-0 left-0 right-0 bg-white md:min-h-[100px]  min-h-[100px]
             flex flex-row-reverse items-center justify-between px-4 z-50 relative">
-                <form onSubmit={handleSubmit} className="relative md:block hidden">
-                    <input
-                        id="search"
-                        type="text"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="py-2 px-3 border border-zinc-300 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-400"
-                        placeholder="Search for tour"
-                    />
-                    <button
-                        type="submit"
-                        className="absolute right-2 bottom-2 text-zinc-700 hover:text-zinc-900"
-                    >
-                        <Search className="w-5 h-5" />
-                    </button>
+                <form onSubmit={handleSubmit} className="relative md:block hidden w-full max-w-[250px]">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 w-5 h-5" />
+
+                        <input
+                            id="search"
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search for tours, destinations..."
+                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-zinc-200 bg-white shadow-sm 
+                 focus:ring-2 focus:ring-zinc-400 focus:border-zinc-300 transition-all duration-200 
+                 placeholder:text-zinc-400 text-zinc-700"
+                        />
+
+                        {search && (
+                            <button
+                                type="button"
+                                onClick={() => setSearch("")}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700"
+                            >
+                                ✕
+                            </button>
+                        )}
+                    </div>
                 </form>
 
 
@@ -86,10 +98,10 @@ export default function SidebarMenu() {
 
             </header>
             <section
-                className={`w-full sticky top-0 z-[40] bg-white border-b border-zinc-50 transition-shadow duration-300  ${isScrolled ? "shadow-md h-[62px]" : "shadow-none h-[45px]"
+                className={`w-full sticky border-t-1 border-b-1 border-zinc-200 top-0 z-[40] bg-white  transition-shadow duration-300 h-[62px]  ${isScrolled ? "shadow-md " : "shadow-none"
                     }`}
             >
-                <div className={`container-x flex items-center justify-center  ${isScrolled ? "h-[62px]" : " h-[45px]"}`}>
+                <div className={`container-x flex items-center justify-center  ${isScrolled ? "h-[62px]" : " h-[62px]"}`}>
                     <SubNavbar menuItems={menuConfig as any} />
                 </div>
             </section>

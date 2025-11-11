@@ -88,6 +88,7 @@
 .Positioner {
   --easing: cubic-bezier(0.22, 1, 0.36, 1);
   --duration: 0.35s;
+  z-index: 99;
   box-sizing: border-box;
   transition-property: top, left, right, bottom;
   transition-duration: var(--duration);
@@ -137,7 +138,8 @@
 .Popup {
   position: relative;
   box-sizing: border-box;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
+  border-top:2px solid var(--primary-color);
   background-color: canvas;
   color: var(--color-gray-900);
   transform-origin: var(--transform-origin);
@@ -168,12 +170,7 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .Popup {
-    outline: 1px solid var(--color-gray-300);
-    outline-offset: -1px;
-  }
-}
+
 
 .Content {
   box-sizing: border-box;

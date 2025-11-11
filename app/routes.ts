@@ -11,6 +11,7 @@ export default [
         route("/guide-service","routes/guideService.tsx"),
         route("/search","routes/search.tsx"),
         route("/tours/:tour_id","routes/tourDetail.tsx"),
+        route("/tours/:type_slug/:place","routes/tourCategory.tsx"),
         route("*", "components/NotFound.tsx"),
     ]),
 

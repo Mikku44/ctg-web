@@ -1,7 +1,8 @@
 import AutoFadeImage from "~/components/AutoSlideImage";
 import type { Route } from "./+types/tourDetail";
 import type { Package, Tour, TourImage } from "~/models/tour";
-import TourCard from "~/components/featureCard";
+
+import FeaturedTours from "~/components/DraggableFeature";
 
 
 
@@ -160,21 +161,7 @@ export default function TourDetail({ params }: Route.MetaArgs) {
 
       {/* recommended tour */}
       {/* featured */}
-      <div className="container-x">
-        <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Featured Tours</h2>
-        <div className="grid grid-flow-col overflow-x-auto px-2 gap-6 pb-4">
-          {/* Tour cards would go here */}
-          {[1, 2, 3, 4, 5, 6, 7].map((tour, index) =>
-            <TourCard image={"https://images.unsplash.com/photo-1546228139-87f5312cac42?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"}
-              key={index}
-              className="min-w-[340px]"
-              title="Bangkok temple Thailand"
-              description="Relax on the beautiful beaches of Phuket and explore the local markets."
-              price="฿5,900"
-              rating={4.7}
-              duration="3 Days 2 Nights" />)}
-        </div>
-      </div>
+      <FeaturedTours />
     </main>
   );
 }

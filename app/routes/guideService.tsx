@@ -1,4 +1,5 @@
 import React from "react";
+import ImageViewer from "~/components/ImageViewer";
 
 export default function GuideService() {
     return (
@@ -50,7 +51,17 @@ export default function GuideService() {
                         Some of our customer gallery
                     </h2> */}
 
-                    <div className="columns-3 gap-5">
+                    <ImageViewer images={[
+                            "/images/thailand2 (5).jpg",
+                            "/images/thailand6 (2).jpg",
+                            "/images/thailand2 (4).jpg",
+                            "/images/album911 (77).jpg",
+                            "/images/album911 (76).jpg",
+                            "/images/album911 (66).jpg",
+                            "/images/album911 (22).jpg",
+                        ]} />
+
+                    {/* <div className="columns-3 gap-5">
 
 
                         {[
@@ -74,7 +85,7 @@ export default function GuideService() {
 
 
 
-                    </div>
+                    </div> */}
                 </div>
             </section>
 

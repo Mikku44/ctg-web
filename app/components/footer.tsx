@@ -103,7 +103,7 @@ export default function Footer() {
             {/* --- Bottom Bar --- */}
             <div className="container-x mt-8 pt-4 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-sm text-white/80">
                 <p>© {new Date().getFullYear()} Creative Tour Guru. All Rights Reserved.</p>
-                <p>
+                {/* <p>
                     Designed & Developed by{" "}
                     <a
                         href="https://khain.app"
@@ -113,7 +113,7 @@ export default function Footer() {
                     >
                         Khain.app
                     </a>
-                </p>
+                </p> */}
             </div>
         </footer>
     );

@@ -12,6 +12,11 @@
   --text-color: #111827;
 }
 
+.momo-trust-display {
+  font-family: "Momo Trust Display", sans-serif;
+  font-style: normal;
+}
+
 /* ::-webkit-scrollbar {
   width: 10px;
   position: absolute;;

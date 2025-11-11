@@ -1,13 +1,12 @@
-import { Helmet } from "react-helmet";
 import type { Route } from "./+types/home";
-import TourCard from "~/components/featureCard";
 import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
 import { useLocation, useNavigate } from "react-router";
 import { popularDestinations, tourList } from "~/const/app";
 import FadeImageSlideshow from "~/components/FadeImage";
 import { motion } from "framer-motion";
-import { EqualApproximately } from "lucide-react";
+import { Calendar, Camera, Check, Compass, EqualApproximately, Heart, MapPin, Users, Utensils } from "lucide-react";
+import { TourCard } from "~/components/featureCard";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -25,16 +24,14 @@ export function meta({ }: Route.MetaArgs) {
 
 
 const tours = [
-  "Unseen Thailand Tour",
-  "Local Living Journey",
-  "Heritage & Culture Trails",
-  "Floating Market & Canal Life",
-  "Temple & Spiritual Tour",
-  "Nature Escape Adventure",
-  "Gastronomy Experience",
-  "Soft Power Journey",
-  "Luxury Private Tour",
-  "Photography & Hidden Gems Tour",
+  { name: "Cultural Immersion", icon: Compass },
+  { name: "Adventure Tours", icon: MapPin },
+  { name: "Group Travel", icon: Users },
+  { name: "Custom Itineraries", icon: Calendar },
+  { name: "Local Experiences", icon: Heart },
+  { name: "Photography Tours", icon: Camera },
+  { name: "Culinary Journey", icon: Utensils },
+  { name: "Luxury Escapes", icon: Check }
 ];
 
 export default function Home() {
@@ -82,7 +79,7 @@ export default function Home() {
 
       <section className=""></section>
       {/* hero */}
-      <section className="w-full md:h-[680px] h-full overflow-hidden">
+      <section className="w-full md:h-[680px] h-[680px] overflow-hidden">
         {/* <div className=" h-[500px] overflow-hidden w-full flex flex-col md:flex-row items-center gap-6">
           <img src="https://images.unsplash.com/photo-1580327942498-53a877c6d0ce?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
             className="w-full h-full object-cover"
@@ -113,64 +110,99 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="md:p-6 pb-6 bg-white border border-zinc-100 shadow rounded-xl overflow-hidden 
-        relative grid md:grid-cols-2 grid-cols-1 justify-center gap-8">
-          {/* Image Section */}
-          <div className="relative md:static md:block md:-translate-x-7 scale-110">
-            <div className="absolute md:relative top-0 left-0 w-full md:w-auto h-[250px]
-             md:h-full overflow-hidden md:overflow-visible flex items-center justify-center">
-              <div className="w-full h-full md:w-[130%] md:h-[130%] bg-black overflow-clip flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100"
+        >
+          <div className="grid lg:grid-cols-2 grid-cols-1">
+            {/* Image Section */}
+            <div className="relative h-[400px] lg:h-auto overflow-hidden bg-gray-100">
+              <div className="absolute inset-0">
                 <img
-                  src="/images/thailand1 (4).jpg"
-                  alt="list"
-                  className="object-cover  w-full h-[320px] md:scale-110"
+                  src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800&auto=format&fit=crop&q=80"
+                  alt="Thailand Experience"
+                  className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
               </div>
-            </div>
-          </div>
 
-          {/* List Section */}
-          <div className="relative z-10 mt-[270px] md:mt-0">
-            
-            <div className="grid sm:grid-cols-2 gap-4 items-center
-             justify-items-center justify-center">
-              {tours.map((tour, i) => (
-                <motion.div
-                  key={tour}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: i * 0.05,
-                    ease: "easeOut",
-                  }}
-                  viewport={{ once: true }}
-                  className="flex items-center gap-2"
-                >
-                  <EqualApproximately className="text-[var(--primary-color)] text-2xl shrink-0" />
-                  <h3 className="text-gray-800 text-base font-light">{tour}</h3>
-                </motion.div>
-              ))}
+              {/* Overlay Text */}
+              
+            </div>
+
+            {/* List Section */}
+            <div className="p-8 lg:p-12 flex flex-col justify-center">
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                  Signature Travel Themes
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Discover Thailand through carefully crafted experiences designed for every type of traveler.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-5">
+                {tours.map((tour, i) => {
+                  const Icon = tour.icon;
+                  return (
+                    <motion.div
+                      key={tour.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: i * 0.08,
+                        ease: "easeOut",
+                      }}
+                      viewport={{ once: true }}
+                      className="group flex items-start gap-3 p-4 rounded-xl hover:bg-gray-50 transition-all duration-300 cursor-pointer border border-transparent hover:border-gray-200"
+                    >
+                      <div className="flex-shrink-0 w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center group-hover:bg-red-100 transition-colors duration-300">
+                        <Icon className="text-[var(--primary-color)] w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="text-gray-800 font-semibold text-base group-hover:text-[var(--primary-color)] transition-colors duration-300">
+                          {tour.name}
+                        </h4>
+                        <p className="text-sm text-gray-500 mt-0.5">
+                          Tailored experiences
+                        </p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                viewport={{ once: true }}
+                className="mt-8 pt-8 border-t border-gray-200"
+              >
+                <button className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-[var(--primary-color)] to-red-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                  View All Experiences
+                </button>
+              </motion.div> */}
             </div>
           </div>
-        </div>
+        </motion.div>
+
       </section>
 
       <section className="container-x mb-20">
         {/* featured */}
         <div className="">
           <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Featured Tours</h2>
-          <div className="grid md:grid-cols-4 grid-cols-1 px-2 gap-6 overflow-x-auto pb-4">
+          <div className="grid md:grid-cols-4 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
             {/* Tour cards would go here */}
             {tourList.map((tour) => (
               <TourCard
                 key={tour.id}
-                image={tour.image}
-                title={tour.title}
-                description={tour.description}
-                price={tour.price}
-                rating={tour.rating}
-                duration={tour.duration}
+                {...tour}
               />
             ))}
           </div>
@@ -186,7 +218,7 @@ export default function Home() {
                 title={tour.title} description={tour.description} />)}
           </div>
         </div>
-        
+
 
         {/* CTA Explore */}
         <div className="flex md:items-center h-[350px] justify-center flex-col">
