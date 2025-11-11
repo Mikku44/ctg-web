@@ -2,11 +2,11 @@ import { useSearchParams } from "react-router";
 import { useState, useMemo } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import TourCard from "~/components/featureCard";
 import { tourList } from "~/const/app";
 import type { Route } from "./+types/search";
+import { TourCard } from "~/components/featureCard";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Search Tours - Creative Tour Guru" },
     {
@@ -69,12 +69,7 @@ export default function Search() {
             {paginatedTours.map((tour) => (
               <TourCard
                 key={tour.id}
-                image={tour.image}
-                title={tour.title}
-                description={tour.description}
-                price={tour.price}
-                rating={tour.rating}
-                duration={tour.duration}
+                {...tour}
               />
             ))}
           </div>
