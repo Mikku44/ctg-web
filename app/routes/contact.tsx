@@ -8,7 +8,7 @@ import { ContactService } from "~/services/contactService";
 
 export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "CONTACT - Creative Tour Guru" },
+    { title: "Contact - Creative Tour Guru" },
     { name: "description", content: "contact page" },
   ];
 }
@@ -63,28 +63,67 @@ export default function Contact() {
 
   return (
     <main className="min-h-screen w-full mb-20 relative ">
-      
-      {/* content */}
-      
 
-      <div className="grid md:grid-cols-12 container-x mt-20
+      {/* content */}
+
+
+      <div className="md:col-span-7 text-[42px] font-bold container-x">ABOUT US</div>
+
+
+      <section className="container-x">
+        <div className="font-bold text-3xl mb-2">Every journey tells your story.</div>
+        <div className="">At Creative Tour Guru Thailand, we don’t just guide tours — we design tailor-made journeys that are personal and meaningful.</div>
+        <div className="">Our Private, Tailor-Made, and Customized Tours are carefully crafted to connect you with Thailand’s people, culture, and hidden treasures — one trip at a time.</div>
+        <div className="">✨ Travel with heart, discover with meaning.</div>
+      </section>
+
+      <section className="container-x mt-4">
+
+        <div className="font-bold text-3xl mb-2">
+          Private, Tailor-made & Customized Tours — Designed with Heart.
+        </div>
+
+        <div className="">At <span className="font-bold">Creative Tour Guru Thailand</span>
+          , we specialize in creating private tours that reflect your personal interests and travel style.
+        </div>
+
+
+        <div className="">
+          Every journey is thoughtfully designed — whether it’s a <span className="font-bold">Tailor-made Tour</span>
+          , crafted entirely from your ideas, or a<span className="font-bold"> Customized Tour</span>,
+          adapted from our signature programs to suit your time, budget, and preferences.
+        </div>
+
+
+        <div className="">
+          With over 25 years of experience in tourism, our founder and tour designer ensures that each trip offers authenticity,
+          comfort, and meaningful cultural connection.
+        </div>
+
+
+        <div className="">Travel with Heart, Explore with Meaning.</div>
+      </section>
+
+
+      <div className="grid md:grid-cols-12 container-x mt-4
         gap-5  mb-20  h-full overflow-hidden">
         {/* image */}
-        <div className="md:col-span-7  md:text-[65px] text-[48px] md:leading-tight -mt-4 font-semibold -mb-4">CONTACT</div>
+        <div className="md:col-span-7 text-[42px] font-bold">CONTACT</div>
         <div className="md:block hidden"></div>
 
         <div className="md:col-span-7 w-full h-full">
           <div className="md:max-h-[640px] overflow-hidden h-full ">
-            <img src="https://images.unsplash.com/photo-1619471643578-e0e78f5bfdcf?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
-             className="w-full h-full object-cover" alt="3 classic car" />
+            <img src="/images/thailand3 (3).jpg"
+              className="w-full h-full object-cover" alt="3 classic car" />
           </div>
-         
+
         </div>
+
 
         {/* contact form */}
         <div className="md:mt-0 mt-16 md:col-span-5">
           <div className="text-[26px] -mt-3 font-bold">Talk to Creative Tour Guru</div>
-          
+
 
           {/* form */}
 
@@ -200,13 +239,13 @@ export default function Contact() {
                   py: 1.5,
                   "&:hover": {
                     bgcolor: "white",
-                    border:"2px solid var(--primary-color)",
+                    border: "2px solid var(--primary-color)",
                     boxShadow: "none",
                     color: "var(--primary-color)"
                   },
                 }}
               >
-                SUBMIT
+                Send
               </Button>
             </Box>
           </div>

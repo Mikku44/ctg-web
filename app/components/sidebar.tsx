@@ -1,12 +1,16 @@
 import { Facebook, Menu, Phone, Search, X } from "lucide-react";
 import { FaLine } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
-import { MENU_LIST } from "~/const/app";
+import { MENU_LIST, menuConfig } from "~/const/app";
+import SubNavbar from "./subNavbar";
 
 export default function SidebarMenu() {
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
+    const [isScrolled, setIsScrolled] = useState(false);
+
+
 
     const router = useNavigate()
 
@@ -15,9 +19,18 @@ export default function SidebarMenu() {
         if (search.trim()) router(`/search?query=${encodeURIComponent(search)}`);
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 0);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <>
-            <div className="relative z-99 from-[var(--primary-color)] to-[var(--secondary-color)]
+            <div className="relative z-[50] from-[var(--primary-color)] to-[var(--secondary-color)]
         text-white bg-linear-120 py-2 flex gap-2 justify-end px-6">
                 <a href="line.me" target="_blank" className="text-sm size-8 bg-white rounded-full  
               flex gap-2 justify-center items-center">
@@ -37,7 +50,7 @@ export default function SidebarMenu() {
 
             </div>
             {/* Top Navbar */}
-            <header className=" top-0 left-0 right-0 bg-white md:min-h-[180px]  min-h-[100px]
+            <header className="container-x top-0 left-0 right-0 bg-white md:min-h-[100px]  min-h-[100px]
             flex flex-row-reverse items-center justify-between px-4 z-50 relative">
                 <form onSubmit={handleSubmit} className="relative md:block hidden">
                     <input
@@ -57,7 +70,7 @@ export default function SidebarMenu() {
                 </form>
 
 
-                <Link to="/"><img src="/logo/logo.jpg" className="md:h-[180px] h-[100px] top-0 md:absolute" alt="creative tour guru" /></Link>
+                <Link to="/"><img src="/logo/logo.jpg" className="md:h-[100px] h-[100px] top-0 md:absolute" alt="creative tour guru" /></Link>
 
 
                 <div className="flex gap-2 flex-row-reverse">
@@ -72,12 +85,20 @@ export default function SidebarMenu() {
 
 
             </header>
+            <section
+                className={`w-full sticky top-0 z-[40] bg-white border-b border-zinc-50 transition-shadow duration-300  ${isScrolled ? "shadow-md h-[62px]" : "shadow-none h-[45px]"
+                    }`}
+            >
+                <div className={`container-x flex items-center justify-center  ${isScrolled ? "h-[62px]" : " h-[45px]"}`}>
+                    <SubNavbar menuItems={menuConfig as any} />
+                </div>
+            </section>
 
             {/* Overlay when drawer is open */}
             {open && (
                 <div
                     onClick={() => setOpen(false)}
-                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+                    className="fixed  inset-0 bg-black/40 backdrop-blur-sm z-[50]"
                 />
             )}
 

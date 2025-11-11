@@ -12,24 +12,35 @@
   --text-color: #111827;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 10px;
   position: absolute;;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #ffffff1d; 
 }
- 
-/* Handle */
+
 ::-webkit-scrollbar-thumb {
   background: #000000; 
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #212121; 
+} */
+
+.hidden-scroll {
+  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none;  
+
+  /* For Firefox */
+  scrollbar-width: none; 
+}
+
+/* For Chrome, Safari, and Opera (Webkit browsers) */
+.hidden-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0; /* Ensures no width is reserved for the scrollbar */
 }
 
 

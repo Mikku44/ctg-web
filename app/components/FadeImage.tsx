@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const images = [
+  "/logo/logo.jpg",
   "/images/thailand3 (1).jpg",
   "/images/thailand3 (2).jpg",
   "/images/thailand3 (3).jpg",
@@ -40,7 +41,7 @@ export default function FadeImageSlideshow() {
           exit={{ opacity: 0 }}
           transition={{
             duration: 1.6, // smoother fade
-            ease: [0.4, 0, 0.2, 1], // soft cubic-bezier easing
+            ease: [1, 0, 0.2, 1], // soft cubic-bezier easing
           }}
         />
       </AnimatePresence>

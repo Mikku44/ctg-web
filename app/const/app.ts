@@ -1,9 +1,59 @@
 export const MENU_LIST = [
   { name: "Home", path: "/" },
   { name: "Tours", path: "/tours" },
+  { name: "Guide Service", path: "/guide-service" },
   // { name: "Blog", path: "/blog" },
-  { name: "About", path: "/about" },
+  // { name: "About", path: "/about" },
+  { name: "Contact us", path: "/contact" },
 ];
+
+export const menuConfig = [
+  {
+    label: "Half Day Tours",
+    layout: "grid", // Suitable for a concise list
+    links: [
+      { href: "/tours/half-day/bangkok", title: "Bangkok", description: "Quick sights and highlights." },
+      { href: "/tours/half-day/chiang-mai", title: "Chiang Mai", description: "Morning or afternoon exploration." },
+      { href: "/tours/half-day/phuket", title: "Phuket", description: "Short beach or town trips." },
+    ],
+  },
+  {
+    label: "One Day Tours",
+    layout: "grid", // Suitable for a slightly longer list
+    links: [
+      { href: "/tours/one-day/bangkok", title: "Bangkok City & Culture", description: "Full-day BKK immersion." },
+      { href: "/tours/one-day/kanchanaburi", title: "Kanchanaburi", description: "River Kwai and historical sites." },
+      { href: "/tours/one-day/pattaya", title: "Pattaya", description: "Coastal city escape." },
+      { href: "/tours/one-day/chiang-mai", title: "Chiang Mai Exploration", description: "Doi Suthep and local villages." },
+      { href: "/tours/one-day/phuket", title: "Phuket Island Hopping", description: "Beaches and viewpoints." },
+    ],
+  },
+  {
+    label: "Specialty Tours & Services",
+    layout: "flex", // Good for a mixed list of unique tours
+    links: [
+      { href: "/tours/specialty/walking", title: "Walking Tour", description: "Discover hidden local neighborhoods." },
+      { href: "/tours/specialty/local-transport", title: "Local Transport Tour", description: "Experience Bangkok like a local." },
+      { href: "/tours/specialty/food-tuk-tuk", title: "Food Tour with Tuk Tuk", description: "Night market hopping on a Tuk Tuk." },
+      { href: "/tours/specialty/unseen", title: "Unseen Tour", description: "Explore off-the-beaten-path destinations." },
+      { href: "/tours/specialty/night", title: "Night Tour", description: "Temples, markets, and neon lights after dark." },
+      { href: "/services/guide", title: "Private Guide Service", description: "Hire a certified personal tour guide." },
+    ],
+  },
+  {
+    label: "Around Thailand & Cruises",
+    layout: "grid",
+    links: [
+      { href: "/tours/around-thailand", title: "Around Thailand Tour", description: "Multi-day trips across regions." },
+      { href: "/tours/dinner-cruise/bangkok", title: "Dinner Cruise: Bangkok", description: "Fine dining on the Chao Phraya River." },
+      { href: "/tours/dinner-cruise/ayuthaya", title: "Dinner Cruise: Ayuthaya", description: "Sunset dining among ancient ruins." },
+    ],
+  },
+  // You can keep a direct link, perhaps to a main booking page or contacts
+  { label: "Book Now", href: "/contact" }, 
+];
+
+
 
 
 export const menuItems =[
@@ -129,6 +179,43 @@ export const popularDestinations = [
     title: "Ayutthaya",
     description: "The second Siamese capital, a UNESCO World Heritage Site featuring magnificent ruins of colossal monasteries and prangs (reliquary towers) from the Ayutthaya Kingdom.",
     link: "/destinations/ayuthaya",
+  },
+
+  {
+    image: "/popular/chiang-rai.jpg",
+    title: "Chiang Rai",
+    description: "Thailand's northernmost major city, famous for its artistic temples like Wat Rong Khun (White Temple) and Baan Dam Museum (Black House), and a gateway to the Golden Triangle and mountain scenery.",
+    link: "/destinations/chiang-rai",
+  },
+  {
+    image: "/popular/Nakhon-Pathom.jpg",
+    title: "Nakhon Pathom",
+    description: "Home to Phra Pathom Chedi, the tallest stupa in Thailand, and a cultural center from the ancient Dvaravati Kingdom. Known for its floating markets and Samphran area attractions.",
+    link: "/destinations/nakhon-pathom",
+  },
+  {
+    image: "/popular/Samut-Songkhram.jpg",
+    title: "Samut Songkhram",
+    description: "A charming province near Bangkok, known for its authentic floating markets like Amphawa and Tha Kha, as well as the famous Maeklong Railway Market and the unique Wat Bang Kung.",
+    link: "/destinations/samut-songkhram",
+  },
+  {
+    image: "/popular/Nakhon-Ratchasima.jpg",
+    title: "Nakhon Ratchasima (Khorat)",
+    description: "The gateway to the Northeast (Isan), famous for the stunning, well-preserved Khmer temple ruins at Phimai Historical Park and the vast, biodiverse Khao Yai National Park.",
+    link: "/destinations/nakhon-ratchasima",
+  },
+  {
+    image: "/popular/Nakhon-Si-Thammarat.jpg",
+    title: "Nakhon Si Thammarat",
+    description: "An ancient southern city and former regional center, home to the magnificent Wat Phra Mahathat Woramahawihan and beautiful natural attractions like the pristine beaches of Khanom (pink dolphins).",
+    link: "/destinations/nakhon-si-thammarat",
+  },
+  {
+    image: "/popular/Sukhothai.jpg",
+    title: "Sukhothai",
+    description: "The first capital of the Siamese Kingdom and a UNESCO World Heritage Site. Features exquisite ruins of temples and royal palaces, reflecting the distinctive early \"Sukhothai style\" of art.",
+    link: "/destinations/sukhothai",
   },
 ];
 
