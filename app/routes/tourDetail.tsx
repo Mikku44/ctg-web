@@ -1,82 +1,89 @@
+import { useEffect, useState } from "react";
 import AutoFadeImage from "~/components/AutoSlideImage";
-import type { Route } from "./+types/tourDetail";
-import type { Package, Tour, TourImage } from "~/models/tour";
-
 import FeaturedTours from "~/components/DraggableFeature";
+import { tourService } from "~/services/tourService";
+import type { Tour, Package, TourImage } from "~/models/tour";
+import type { Route } from "../+types/root";
+import CustomViewer from "~/components/CustomViewer";
+import { Link, useLocation } from "react-router";
 
+export default function TourDetailPage({ params }: Route.MetaArgs) {
+  const slug = params.tour_slug;
+  const [tour, setTour] = useState<Tour | null>(null);
+  const [images, setImages] = useState<TourImage[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  const location = useLocation()
+  const pathnames = location.pathname.split("/").filter((x) => x);
 
-export default function TourDetail({ params }: Route.MetaArgs) {
-  // Mock data for now — replace later with real loader data
-  const tour: Tour = {
-    id: "1",
-    title: "Chiang Mai Adventure",
-    slug: "chiang-mai-adventure",
-    description:
-      "Explore the lush mountains, local villages, and cultural sites of Chiang Mai in this all-inclusive 3-day tour.",
-    duration: "3 Days 2 Nights",
-    location: "Chiang Mai, Thailand",
-    price_from: 6900,
-    note: ["Bring hiking shoes", "Light clothing recommended"],
-    itinerary: ["Day 1: Arrival and city tour", "Day 2: Doi Inthanon trekking", "Day 3: Local market and farewell"],
-    program_detail: "This program offers a balance of adventure and cultural immersion.",
-    tour_include: ["Accommodation", "Meals", "Guide", "Transport"],
-    not_include: ["Personal expenses", "Travel insurance"],
-    cancellation_policy: [
-      "Free cancellation up to 7 days before departure",
-      "50% refund within 3 days",
-      "No refund for same-day cancellations",
-    ],
-    category_id: "adventure",
-    featured_image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop",
-    status: "published",
-    created_at: new Date(),
-    updated_at: new Date(),
-  };
+  useEffect(() => {
+    if (!slug) return;
 
-  const images: TourImage[] = [
-    {
-      id: "1",
-      tour_id: "1",
-      image_url:
-        "https://images.unsplash.com/photo-1580327942498-53a877c6d0ce?auto=format&fit=crop&q=80&w=1170",
-    },
-    {
-      id: "2",
-      tour_id: "1",
-      image_url:
-        "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&q=80&w=1332",
-    },
-    {
-      id: "3",
-      tour_id: "1",
-      image_url:
-        "https://images.unsplash.com/photo-1589932896376-5244c8898269?auto=format&fit=crop&q=80&w=1332",
-    },
-  ];
+    const fetchTour = async () => {
+      setLoading(true);
+      try {
+        const selectedTour = await tourService.getBySlug(slug);
+        // console.log("TOUR : ",selectedTour)
+        setTour(selectedTour);
+        if (selectedTour) {
+          setImages(selectedTour.images || []);
+          setPackages(selectedTour.packages || []);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const packages: Package[] = [
-    {
-      id: "p1",
-      tour_id: "1",
-      name: "Standard Package",
-      price: 6900,
-      description: "Shared accommodation, group activities",
-    },
-    {
-      id: "p2",
-      tour_id: "1",
-      name: "Private Package",
-      price: 9900,
-      description: "Private guide and vehicle",
-    },
-  ];
+    fetchTour();
+  }, [slug]);
+
+  if (loading) return <p className="p-6 min-h-screen text-center flex flex-col gap-5 items-center justify-center">
+    <div className="loader">
+     
+      </div>
+    <div className="">Loading...</div>
+    </p>;
+  if (!tour) return <p className="p-6 min-h-screen text-center text-red-600">Tour not found.</p>;
 
   return (
     <main className="min-h-screen text-neutral-900">
       {/* Hero Section */}
-      <AutoFadeImage images={images.map((img) => img.image_url)} />
+      {/* {images.length > 0 && <AutoFadeImage images={images.map((img) => img.image_url) || [tour.featured_image]} />} */}
+      <nav className="px-4 w-full max-w-4xl mt-5 mx-auto text-sm text-gray-600" aria-label="Breadcrumb">
+        <ol className="list-reset flex">
+          <li>
+            <Link to="/" className="text-gray-500 hover:text-gray-800">
+              Home
+            </Link>
+          </li>
+          {pathnames.map((name, index) => {
+            const routeTo = "/" + pathnames.slice(0, index + 1).join("/");
+            const isLast = index === pathnames.length - 1;
+            const displayName = name.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
+            return (
+              <li key={routeTo} className="flex items-center">
+                <span className="mx-2">/</span>
+                {isLast ? (
+                  <span className="text-gray-800 font-medium">{displayName}</span>
+                ) : (
+                  <Link to={routeTo} className="text-gray-500 hover:text-gray-800">
+                    {displayName}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+      <div className=" container-x w-full max-w-4xl mt-5 mx-auto overflow-hidden">
+
+
+        <CustomViewer className="max-w-4xl mx-auto px-4 " images={[tour.featured_image]} />
+      </div>
       {/* Content */}
       <section className="max-w-4xl mx-auto px-4 py-10 space-y-8">
         <div>
@@ -92,75 +99,100 @@ export default function TourDetail({ params }: Route.MetaArgs) {
 
         <hr className="border-gray-200" />
 
-        <div>
-          <h2 className="text-2xl font-semibold mb-3">Description</h2>
-          <p className="leading-relaxed text-gray-700">{tour.description}</p>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-semibold mb-3">Itinerary</h2>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {tour.itinerary.map((step, i) => (
-              <li key={i}>{step}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-semibold mb-3">Included</h2>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {tour.tour_include.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-
-          <h2 className="text-2xl font-semibold mt-6 mb-3">Not Included</h2>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {tour.not_include.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-semibold mb-3">Available Packages</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            {packages.map((pkg) => (
-              <div
-                key={pkg.id}
-                className="rounded-xl border border-gray-200 p-4 hover:border-emerald-400 transition"
-              >
-                <h3 className="text-xl font-medium">{pkg.name}</h3>
-                <p className="text-gray-600 text-sm mt-1">{pkg.description}</p>
-                <p className="mt-3 font-semibold text-emerald-600">
-                  ฿{pkg.price.toLocaleString()}
-                </p>
-              </div>
-            ))}
+        {/* Description */}
+        {tour.description && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Description</h2>
+            <p className="leading-relaxed text-gray-700">{tour.description}</p>
           </div>
-        </div>
+        )}
 
-        <div>
-          <h2 className="text-2xl font-semibold mb-3">Cancellation Policy</h2>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {tour.cancellation_policy.map((rule, i) => (
-              <li key={i}>{rule}</li>
-            ))}
-          </ul>
-        </div>
+        {/* Itinerary */}
+        {tour.itinerary?.length > 0 && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Itinerary</h2>
+            <ul className="list-disc pl-5 space-y-1 text-gray-700">
+              {tour.itinerary.map((step, i) => (
+                <li key={i}>{step}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        <div>
-          <h2 className="text-2xl font-semibold mb-3">Notes</h2>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {tour.note.map((note, i) => (
-              <li key={i}>{note}</li>
-            ))}
-          </ul>
-        </div>
+        {/* Included / Not Included */}
+        {(tour.tour_include?.length || tour.not_include?.length) > 0 && (
+          <div>
+            {tour.tour_include?.length > 0 && (
+              <>
+                <h2 className="text-2xl font-semibold mb-3">Included</h2>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  {tour.tour_include.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {tour.not_include?.length > 0 && (
+              <>
+                <h2 className="text-2xl font-semibold mt-6 mb-3">Not Included</h2>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  {tour.not_include.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Packages */}
+        {packages.length > 0 && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Available Packages</h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              {packages.map((pkg) => (
+                <div
+                  key={pkg.id}
+                  className="rounded-xl border border-gray-200 p-4 hover:border-emerald-400 transition"
+                >
+                  <h3 className="text-xl font-medium">{pkg.name}</h3>
+                  {pkg.description && <p className="text-gray-600 text-sm mt-1">{pkg.description}</p>}
+                  <p className="mt-3 font-semibold text-emerald-600">
+                    ฿{pkg.price.toLocaleString()}
+                  </p>
+                  {pkg.max_people && <p className="text-gray-500 text-sm mt-1">Max: {pkg.max_people} people</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Cancellation Policy */}
+        {tour.cancellation_policy?.length > 0 && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Cancellation Policy</h2>
+            <ul className="list-disc pl-5 space-y-1 text-gray-700">
+              {tour.cancellation_policy.map((rule, i) => (
+                <li key={i}>{rule}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Notes */}
+        {tour.note?.length > 0 && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Notes</h2>
+            <ul className="list-disc pl-5 space-y-1 text-gray-700">
+              {tour.note.map((n, i) => (
+                <li key={i}>{n}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
-      {/* recommended tour */}
-      {/* featured */}
+      {/* Featured / Recommended Tours */}
       <FeaturedTours />
     </main>
   );

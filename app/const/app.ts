@@ -347,3 +347,11 @@ export const tourList = [
     category: "Day Trip & History",
   },
 ];
+
+export const CATEGORY_OPTIONS = [
+  { id: "half-day", label: "Half Day" },
+  { id: "one-day", label: "One Day" },
+  { id: "specialty", label: "Specialty" },
+  { id: "unseen", label: "Unseen" },
+  { id: "dinner-cruise", label: "Dinner Cruise" },
+];

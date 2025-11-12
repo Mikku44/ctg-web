@@ -1,8 +1,11 @@
 import { Star, Users, MapPin, Clock, ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 
 
-type TourCardProps = {
+export type TourCardProps = {
+  id?:string,
+  slug?:string,
   className?: string;
   image: string;
   title: string;
@@ -11,6 +14,7 @@ type TourCardProps = {
   rating: number;
   duration: string;
   route?: string;
+  place_location? : string;
   maxPeople?: number;
   tourType?: string;
 };
@@ -18,17 +22,19 @@ type TourCardProps = {
 export function TourCard({
   image,
   title,
+  slug,
   description,
   price,
   rating,
   duration,
   route,
+  place_location,
   maxPeople,
   tourType,
   className
 }: TourCardProps) {
   return (
-    <div draggable="false" className={`group select-none cursor-potiner w-full bg-white h-fit overflow-hidden shadow-md transition-all duration-300 transform hover:-translate-y-2 ${className}`}>
+    <Link to={`/tours/${slug}`} draggable="false" className={`group select-none cursor-potiner w-full bg-white h-fit overflow-hidden shadow-md transition-all duration-300 transform hover:-translate-y-2 ${className}`}>
       <div className="relative overflow-hidden">
         <img
           src={image}
@@ -59,12 +65,12 @@ export function TourCard({
           {description}
         </p>
 
-        {(route || maxPeople) && (
+        {(place_location || maxPeople) && (
           <div className="flex flex-wrap gap-3 mt-4">
-            {route && (
-              <div className="flex items-center gap-1.5 text-xs text-gray-700 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
-                <MapPin size={14} className="text-[var(--primary-color)]" />
-                <span className="font-medium">{route}</span>
+            {place_location && (
+              <div className=" items-start gap-1.5 text-xs text-gray-700 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
+                <MapPin size={14} className="min-w-[24px] inline text-[var(--primary-color)]" />
+                <span className="font-medium line-clamp-1 inline">{(place_location)}</span>
               </div>
             )}
             {maxPeople && (
@@ -108,6 +114,6 @@ export function TourCard({
           </button>
         </a>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -6,7 +6,10 @@ import { popularDestinations, tourList } from "~/const/app";
 import FadeImageSlideshow from "~/components/FadeImage";
 import { motion } from "framer-motion";
 import { Calendar, Camera, Check, Compass, EqualApproximately, Heart, MapPin, Users, Utensils } from "lucide-react";
-import { TourCard } from "~/components/featureCard";
+import { TourCard, type TourCardProps } from "~/components/featureCard";
+import { useEffect, useState } from "react";
+import { tourService } from "~/services/tourService";
+import type { Tour } from "~/models/tour";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -36,7 +39,15 @@ const tours = [
 
 export default function Home() {
 
-  const router = useNavigate()
+  const router = useNavigate();
+
+  const [toursList, setTours] = useState<TourCardProps[]>([]);
+
+  useEffect(() => {
+    tourService.getAllForCard().then((items) => {
+      console.log("ITEMS : ",items)
+      setTours(items)});
+  }, []);
 
   return (
     <main className="">
@@ -89,10 +100,26 @@ export default function Home() {
           "/images/thailand6 (9).jpg",
           "/images/thailand6 (4).jpg",
           "/images/thailand8 (8).jpg",
+          "/images/tapu (37).jpg",
+          "/images/thailand8 (8).jpg",
+          "/images/thailand7 (7).jpg",
+          "/images/trips_market (1).jpg",
+          "/images/train (3).jpg",
+          "/images/thailand5 (7).jpg",
+          "/images/temple (46).jpg",
+          "/images/temple (5).jpg",
 
         ]}
 
           titles={[
+            "Thailand",
+            "Thailand",
+            "Thailand",
+            "Thailand",
+            "Thailand",
+            "Thailand",
+            "Thailand",
+            "Thailand",
             "Thailand",
             "Thailand",
             "Thailand",
@@ -199,10 +226,11 @@ export default function Home() {
           <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Featured Tours</h2>
           <div className="grid md:grid-cols-4 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
             {/* Tour cards would go here */}
-            {tourList.map((tour) => (
+            {toursList.map((tour) => (
               <TourCard
                 key={tour.id}
                 {...tour}
+                
               />
             ))}
           </div>

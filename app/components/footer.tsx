@@ -5,7 +5,7 @@ import { FaLine, FaWhatsapp } from "react-icons/fa6";
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-gradient-to-br from-[var(--primary-color)] to-[var(--secondary-color)] text-white pt-10 pb-4">
+        <footer className="w-full bg-[#3b444f] text-white pt-10 pb-4">
             <div className="container-x grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-8">
                 {/* --- Brand --- */}
                 <div>
@@ -20,11 +20,11 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold text-lg mb-3">Quick Links</h3>
                     <ul className="space-y-2 text-white/90 text-sm">
-                        <li><a href="/" className="hover:text-white">Home</a></li>
-                        <li><a href="/tours" className="hover:text-white">Tours</a></li>
-                        <li><a href="/guide-service" className="hover:text-white">Guide Service</a></li>
-                        <li><a href="/about" className="hover:text-white">About Us</a></li>
-                        <li><a href="/contact" className="hover:text-white">Contact</a></li>
+                        <li><a href="/" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Home</a></li>
+                        <li><a href="/tours" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Tours</a></li>
+                        <li><a href="/guide-service" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Guide Service</a></li>
+                        <li><a href="/about" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">About Us</a></li>
+                        <li><a href="/contact" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Contact</a></li>
                     </ul>
                 </div>
 
