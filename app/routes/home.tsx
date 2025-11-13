@@ -45,8 +45,9 @@ export default function Home() {
 
   useEffect(() => {
     tourService.getAllForCard().then((items) => {
-      console.log("ITEMS : ",items)
-      setTours(items)});
+      console.log("ITEMS : ", items)
+      setTours(items)
+    });
   }, []);
 
   return (
@@ -127,7 +128,7 @@ export default function Home() {
         />
       </section>
 
-      <section className="container-x mx-auto md:px-0 px-4 py-20">
+      {/* <section className="container-x mx-auto md:px-0 px-4 py-20">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
             Explore Thailand Like Never Before
@@ -145,7 +146,7 @@ export default function Home() {
           className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100"
         >
           <div className="grid lg:grid-cols-2 grid-cols-1">
-            {/* Image Section */}
+
             <div className="relative h-[400px] lg:h-auto overflow-hidden bg-gray-100">
               <div className="absolute inset-0">
                 <img
@@ -156,11 +157,11 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
               </div>
 
-              {/* Overlay Text */}
-              
+         
+
             </div>
 
-            {/* List Section */}
+        
             <div className="p-8 lg:p-12 flex flex-col justify-center">
               <div className="mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">
@@ -203,7 +204,7 @@ export default function Home() {
                 })}
               </div>
 
-              {/* <motion.div
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
@@ -213,31 +214,50 @@ export default function Home() {
                 <button className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-[var(--primary-color)] to-red-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
                   View All Experiences
                 </button>
-              </motion.div> */}
+              </motion.div> *
             </div>
           </div>
         </motion.div>
 
-      </section>
+      </section> */}
 
       <section className="container-x mb-20">
         {/* featured */}
         <div className="">
-          <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Featured Tours</h2>
-          <div className="grid md:grid-cols-4 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
+          <h2 className="text-4xl font-medium mb-6 md:mt-10 mt-5">Featured Tours</h2>
+          <div className="grid md:grid-cols-3 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
             {/* Tour cards would go here */}
             {toursList.map((tour) => (
               <TourCard
                 key={tour.id}
                 {...tour}
-                
+
               />
             ))}
           </div>
         </div>
+
+        {/* Recommend */}
+        {/* featured */}
+        <div className="">
+          <h2 className="text-4xl font-medium mb-6 md:mt-10 mt-5 ">Recommend Tours</h2>
+          <div className="grid md:grid-cols-3 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
+            {/* Tour cards would go here */}
+            {toursList.map((tour) => (
+              <TourCard
+                key={tour.id}
+                {...tour}
+
+              />
+            ))}
+          </div>
+        </div>
+
+
+
         {/* Popular Destinations */}
         <div className="">
-          <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Popular Destinations</h2>
+          <h2 className="text-4xl font-medium mb-6 md:mt-10 mt-5">Popular Destinations</h2>
           <div className="grid md:grid-cols-4 grid-cols-2 gap-6 overflow-x-auto pb-4">
             {/* Tour cards would go here */}
             {popularDestinations?.map((tour, index) =>
@@ -248,15 +268,36 @@ export default function Home() {
         </div>
 
 
-        {/* CTA Explore */}
-        <div className="flex md:items-center h-[350px] justify-center flex-col">
-
-          <h2 className="text-4xl font-bold">Ready for your next adventure?</h2>
-          <div className="mt-3 text-zinc-500 text-sm">Browse our extensive collection of tours and activities worldwide.</div>
-          <button onClick={() => router("/tours")} className=" py-3 button px-5 mt-5">Explore All Tours</button>
-        </div>
+       
 
       </section>
+
+       {/* CTA Explore */}
+        <div
+          className="flex md:items-center h-[450px]
+  bg-[url('/images/bangkok(18).jpg')] bg-center bg-cover
+  relative justify-center text-white overflow-hidden flex-col"
+        >
+          {/* 🔲 Black overlay */}
+          <div className="absolute inset-0 bg-black/50 z-0"></div>
+
+          {/* Content */}
+          <h2 className="text-4xl font-bold z-10">Quality Experiences Travel</h2>
+          <div className="mt-3 opacity-95 text-sm z-10">Private Tours around Thailand</div>
+          <button
+            onClick={() => router("/tours")}
+            className="py-3 button px-5 mt-5 z-10"
+          >
+            Explore All Tours
+          </button>
+        </div>
+
+
+
+
+      {/* <section className="h-[550px] overflow-hidden">
+       
+      </section> */}
 
     </main>
   );

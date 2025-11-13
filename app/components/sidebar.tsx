@@ -64,7 +64,7 @@ export default function SidebarMenu() {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search for tours, destinations..."
-                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-zinc-200 bg-white shadow-sm 
+                            className="w-full pl-10 pr-4 py-2.5 text-sm border border-zinc-200 bg-white  
                  focus:ring-2 focus:ring-zinc-400 focus:border-zinc-300 transition-all duration-200 
                  placeholder:text-zinc-400 text-zinc-700"
                         />

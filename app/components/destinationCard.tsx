@@ -9,7 +9,7 @@ type DesCardProps = {
 
 export default function DesCard({ image, title, description }: DesCardProps) {
   return (
-    <Link to={`/search?query=${title}`} className="w-full group bg-white rounded-xl overflow-hidden duration-300">
+    <Link to={`/search?query=${title}`} className="w-full group  rounded-xl overflow-hidden duration-300">
       <div className="rounded-xl overflow-hidden h-[180px] group-hover:shadow-md">
         <img
           src={image}

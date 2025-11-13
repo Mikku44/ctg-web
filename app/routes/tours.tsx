@@ -46,37 +46,41 @@ export default function Tours() {
         <section className="container-x mb-20">
             {/* Header */}
             <div className="">
-                <div className="md:max-w-[50vw] mx-auto text-center">
-                    <h1 className="text-4xl font-semibold mt-5">Tours Destination</h1>
-                    <h2 className="text-lg text-zinc-500 mb-6">
-                        Navigate the city using authentic methods, such as tuk-tuks for
-                        exhilarating night tours, or long-tail boats to explore the quieter,
-                        less-traveled canals.
-                    </h2>
-                </div>
-
-                {/* Filter */}
-                <div className="flex gap-2 items-center justify-center mt-10 mb-8 flex-wrap">
-                    {filterItems.map((item) => (
-                        <div
-                            key={item.key}
-                            onClick={() => {
-                                setFilterOptions(item.key);
-                                setPage(1); // reset to page 1 when changing filter
-                            }}
-                            className={`rounded-full px-4 py-2 cursor-pointer duration-200 w-fit ${filterOptions === item.key
-                                    ? "bg-[var(--primary-color)] text-white"
-                                    : "bg-orange-50 text-[var(--primary-color)]"
-                                }`}
-                        >
-                            {item.label}
-                        </div>
-                    ))}
-                </div>
+                <section className="flex justify-between items-center mb-2">
+                    <div className="">
+                        <h1 className="text-4xl font-semibold mt-5">Explore Tours Destination</h1>
+                        <p className=" text-zinc-500">{filterItems?.length || 0} Tours found.</p>
+                    </div>
+                    {/* <div className="md:max-w-[50vw] mx-auto text-center">
+                        <h2 className="text-lg text-zinc-500 mb-6">
+                            Navigate the city using authentic methods, such as tuk-tuks for
+                            exhilarating night tours, or long-tail boats to explore the quieter,
+                            less-traveled canals.
+                        </h2>
+                    </div> */}
+                    {/* Filter */}
+                    <div className="flex gap-2 items-center justify-center mt-10 mb-8 flex-wrap">
+                        {/* {filterItems.map((item) => (
+                            <div
+                                key={item.key}
+                                onClick={() => {
+                                    setFilterOptions(item.key);
+                                    setPage(1); // reset to page 1 when changing filter
+                                }}
+                                className={`rounded-full px-4 py-2 cursor-pointer duration-200 w-fit ${filterOptions === item.key
+                                        ? "bg-[var(--primary-color)] text-white"
+                                        : "bg-orange-50 text-[var(--primary-color)]"
+                                    }`}
+                            >
+                                {item.label}
+                            </div>
+                        ))} */}
+                    </div>
+                </section>
 
                 {/* Tour cards */}
                 {paginatedTours.length > 0 ? (
-                    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 px-2 gap-6">
+                    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6">
                         {paginatedTours.map((tour) => (
                             <TourCard
                                 key={tour.id}
