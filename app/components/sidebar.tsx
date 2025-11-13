@@ -1,4 +1,4 @@
-import { Menu,  Search, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { MENU_LIST, menuConfig } from "~/const/app";
@@ -96,11 +96,16 @@ export default function SidebarMenu() {
 
 
             </header>
+
+
             <section
                 className={`w-full sticky border-t-1 border-b-1 border-zinc-200 top-0 z-[40] bg-white  transition-shadow duration-300 h-[62px]  ${isScrolled ? "shadow-md " : "shadow-none"
                     }`}
             >
-                <div className={`container-x flex items-center justify-center  ${isScrolled ? "h-[62px]" : " h-[62px]"}`}>
+                <div className={`container-x flex overflow-hidden items-center   ${isScrolled ? "h-[62px] justify-between" : " h-[62px] justify-center"}`}>
+                    <Link to="/">
+                        <img src="/logo/logo.jpg" className={`w-full  overflow-hidden duration-200 flex items-center justify-center ${isScrolled ? "h-[56px]" : "h-[0px]"}`}
+                            alt="creative tour guru" /></Link>
                     <SubNavbar menuItems={menuConfig as any} />
                 </div>
             </section>
