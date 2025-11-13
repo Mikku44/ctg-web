@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { tourList } from "~/const/app";
+// import { tourList } from "~/const/app";
 import type { Route } from "./+types/tours";
-import { TourCard } from "~/components/featureCard";
+import { TourCard, type TourCardProps } from "~/components/featureCard";
+import { tourService } from "~/services/tourService";
 
 const filterItems = [
     { label: "All destination", key: "" },
@@ -22,8 +23,16 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Tours() {
     const [filterOptions, setFilterOptions] = useState("");
+     const [tourList, setTours] = useState<TourCardProps[]>([]);
     const [page, setPage] = useState(1);
 
+
+     useEffect(() => {
+        tourService.getAllForCard().then((items) => {
+          console.log("ITEMS : ", items)
+          setTours(items)
+        });
+      }, []);
 
     // pagination setup
     const itemsPerPage = 8;
@@ -80,7 +89,7 @@ export default function Tours() {
 
                 {/* Tour cards */}
                 {paginatedTours.length > 0 ? (
-                    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6">
+                    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
                         {paginatedTours.map((tour) => (
                             <TourCard
                                 key={tour.id}

@@ -59,7 +59,7 @@ export default function Footer() {
                     <div className="flex gap-4 mt-4">
                         {/* WhatsApp */}
                         <a
-                            href="https://wa.me/66993210694"
+                            href="https://wa.me/0993210694"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"

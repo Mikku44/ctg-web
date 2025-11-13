@@ -1,5 +1,4 @@
-import { Facebook, Menu, Phone, Search, X } from "lucide-react";
-import { FaLine } from "react-icons/fa6";
+import { Menu,  Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { MENU_LIST, menuConfig } from "~/const/app";
