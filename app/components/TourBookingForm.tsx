@@ -31,11 +31,11 @@ export default function TourBookingForm({ tour, price,cover }: { tour?: string; 
   };
 
   return (
-    <div className="min-h-screen  py-12 px-4">
-      <div className="container-x mx-auto bg-white  overflow-hidden grid md:grid-cols-2">
+    <div className="min-h-screen container-x md:py-12 py-4">
+      <div className=" mx-auto bg-white  overflow-hidden grid md:grid-cols-2">
 
         {/* Left: Contact Info */}
-        <div className=" p-8 w-full flex flex-col justify-center  space-y-6">
+        <div className=" w-full flex flex-col justify-center  space-y-6">
 
           <div className="w-full h-full rounded-sm overflow-hidden">
             <img
@@ -75,7 +75,7 @@ export default function TourBookingForm({ tour, price,cover }: { tour?: string; 
         </div>
 
         {/* Right: Booking Form */}
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        <form onSubmit={handleSubmit} className=" p-4 space-y-6">
           <h3 className="text-gray-800 font-medium text-4xl mb-4">Book Your Tour</h3>
 
           <div className="grid md:grid-cols-2 gap-4">
