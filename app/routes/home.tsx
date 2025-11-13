@@ -52,10 +52,9 @@ export default function Home() {
 
   return (
     <main className="">
-      <section className="md:min-h-[560px]  flex justify-between md:flex-row flex-col-reverse gap-5
+      {/* <section className="md:min-h-[560px]  flex justify-between flex-col-reverse gap-5
        md:px-0 px-4 py-2 items-center  container-x">
-        {/* <img src="/images/background.jpg" className="w-full md:h-[800px] absolute left-0 top-0" alt="" /> */}
-        {/* left side */}
+     
         <div className="flex flex-col justify-center relative z-1">
 
           <div className="rounded-full bg-[var(--primary-color)] w-fit text-white mb-3 font-medium px-4 py-2">Online Booking | Local Guide</div>
@@ -82,14 +81,19 @@ export default function Home() {
 
         </div>
 
-        {/* right side */}
+       
         <div className="">
           <FadeImageSlideshow />
         </div>
 
+      </section> */}
+
+
+      <section className="container-x">
+        <img src="/logo/logo.jpg" alt="creative tour guru logo" className="w-fit mx-auto h-[500px]" />
       </section>
 
-      <section className=""></section>
+
       {/* hero */}
       <section className="w-full md:h-[680px] h-[680px] overflow-hidden">
         {/* <div className=" h-[500px] overflow-hidden w-full flex flex-col md:flex-row items-center gap-6">
@@ -126,6 +130,29 @@ export default function Home() {
             "Thailand",
           ]}
         />
+      </section>
+
+
+      <section className="flex items-center justify-center flex-col">
+        <div className="text-center mt-5">
+          <div className="">Received an award from </div>
+          <img src="/images/9-awards.png"
+            className="md:max-w-[450px] max-w-[250px]"
+            alt="thailand-tourism-award-creative-tour-guru" />
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-4 items-center">
+
+          <img src="/logo/payments.svg"
+            className="md:w-[380px] w-[200px] mt-5"
+            alt="thailand-tourism-award-creative-tour-guru" />
+
+          <div className="grid gap-2">
+            <img src="/licenese/drp.png" className="w-[100px]" alt="dr.prawit" />
+            <h3 className="text-sm text-zinc-600">By Dr. Prawit (Audi) Charoennuam</h3>
+          </div>
+
+        </div>
       </section>
 
       {/* <section className="container-x mx-auto md:px-0 px-4 py-20">
@@ -268,29 +295,29 @@ export default function Home() {
         </div>
 
 
-       
+
 
       </section>
 
-       {/* CTA Explore */}
-        <div
-          className="flex md:items-center h-[450px]
-  bg-[url('/images/bangkok(18).jpg')] bg-center bg-cover
+      {/* CTA Explore */}
+      <div
+        className="flex md:items-center h-[450px]
+  bg-image1 bg-center bg-cover
   relative justify-center text-white overflow-hidden flex-col"
-        >
-          {/* 🔲 Black overlay */}
-          <div className="absolute inset-0 bg-black/50 z-0"></div>
+      >
+        {/* 🔲 Black overlay */}
+        <div className="absolute inset-0 bg-black/50 z-0"></div>
 
-          {/* Content */}
-          <h2 className="text-4xl font-bold z-10">Quality Experiences Travel</h2>
-          <div className="mt-3 opacity-95 text-sm z-10">Private Tours around Thailand</div>
-          <button
-            onClick={() => router("/tours")}
-            className="py-3 button px-5 mt-5 z-10"
-          >
-            Explore All Tours
-          </button>
-        </div>
+        {/* Content */}
+        <h2 className="text-4xl font-bold z-10">Quality Experiences Travel</h2>
+        <div className="mt-3 opacity-95 text-sm z-10">Private Tours around Thailand</div>
+        <button
+          onClick={() => router("/tours")}
+          className="py-3 button px-5 mt-5 z-10"
+        >
+          Explore All Tours
+        </button>
+      </div>
 
 
 

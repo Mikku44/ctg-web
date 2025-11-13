@@ -173,3 +173,8 @@ button {
 .animate-fade-in {
   animation: fade-in 0.3s ease-out forwards;
 }
+
+
+.bg-image1 {
+  background-image: url('/images/bangkok(18).jpg');
+}
