@@ -114,7 +114,7 @@ export function TourCard({
           </div>
         </div>
 
-        <a href={`/tours/${title}`}>
+        <a href={`/tours/${slug}`}>
           <button className="w-full bg-[var(--primary-color)] text-white font-semibold py-3 
           mt-4  hover:shadow-lg  duration-300 flex items-center justify-center gap-2 group/btn">
             <span>Explore Tour</span>
