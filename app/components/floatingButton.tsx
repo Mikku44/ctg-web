@@ -16,8 +16,8 @@ export default function FloatingButtons() {
 
   const openWhatsApp = () => {
     // format number for WhatsApp (remove spaces and leading 0)
-    const phone = "66993210694"; // Thailand country code +66
-    const message = encodeURIComponent("สวัสดีครับ! ต้องการสอบถามข้อมูลเพิ่มเติมครับ 🙏");
+    const phone = "0993210694"; // Thailand country code +66
+    const message = encodeURIComponent("Hello! I would like to ask for more information.");
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
   };
 
