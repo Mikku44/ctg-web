@@ -15,7 +15,7 @@ import type { Package, Tour, TourImage } from "~/models/tour";
 
 
 const TOURS = "Tours";
-const TOUR_IMAGES = "TourImages";
+const TOUR_IMAGES = "Images";
 const PACKAGES = "Packages";
 
 export const tourService = {

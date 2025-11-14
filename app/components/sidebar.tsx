@@ -14,8 +14,8 @@ export default function SidebarMenu() {
     const router = useNavigate()
 
     const handleSubmit = (e: React.FormEvent) => {
-        // e.preventDefault();
-        alert(`=${encodeURIComponent(search)}`)
+        e.preventDefault();
+        // alert(`=${encodeURIComponent(search)}`)
         if (search.trim()) router(`/search?query=${encodeURIComponent(search)}`);
     };
 

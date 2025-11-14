@@ -8,6 +8,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { RiChatPrivateFill } from "react-icons/ri";
 import TourBookingForm from "~/components/TourBookingForm";
+import ImageViewer from "~/components/ImageViewer";
 
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -19,9 +20,12 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
   try {
     const selectedTour = await tourService.getBySlug(tour_slug);
+
     if (!selectedTour) {
       throw new Response("Tour not found", { status: 404 });
     }
+
+    console.log("DATA : ", selectedTour)
 
 
     return Response.json({
@@ -57,12 +61,17 @@ export default function TourDetailPage() {
   const pathnames = location.pathname.split("/").filter(Boolean);
 
 
+
+
   const scrollToBottom = () => {
-  const el = document.getElementById("booking");
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth" });
-  }
-};
+    const el = document.getElementById("booking");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+
+  console
 
 
   return (
@@ -72,7 +81,7 @@ export default function TourDetailPage() {
         className="px-4 w-full container-x mt-5 mx-auto text-sm text-gray-600"
         aria-label="Breadcrumb"
       >
-        <ol className="list-reset flex">
+        <ol className="list-reset flex md:flex-row flex-col">
           <li>
             <Link to="/" className="text-gray-500 hover:text-gray-800">
               Home
@@ -115,7 +124,8 @@ export default function TourDetailPage() {
       </div> */}
 
       {/* Content */}
-      <section className="container-x mx-auto px-4 py-10 space-y-8">
+      <section className="max-w-4xl mx-auto px-4 py-10 space-y-8">
+        <h1 className="text-4xl font-semibold mb-6">{tour.title}</h1>
         <div className="grid md:grid-cols-2 gap-2 ">
           <div className="">
             <img src={tour.featured_image} alt="" />
@@ -124,7 +134,7 @@ export default function TourDetailPage() {
           {/* right */}
           <div className="flex flex-col justify-between">
             <div className="">
-              <h1 className="text-4xl font-semibold mb-2">{tour.title}</h1>
+
               <p className="text-gray-600"><FaMapMarkerAlt size={18} className="inline mr-2" />{tour.location}</p>
               <p className="mt-2 text-gray-600">
                 <FaClock className="inline mr-2" />Duration: <span className="font-medium">{tour.duration}</span>
@@ -142,6 +152,12 @@ export default function TourDetailPage() {
 
             <button
               className="mt-10 button text-center px-1 py-2 w-full"
+              onClick={scrollToBottom}>Book now</button>
+              
+
+              
+            <button
+              className="mt-10 button md:hidden block fixed bottom-0 z-10 left-0 text-center px-1 py-2 w-full"
               onClick={scrollToBottom}>Book now</button>
 
           </div>
@@ -169,8 +185,11 @@ export default function TourDetailPage() {
 
         {/* Itinerary */}
         {tour.itinerary?.length > 0 && (
-          <div className=" gap-2">
-          
+          <div className="grid md:grid-cols-2 gap-2">
+            {/* image */}
+            <div className="">
+              <img src={tour?.images?.[0]?.image_url || tour.featured_image} alt="" />
+            </div>
             <div>
               <h2 className="text-2xl font-semibold mb-3">Itinerary</h2>
               <ul className="list-disc pl-5 space-y-1 text-gray-700">
@@ -226,6 +245,11 @@ export default function TourDetailPage() {
           </div>
         )}
 
+        {/* image */}
+        <div className="">
+          <img src={tour?.images?.[2]?.image_url || tour.featured_image} alt="" />
+        </div>
+
         {/* Notes */}
         {tour.note?.length > 0 && (
           <div>
@@ -239,15 +263,31 @@ export default function TourDetailPage() {
         )}
       </section>
 
+      <section className="max-w-4xl px-4 mx-auto grid gap-5">
+        {tour?.images?.sort((a, b) => {
+
+          const indexA = a.order_index ?? Infinity;
+          const indexB = b.order_index ?? Infinity;
+          return indexA - indexB;
+        }).map(item => 
+        
+       
+         <div key={item.id} className="">
+              <img src={ (item.image_url)} alt={`${tour.title} - ${item.id}`} />
+            </div>
+        
+        )}
+      </section>
+
       <section id="booking">
-        <TourBookingForm 
-        cover={tour.featured_image}
-        price={tour.price_from}
-        tour={tour.id} />
+        {<TourBookingForm
+          // cover={tour.featured_image}
+          price={tour.price_from}
+          tour={tour.id} />}
       </section>
 
 
-      
+
 
       {/* Featured / Recommended Tours */}
       <FeaturedTours />

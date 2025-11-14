@@ -6,9 +6,10 @@
 }
 
 :root {
-  --primary-color: #f96706;
+  --primary-color: #064ff9;
   --secondary-color: #ce5605;
   --background-color: #f9fafb;
+  --tertiary-color : #e8e8e8;
   --text-color: #111827;
 }
 
@@ -93,7 +94,7 @@
 
 html,
 body {
-  font-family: "Raleway","Noto Sans Thai", sans-serif;;
+  font-family: "Inter","Raleway","Noto Sans Thai", sans-serif;;
 
   @apply bg-white ;
 

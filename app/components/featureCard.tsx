@@ -1,7 +1,8 @@
-import { Star, Users, MapPin, Clock, ArrowRight } from "lucide-react";
-import { Link } from "react-router";
+import { Star, Users, MapPin, Clock, ArrowRight, Check } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { formatCurrency } from "~/lib/utils/currencyFormator";
-import { RiChatPrivateFill } from "react-icons/ri";
+import { RiChatPrivateFill, RiMapPinFill } from "react-icons/ri";
+import { FaClock } from "react-icons/fa";
 
 
 export type TourCardProps = {
@@ -34,6 +35,9 @@ export function TourCard({
   tourType,
   className
 }: TourCardProps) {
+
+  const router = useNavigate();
+
   return (
     <Link to={`/tours/${slug}`} target="_blank" draggable="false" className={`group select-none cursor-potiner w-full bg-white h-fit
      overflow-hidden border border-zinc-200 transition-all rounded-sm duration-300 ${className}`}>
@@ -49,11 +53,11 @@ export function TourCard({
 
       <div className="p-3">
         {tourType && (
-          <div className=" text-[10px]  flex gap-1.5 items-center bg-amber-300 w-fit px-1.5 py-1.5 rounded-sm mb-2 capitalize">
+          <div className=" text-[10px]  flex gap-1.5 items-center bg-[var(--tertiary-color)] w-fit px-1.5 py-1.5 rounded-sm mb-2 capitalize">
             <RiChatPrivateFill size={16} />{tourType}
           </div>
         )}
-        <h3 className="text-base font-medium text-gray-900 leading-tight group-hover:text-[var(--primary-color)] transition-colors duration-300">
+        <h3 className="text-base font-medium text-gray-900 leading-tight transition-colors duration-300">
           {title}
         </h3>
         <p className="text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">
@@ -66,7 +70,7 @@ export function TourCard({
 
 
               <div className=" text-gray-800 text-[13px] font-medium  py-1.5 space-x-1 gap-1.5">
-                <MapPin size={14} className="min-w-[14px]  inline text-[var(--primary-color)]" />
+                <RiMapPinFill  size={15} className="min-w-[15px]  inline text-[var(--primary-color)]" />
                 <span className="font-medium inline">{place_location}</span>
               </div>
             )}
@@ -82,7 +86,7 @@ export function TourCard({
         )}
 
         <div className=" text-gray-800 text-[13px] font-medium  py-1.5 space-x-1 gap-1.5">
-          <Clock size={14} className="min-w-[14px] text-[var(--primary-color)] inline" />
+          <FaClock  size={14} className="min-w-[14px] text-[var(--primary-color)] inline" />
           <span className="font-medium inline">{duration}</span>
         </div>
 
@@ -111,16 +115,22 @@ export function TourCard({
               <p className="text-base font-semibold ">{formatCurrency(price)} / traveler</p>
             </div>
             <div className="text-sm text-zinc-500"></div>
+             <div className="text-sm mt-1 text-zinc-800"><Check size={16} className="text-sms inline" /> Taxes and additional fees included</div>
           </div>
+          
         </div>
 
-        <a href={`/tours/${slug}`}>
-          <button className="w-full bg-[var(--primary-color)] text-white font-semibold py-3 
+     
+          <button
+          onClick={() => router(`/tours/${slug}`)}
+          className="w-full bg-[var(--primary-color)] text-white font-semibold py-3 
           mt-4  hover:shadow-lg  duration-300 flex items-center justify-center gap-2 group/btn">
             <span>Explore Tour</span>
             <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform duration-300" />
           </button>
-        </a>
+
+         
+      
       </div>
     </Link>
   );
