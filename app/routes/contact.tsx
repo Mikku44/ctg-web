@@ -142,8 +142,8 @@ export default function Contact() {
           <p className="text-4xl text-center py-5">Received an award from Thailand Tourism Awards 9th</p>
           <p className="text-xl"><b>Creative Tour Guru Thailand</b>, we received an award from "Thailand Tourism Awards 9th"</p>
           <br />
-          <p className="text-xl"><b>Thailand Tourism Awards</b>, The Thailand Tourism Awards is a prestigious biennial award established by the Tourism Authority of Thailand (TAT) to recognize outstanding contributions and quality in Thailand's tourism industry. Awarded in categories such as attractions, accommodation, tour programs, and health and wellness,
-            the awards also have a strong emphasis on sustainability and responsible tourism management.</p>
+          <p className="text-xl"><b>Thailand Tourism Awards</b>Recipient of the Kinnaree Award 2013 (Thailand Tourism Awards) – Best Tour Guide Category.
+            Awarded by the Tourism Authority of Thailand (TAT) for outstanding professionalism, cultural knowledge, and exceptional service excellence.</p>
         </div>
 
 
@@ -184,8 +184,7 @@ export default function Contact() {
             <p className="text-xl">Hello, I’m <b>Audi</b>, founder of Creative Tour Guru Thailand.
               For more than 25 years, I’ve been guiding travelers from all over the world to experience the real Thailand —
               from ancient temples and floating markets to charming local villages.</p>
-            <p className="text-xl">I started as a Tour Guide, then became a Tour Leader, Tour Manager, and finally an Experienced Tour Designer,
-              creating tailor-made journeys that blend culture, comfort, and connection.</p>
+          
             <p className="text-xl">I started as a <b>Tour Guide</b>, then became a <b>Tour Leader, Tour Manager</b>, and finally an <b>Experienced Tour Designer</b>,
               creating tailor-made journeys that blend culture, comfort, and connection.</p>
           </div>
@@ -217,19 +216,19 @@ export default function Contact() {
 
 
       <div className="grid mt-10 max-w-4xl mx-auto gap-10 md:gap-16 mb-20 h-full overflow-hidden">
-        
-       
+
+
         <div className="md:col-span-5 order-2 md:order-1">
-          <Typography variant="h4" sx={{ 
-            fontSize: '26px', 
-            fontWeight: 700, 
-            mb: 4, 
-            
+          <Typography variant="h4" sx={{
+            fontSize: '26px',
+            fontWeight: 700,
+            mb: 4,
+
           }}>
             Talk to Creative Tour Guru
           </Typography>
 
-         
+
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -324,9 +323,9 @@ export default function Contact() {
             </Button>
           </Box>
         </div>
-        
-       
-      
+
+
+
       </div>
     </main>
   );

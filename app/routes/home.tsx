@@ -89,9 +89,9 @@ export default function Home() {
       </section> */}
 
 
-      <section className="container-x">
-        <img src="/logo/logo.jpg" alt="creative tour guru logo" className="w-fit mx-auto h-[500px]" />
-      </section>
+      {/* <section className="w-full">
+        <img src="/logo/logo.jpg" alt="creative tour guru logo" className="h-[250px] mx-auto" />
+      </section> */}
 
 
       {/* hero */}
@@ -302,18 +302,18 @@ export default function Home() {
       {/* CTA Explore */}
       <div
         className="flex md:items-center h-[450px]
-  bg-image1 bg-center bg-cover
+  bg-image1 bg-center bg-cover px-5
   relative justify-center text-white overflow-hidden flex-col"
       >
         {/* 🔲 Black overlay */}
         <div className="absolute inset-0 bg-black/50 z-0"></div>
 
         {/* Content */}
-        <h2 className="text-4xl font-bold z-10">Quality Experiences Travel</h2>
-        <div className="mt-3 opacity-95 text-sm z-10">Private Tours around Thailand</div>
+        <h2 className="text-4xl font-bold z-10">Beyond Sightseeing</h2>
+        <div className="mt-3 opacity-95 text-sm z-10">— Experience Thailand Creatively</div>
         <button
           onClick={() => router("/tours")}
-          className="py-3 button px-5 mt-5 z-10"
+          className="py-3 button px-5 mt-5 z-10 "
         >
           Explore All Tours
         </button>
