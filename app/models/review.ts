@@ -1,9 +1,10 @@
+import type { Timestamp } from "firebase/firestore";
+
 export interface Review {
-  id: string
-  tour_id: string
-  name: string
-  rating: number // 1–5
-  comment: string
-  approved: boolean
-  created_at: Date
+  name: string;
+  message: string;
+  rating: number;
+  tour_id?: string;
+  status?: "pending" | "approved" | "rejected";
+  created_at: Timestamp | null;
 }

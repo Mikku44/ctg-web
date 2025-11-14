@@ -246,6 +246,9 @@ export default function TourDetailPage() {
         tour={tour.id} />
       </section>
 
+
+      
+
       {/* Featured / Recommended Tours */}
       <FeaturedTours />
     </main>

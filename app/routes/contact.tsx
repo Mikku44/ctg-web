@@ -142,7 +142,7 @@ export default function Contact() {
           <p className="text-4xl text-center py-5">Received an award from Thailand Tourism Awards 9th</p>
           <p className="text-xl"><b>Creative Tour Guru Thailand</b>, we received an award from "Thailand Tourism Awards 9th"</p>
           <br />
-          <p className="text-xl"><b>Thailand Tourism Awards</b>Recipient of the Kinnaree Award 2013 (Thailand Tourism Awards) – Best Tour Guide Category.
+          <p className="text-xl"><b>Thailand Tourism Awards</b> Recipient of the Kinnaree Award 2013 (Thailand Tourism Awards) – Best Tour Guide Category.
             Awarded by the Tourism Authority of Thailand (TAT) for outstanding professionalism, cultural knowledge, and exceptional service excellence.</p>
         </div>
 
@@ -218,7 +218,7 @@ export default function Contact() {
       <div className="grid mt-10 max-w-4xl mx-auto gap-10 md:gap-16 mb-20 h-full overflow-hidden">
 
 
-        <div className="md:col-span-5 order-2 md:order-1">
+        <div className="md:col-span-5 order-2 px-4 md:order-1">
           <Typography variant="h4" sx={{
             fontSize: '26px',
             fontWeight: 700,

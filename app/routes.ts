@@ -10,6 +10,7 @@ export default [
         route("/tours","routes/tours.tsx"),
         route("/guide-service","routes/guideService.tsx"),
         route("/search","routes/search.tsx"),
+        route("/reviews","routes/reviews.tsx"),
         route("/tours/:tour_slug","routes/tourDetail.tsx"),
         route("/tours/:type_slug/:place","routes/tourCategory.tsx"),
         route("/admin/tour/add","routes/admin/tour.add.tsx"),

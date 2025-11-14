@@ -14,25 +14,25 @@ const filterItems = [
     { label: "Relaxing", key: "relaxing" },
 ];
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Tours Destination - Creative Tour Guru" },
-    { name: "description", content: "Discover curated tours and destinations across Thailand — from adventures to relaxing escapes." },
-  ];
+export function meta({ }: Route.MetaArgs) {
+    return [
+        { title: "Tours Destination - Creative Tour Guru" },
+        { name: "description", content: "Discover curated tours and destinations across Thailand — from adventures to relaxing escapes." },
+    ];
 }
 
 export default function Tours() {
     const [filterOptions, setFilterOptions] = useState("");
-     const [tourList, setTours] = useState<TourCardProps[]>([]);
+    const [tourList, setTours] = useState<TourCardProps[]>([]);
     const [page, setPage] = useState(1);
 
 
-     useEffect(() => {
+    useEffect(() => {
         tourService.getAllForCard().then((items) => {
-          console.log("ITEMS : ", items)
-          setTours(items)
+            console.log("ITEMS : ", items)
+            setTours(items)
         });
-      }, []);
+    }, []);
 
     // pagination setup
     const itemsPerPage = 8;
@@ -93,12 +93,7 @@ export default function Tours() {
                         {paginatedTours.map((tour) => (
                             <TourCard
                                 key={tour.id}
-                                image={tour.image}
-                                title={tour.title}
-                                description={tour.description}
-                                price={tour.price}
-                                rating={tour.rating}
-                                duration={tour.duration}
+                                {...tour}
                             />
                         ))}
                     </div>
