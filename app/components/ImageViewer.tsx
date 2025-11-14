@@ -38,9 +38,9 @@ export default function ImageViewer({ images, className, options }: ImageViewerP
   }, [options]);
 
   return (
-    <div ref={containerRef} className={`columns-3 gap-2 ${className || ""}`}>
+    <div ref={containerRef} className={` ${className || ""}`}>
       {images.map((src, i) => (
-        <div key={i} className="overflow-hidden rounded-lg mt-2 shadow-sm cursor-zoom-in">
+        <div key={i} className="overflow-hidden mt-2 shadow-sm cursor-zoom-in">
           <img
             src={src}
             alt={`Image ${i + 1}`}

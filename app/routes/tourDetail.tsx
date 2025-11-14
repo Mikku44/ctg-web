@@ -153,9 +153,9 @@ export default function TourDetailPage() {
             <button
               className="mt-10 button text-center px-1 py-2 w-full"
               onClick={scrollToBottom}>Book now</button>
-              
 
-              
+
+
             <button
               className="mt-10 button md:hidden block fixed bottom-0 z-10 left-0 text-center px-1 py-2 w-full"
               onClick={scrollToBottom}>Book now</button>
@@ -188,7 +188,7 @@ export default function TourDetailPage() {
           <div className="grid md:grid-cols-2 gap-2">
             {/* image */}
             <div className="">
-              <img src={tour?.images?.[0]?.image_url || tour.featured_image} alt="" />
+              <img src={tour?.images?.[1]?.image_url || tour.featured_image} alt="" />
             </div>
             <div>
               <h2 className="text-2xl font-semibold mb-3">Itinerary</h2>
@@ -264,19 +264,13 @@ export default function TourDetailPage() {
       </section>
 
       <section className="max-w-4xl px-4 mx-auto grid gap-5">
-        {tour?.images?.sort((a, b) => {
+        <ImageViewer images={tour?.images?.sort((a, b) => {
 
           const indexA = a.order_index ?? Infinity;
           const indexB = b.order_index ?? Infinity;
           return indexA - indexB;
-        }).map(item => 
-        
-       
-         <div key={item.id} className="">
-              <img src={ (item.image_url)} alt={`${tour.title} - ${item.id}`} />
-            </div>
-        
-        )}
+        }).map(item => item.image_url) || []} />
+
       </section>
 
       <section id="booking">
