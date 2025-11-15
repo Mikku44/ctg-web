@@ -11,10 +11,14 @@ export default [
         route("/guide-service","routes/guideService.tsx"),
         route("/search","routes/search.tsx"),
         route("/reviews","routes/reviews.tsx"),
+        route("/checkout","routes/CheckoutPage.tsx"),
         route("/tours/:tour_slug","routes/tourDetail.tsx"),
         route("/tours/:type_slug/:place","routes/tourCategory.tsx"),
         route("/admin/tour/add","routes/admin/tour.add.tsx"),
         route("*", "components/NotFound.tsx"),
+        
+        // API
+        route("/api/payment-intent","api/paymentIntent.tsx"),
     ]),
 
 
