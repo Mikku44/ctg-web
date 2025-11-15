@@ -1,27 +1,28 @@
-export interface Booking {
-  id: string
-  tour_id: string
-  package_id?: string
-  full_name: string
-  email: string
-  phone: string
-  num_people: number
-  booking_date: Date
-  travel_date: Date
-  total_price: number
-  status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
-  payment_status: 'unpaid' | 'paid' | 'refunded'
-  special_request?: string
-  created_at: Date
-  updated_at: Date
-}
+import type { Timestamp } from "firebase/firestore";
 
-export interface Payment {
-  id: string
-  booking_id: string
-  amount: number
-  method: 'transfer' | 'card' | 'cash'
-  transaction_id?: string
-  paid_at?: Date
-  status: 'success' | 'failed' | 'refunded'
+export interface BookingModel {
+  id?: string;          // unique reference
+  tourId: string;
+  tourName: string;
+  packageName?: string;
+  price?: number;
+
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+ 
+  tripDate: string;           // วันที่ไปทริป
+  people: number;
+  hotel: string;
+  special: string;
+
+  amount: number;             // total price
+  currency: 'THB' | 'USD';
+
+  status: 'paid' | 'unpaid' | 'complete';
+
+  paymentId?: string;         // stripe / promptpay
+  created_at: Timestamp;
+  updated_at: Timestamp;
 }

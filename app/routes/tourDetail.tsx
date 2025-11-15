@@ -9,6 +9,7 @@ import { FaClock } from "react-icons/fa6";
 import { RiChatPrivateFill } from "react-icons/ri";
 import TourBookingForm from "~/components/TourBookingForm";
 import ImageViewer from "~/components/ImageViewer";
+import { Remark } from 'react-remark';
 
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -170,8 +171,9 @@ export default function TourDetailPage() {
           <div className="grid md:grid-cols-2 gap-2">
             <div className="">
               <h2 className="text-2xl font-semibold mb-3">Description</h2>
-              <p className="leading-relaxed text-gray-700">
-                {tour.description}
+              <p className="leading-relaxed indent-4 space-y-1 text-gray-700">
+                {/* {tour.description} */}
+                 <Remark >{tour.description}</Remark>
               </p>
             </div>
 
@@ -194,7 +196,7 @@ export default function TourDetailPage() {
               <h2 className="text-2xl font-semibold mb-3">Itinerary</h2>
               <ul className="list-disc pl-5 space-y-1 text-gray-700">
                 {tour.itinerary.map((step, i) => (
-                  <li key={i}>{step}</li>
+                  <li key={i} className={`${step.startsWith("[b]") && "font-bold"}`}>{step.replace("[b]","")}</li>
                 ))}
               </ul>
             </div>

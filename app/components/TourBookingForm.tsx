@@ -1,10 +1,20 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
-
 import { FaWhatsapp, FaLine } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, redirect } from "react-router";
+import { toast } from "sonner";
+import { bookingService } from "~/services/bookingService"; // <-- add import
 
-export default function TourBookingForm({ tour, price, cover }: { tour?: string; price?: number, cover?: string }) {
+export default function TourBookingForm({
+  tour,
+  price,
+  cover,
+}: {
+  tour?: string;
+  price?: number;
+  cover?: string;
+}) {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -16,40 +26,80 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
     special: "",
   });
 
-  const totalPrice = price && formData.people ? price * parseInt(formData.people) : 0;
+  const totalPrice =
+    price && formData.people ? price * parseInt(formData.people) : 0;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+ 
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Booking Data:", { ...formData, tour });
-    alert("Your booking request has been sent!");
+    setLoading(true);
+
+    try {
+      const payload = {
+        ...formData,
+        tour: tour || null,
+        price: price || 0,
+        totalPrice: totalPrice,
+        status: "unpaid" as const,
+      };
+
+      const result = await bookingService.createBooking(payload as any);
+
+      // console.log("📌 Booking saved:", result);
+      toast.success("Your booking request has been sent!");
+
+      redirect(`/checkout?`)
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        contact: "",
+        date: "",
+        people: "",
+        hotel: "",
+        special: "",
+      });
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (typeof window !== 'undefined')
-
+  if (typeof window !== "undefined")
     return (
       <div className="min-h-screen container-x md:py-12 py-4">
-        <div className=" mx-auto bg-white  overflow-hidden grid md:grid-cols-2">
-
-          {/* Left: Contact Info */}
-          <div className=" w-full flex flex-col justify-center  space-y-6">
-
+        <div className="mx-auto bg-white overflow-hidden grid md:grid-cols-2">
+          {/* Left */}
+          <div className="w-full flex flex-col justify-center space-y-6">
             <div className="w-full h-full rounded-sm overflow-hidden">
-              {cover && <img
-                className="w-full h-full object-cover"
-                src={cover}
-                alt={tour} />}
+              {cover && (
+                <img
+                  className="w-full h-full object-cover"
+                  src={cover}
+                  alt={tour}
+                />
+              )}
             </div>
+
             <h3 className="font-semibold text-xl">Contact Us</h3>
             <ul className="space-y-3 text-sm">
               <Link to="tel:0993210694" className="flex items-center gap-2">
                 <Phone size={16} /> 099 321 0694
               </Link>
-              <Link to="mailto:creativetourguru@hotmail.com" className="flex items-center gap-2">
+              <Link
+                to="mailto:creativetourguru@hotmail.com"
+                className="flex items-center gap-2"
+              >
                 <Mail size={16} /> creativetourguru@hotmail.com
               </Link>
               <li className="flex items-center gap-2">
@@ -58,36 +108,55 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
             </ul>
 
             <div className="flex gap-4 mt-4">
-              <a href="https://wa.me/0993210694" target="_blank" rel="noopener noreferrer"
-                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition" title="WhatsApp">
+              <a
+                href="https://wa.me/0993210694"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+                title="WhatsApp"
+              >
                 <FaWhatsapp size={18} />
               </a>
-              <a href="tel:0993210694" className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition" title="Call us">
+              <a
+                href="tel:0993210694"
+                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+                title="Call us"
+              >
                 <Phone size={18} />
               </a>
-              <a href="mailto:creativetourguru@hotmail.com" className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition" title="Send email">
+              <a
+                href="mailto:creativetourguru@hotmail.com"
+                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+                title="Send email"
+              >
                 <Mail size={18} />
               </a>
-              <a href="https://line.me/ti/p/~0993210694" target="_blank" rel="noopener noreferrer"
-                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition" title="Chat on LINE">
+              <a
+                href="https://line.me/ti/p/~0993210694"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+                title="Chat on LINE"
+              >
                 <FaLine size={18} />
               </a>
             </div>
           </div>
 
-          {/* Right: Booking Form */}
-          <form onSubmit={handleSubmit} className=" p-4 space-y-6">
-            <h3 className="text-gray-800 font-medium text-4xl mb-4">Book Your Tour</h3>
+          {/* Right: Form */}
+          <form onSubmit={handleSubmit} className="p-4 space-y-6">
+            <h3 className="text-gray-800 font-medium text-4xl mb-4">
+              Book Your Tour
+            </h3>
 
+            {/* First + Last */}
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="firstName">
+                <label className="text-sm font-medium text-gray-700 mb-1">
                   First Name <span className="text-red-600">*</span>
                 </label>
                 <input
-                  id="firstName"
                   name="firstName"
-                  placeholder="First Name"
                   value={formData.firstName}
                   onChange={handleChange}
                   className="input"
@@ -96,13 +165,11 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
               </div>
 
               <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="lastName">
+                <label className="text-sm font-medium text-gray-700 mb-1">
                   Last Name <span className="text-red-600">*</span>
                 </label>
                 <input
-                  id="lastName"
                   name="lastName"
-                  placeholder="Last Name"
                   value={formData.lastName}
                   onChange={handleChange}
                   className="input"
@@ -111,15 +178,14 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
               </div>
             </div>
 
+            {/* Email */}
             <div className="flex flex-col mt-4">
-              <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="email">
+              <label className="text-sm font-medium text-gray-700 mb-1">
                 Email <span className="text-red-600">*</span>
               </label>
               <input
-                id="email"
                 type="email"
                 name="email"
-                placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
                 className="input"
@@ -127,14 +193,13 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
               />
             </div>
 
+            {/* Contact */}
             <div className="flex flex-col mt-4">
-              <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="contact">
+              <label className="text-sm font-medium text-gray-700 mb-1">
                 Contact Number <span className="text-red-600">*</span>
               </label>
               <input
-                id="contact"
                 name="contact"
-                placeholder="Phone / WhatsApp / Line"
                 value={formData.contact}
                 onChange={handleChange}
                 className="input"
@@ -142,15 +207,15 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
               />
             </div>
 
+            {/* Date + People */}
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="date">
+                <label className="text-sm font-medium text-gray-700 mb-1">
                   Tour Date <span className="text-red-600">*</span>
                 </label>
                 <input
-                  id="date"
-                  name="date"
                   type="date"
+                  name="date"
                   value={formData.date}
                   onChange={handleChange}
                   className="input"
@@ -159,15 +224,13 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
               </div>
 
               <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="people">
+                <label className="text-sm font-medium text-gray-700 mb-1">
                   Number of Guests <span className="text-red-600">*</span>
                 </label>
                 <input
-                  id="people"
-                  name="people"
                   type="number"
                   min="1"
-                  placeholder="No. of Guests"
+                  name="people"
                   value={formData.people}
                   onChange={handleChange}
                   className="input"
@@ -176,28 +239,26 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
               </div>
             </div>
 
+            {/* Hotel */}
             <div className="flex flex-col mt-4">
-              <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="hotel">
+              <label className="text-sm font-medium text-gray-700 mb-1">
                 Hotel for Pick-Up
               </label>
               <input
-                id="hotel"
                 name="hotel"
-                placeholder="Hotel for Pick-Up"
                 value={formData.hotel}
                 onChange={handleChange}
                 className="input"
               />
             </div>
 
+            {/* Special */}
             <div className="flex flex-col mt-4">
-              <label className="text-sm font-medium text-gray-700 mb-1" htmlFor="special">
+              <label className="text-sm font-medium text-gray-700 mb-1">
                 Special Requirements
               </label>
               <textarea
-                id="special"
                 name="special"
-                placeholder="Special Requirements"
                 rows={4}
                 value={formData.special}
                 onChange={handleChange}
@@ -206,17 +267,24 @@ export default function TourBookingForm({ tour, price, cover }: { tour?: string;
             </div>
 
             {price && formData.people && (
-              <div className="p-4 bg-gray-100  flex justify-between text-gray-800">
-                <div>Price per person: <strong>฿{price.toLocaleString()}</strong></div>
-                <div>Total: <strong>฿{totalPrice.toLocaleString()}</strong></div>
+              <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
+                <div>
+                  Price per person: <strong>฿{price.toLocaleString()}</strong>
+                </div>
+                <div>
+                  Total: <strong>฿{totalPrice.toLocaleString()}</strong>
+                </div>
               </div>
             )}
 
-            <button type="submit" className="w-full py-3 button text-white font-medium ">
-              Continue
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 button text-white font-medium disabled:opacity-50"
+            >
+              {loading ? "Processing..." : "Continue"}
             </button>
           </form>
-
         </div>
       </div>
     );
