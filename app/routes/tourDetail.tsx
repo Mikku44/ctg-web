@@ -26,7 +26,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
       throw new Response("Tour not found", { status: 404 });
     }
 
-    console.log("DATA : ", selectedTour)
+    // console.log("DATA : ", selectedTour)
 
 
     return Response.json({
@@ -76,7 +76,7 @@ export default function TourDetailPage() {
 
 
   return (
-    <main className="min-h-screen text-neutral-900">
+    <main className="min-h-screen  text-neutral-900">
       {/* Breadcrumb */}
       <nav
         className="px-4 w-full container-x mt-5 mx-auto text-sm text-gray-600"
@@ -266,7 +266,9 @@ export default function TourDetailPage() {
       </section>
 
       <section className="max-w-4xl px-4 mx-auto grid gap-5">
-        <ImageViewer images={tour?.images?.sort((a, b) => {
+        <ImageViewer
+        className="columns-3"
+        images={tour?.images?.sort((a, b) => {
 
           const indexA = a.order_index ?? Infinity;
           const indexB = b.order_index ?? Infinity;

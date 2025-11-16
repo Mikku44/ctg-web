@@ -179,3 +179,8 @@ button {
 .bg-image1 {
   background: url("https://ctg-web-nine.vercel.app/images/bangkok(18).jpg");
 }
+
+
+.admin-input {
+  @apply rounded border p-2 border-zinc-300;
+}
