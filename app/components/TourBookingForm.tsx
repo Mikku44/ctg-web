@@ -1,7 +1,7 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import { FaWhatsapp, FaLine } from "react-icons/fa";
-import { Link, redirect } from "react-router";
+import { Link, redirect, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { bookingService } from "~/services/bookingService"; // <-- add import
 
@@ -14,6 +14,8 @@ export default function TourBookingForm({
   price?: number;
   cover?: string;
 }) {
+
+  const router = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -55,7 +57,9 @@ export default function TourBookingForm({
       // console.log("📌 Booking saved:", result);
       toast.success("Your booking request has been sent!");
 
-      redirect(`/checkout?`)
+
+
+      router(`/checkout?id=${result.id}`)
       // Reset form
       setFormData({
         firstName: "",
@@ -266,10 +270,10 @@ export default function TourBookingForm({
               />
             </div>
 
-            {price && formData.people && (
+            {(formData.people) && (
               <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
                 <div>
-                  Price per person: <strong>฿{price.toLocaleString()}</strong>
+                  Price per person: <strong>฿{price?.toLocaleString() || 0}</strong>
                 </div>
                 <div>
                   Total: <strong>฿{totalPrice.toLocaleString()}</strong>

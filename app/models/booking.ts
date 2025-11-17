@@ -2,7 +2,7 @@ import type { Timestamp } from "firebase/firestore";
 
 export interface BookingModel {
   id?: string;          // unique reference
-  tourId: string;
+  tour: string;
   tourName: string;
   packageName?: string;
   price?: number;
@@ -10,14 +10,14 @@ export interface BookingModel {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  contact: string;
  
-  tripDate: string;           // วันที่ไปทริป
+  date: string;           // วันที่ไปทริป
   people: number;
   hotel: string;
   special: string;
 
-  amount: number;             // total price
+  totalPrice: number;             // total price
   currency: 'THB' | 'USD';
 
   status: 'paid' | 'unpaid' | 'complete';

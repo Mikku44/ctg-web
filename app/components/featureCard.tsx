@@ -57,7 +57,7 @@ export function TourCard({
             <RiChatPrivateFill size={16} />{tourType}
           </div>
         )}
-        <h3 className="text-base font-medium text-gray-900 leading-tight transition-colors duration-300">
+        <h3 className="text-base font-bold text-gray-900 leading-tight transition-colors duration-300">
           {title}
         </h3>
         <p className="text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">

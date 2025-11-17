@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
-import { useLocation, useNavigate } from "react-router";
+import { useLoaderData, useLocation, useNavigate } from "react-router";
 import { popularDestinations, tourList } from "~/const/app";
 import FadeImageSlideshow from "~/components/FadeImage";
 import { motion } from "framer-motion";
@@ -37,18 +37,30 @@ const tours = [
   { name: "Luxury Escapes", icon: Check }
 ];
 
+export async function loader() {
+  try {
+    const items: TourCardProps[] = await tourService.getAllForCard();
+    return items;
+  } catch (error) {
+    console.error("Failed to load tours:", error);
+    return []; // fallback to empty array
+  }
+}
+
 export default function Home() {
+
+  const toursList = useLoaderData() as TourCardProps[];
 
   const router = useNavigate();
 
-  const [toursList, setTours] = useState<TourCardProps[]>([]);
+  // const [toursList, setTours] = useState<TourCardProps[]>([]);
 
-  useEffect(() => {
-    tourService.getAllForCard().then((items) => {
-      console.log("ITEMS : ", items)
-      setTours(items)
-    });
-  }, []);
+  // useEffect(() => {
+  //   tourService.getAllForCard().then((items) => {
+  //     console.log("ITEMS : ", items)
+  //     setTours(items)
+  //   });
+  // }, []);
 
   return (
     <main className="">

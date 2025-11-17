@@ -50,6 +50,7 @@ export const bookingService = {
 
     if (!snap.exists()) return null;
 
+
     return {
       id: snap.id,
       ...(snap.data() as BookingModel),

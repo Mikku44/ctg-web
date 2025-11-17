@@ -12,6 +12,7 @@ export default [
         route("/search","routes/search.tsx"),
         route("/reviews","routes/reviews.tsx"),
         route("/checkout","routes/CheckoutPage.tsx"),
+        route("/checkout-session","routes/checkout-session.tsx"),
         route("/tours/:tour_slug","routes/tourDetail.tsx"),
         route("/tours/:type_slug/:place","routes/tourCategory.tsx"),
         route("/admin/tour/add","routes/admin/tour.add.tsx"),
@@ -19,6 +20,7 @@ export default [
         
         // API
         route("/api/payment-intent","api/paymentIntent.tsx"),
+        route("/api/payment-status","api/paymentStatus.tsx"),
     ]),
 
 
