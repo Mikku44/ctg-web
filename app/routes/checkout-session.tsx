@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { bookingService } from "~/services/bookingService";
 
 export default function CheckoutSession() {
   const [status, setStatus] = useState<
@@ -10,7 +11,7 @@ export default function CheckoutSession() {
 
   let navigate = useNavigate();
 
-   const [query, setSearchParams] = useSearchParams();
+  const [query, setSearchParams] = useSearchParams();
 
   // const query = new URLSearchParams(window.location.search);
   const clientSecret = query.get("payment_intent_client_secret");
@@ -32,6 +33,26 @@ export default function CheckoutSession() {
 
       setStatus(data.status);
       setMessage(data.message);
+
+      if (data.status == "succeeded") {
+        await handleSuccessPayment(data.bookingID, data.paymentId, data.paymentMethod, data.paymentDate);
+      }
+
+    };
+
+
+    const handleSuccessPayment = async (
+      bookingID: string,
+      paymentId: string,
+      paymentMethod: string,
+      paymentDate: string
+    ) => {
+      await bookingService.updateBooking(bookingID, {
+        status: "paid",
+        paymentId,
+        paymentMethod,
+        paymentDate
+      });
     };
 
     fetchStatus();

@@ -23,6 +23,8 @@ export interface BookingModel {
   status: 'paid' | 'unpaid' | 'complete';
 
   paymentId?: string;         // stripe / promptpay
+  paymentDate?: string;         // stripe / promptpay
+  paymentMethod?: string;         // stripe / promptpay
   created_at: Timestamp;
   updated_at: Timestamp;
 }

@@ -3,7 +3,7 @@ import { stripe } from "~/lib/stripe/server";
 
 
 export async function action({ request }: ActionFunctionArgs) {
-  const { amount ,description} = await request.json(); // amount หน่วยคือ "สตางค์" เช่น 100 = 1.00 บาท
+  const { amount, description } = await request.json(); // amount หน่วยคือ "สตางค์" เช่น 100 = 1.00 บาท
 
   if (amount <= 0) {
     return Response.json({
@@ -13,9 +13,20 @@ export async function action({ request }: ActionFunctionArgs) {
   }
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount : amount * 100,
+      amount: amount * 100,
       currency: "thb",
       description: description || "Custom booking payment",
+      automatic_payment_methods: {
+        enabled: true               // เปิดให้ PaymentElement เลือกวิธีจ่ายอัตโนมัติ
+      },
+      // payment_method_types: [
+      //   "card",
+      //   "promptpay",
+        // "customer_balance"
+      
+      // ]
+    
+
     });
 
     return Response.json({

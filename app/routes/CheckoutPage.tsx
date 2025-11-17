@@ -9,7 +9,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { VscBracketError, VscError } from "react-icons/vsc";
 import { Link, useSearchParams } from "react-router";
-import { FileWarning, Mail, MapPin, Phone } from "lucide-react";
+import { Calendar, CheckCircle, Download, FileWarning, Mail, MapPin, Phone } from "lucide-react";
 import { FaLine, FaWhatsapp } from "react-icons/fa";
 import { type Tour } from "~/models/tour";
 import { type BookingModel } from "~/models/booking";
@@ -66,6 +66,234 @@ export default function CheckoutPage() {
         }
       })
   }, []);
+
+  if(booking?.status === "paid") 
+    return <main className="min-h-screen w-full bg-slate-50 py-8 px-4">
+      <div className="max-w-6xl mx-auto">
+
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold text-slate-900">Payment Completed</h1>
+          <p className="text-sm text-slate-600 mt-1">Your booking has been confirmed and paid</p>
+        </div>
+
+        <div className="grid lg:grid-cols-5 gap-6">
+
+          {/* LEFT PANEL — BOOKING DETAILS */}
+          <section className="lg:col-span-3 bg-white border border-slate-200 rounded-lg overflow-hidden">
+
+            {/* Tour Image */}
+            {tourDetail?.featured_image && (
+              <div className="aspect-video w-full bg-slate-100 overflow-hidden">
+                <img
+                  src={tourDetail.featured_image}
+                  alt={tourDetail.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            <div className="p-6 space-y-6">
+
+              {/* Tour Information */}
+              <div>
+                <h2 className="text-sm font-medium text-slate-500 uppercase tracking-wide mb-3">
+                  Tour Information
+                </h2>
+                <div className="space-y-2.5">
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Tour</span>
+                    <span className="text-sm font-medium text-slate-900">{tourDetail?.title}</span>
+                  </div>
+
+                  {booking.packageName && (
+                    <div className="flex justify-between py-2 border-b border-slate-100">
+                      <span className="text-sm text-slate-600">Package</span>
+                      <span className="text-sm font-medium text-slate-900">{booking.packageName}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Date</span>
+                    <span className="text-sm font-medium text-slate-900">{booking.date}</span>
+                  </div>
+
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Number of Guests</span>
+                    <span className="text-sm font-medium text-slate-900">{booking.people}</span>
+                  </div>
+
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Price per Person</span>
+                    <span className="text-sm font-medium text-slate-900">
+                      {booking.price?.toLocaleString()} {booking.currency}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Guest Information */}
+              <div>
+                <h2 className="text-sm font-medium text-slate-500 uppercase tracking-wide mb-3">
+                  Guest Information
+                </h2>
+                <div className="space-y-2.5">
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Name</span>
+                    <span className="text-sm font-medium text-slate-900">
+                      {booking.firstName} {booking.lastName}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Email</span>
+                    <span className="text-sm font-medium text-slate-900">{booking.email}</span>
+                  </div>
+
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Phone</span>
+                    <span className="text-sm font-medium text-slate-900">{booking.contact}</span>
+                  </div>
+
+                  <div className="flex justify-between py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Hotel Pickup</span>
+                    <span className="text-sm font-medium text-slate-900">{booking.hotel}</span>
+                  </div>
+
+                  {booking.special && (
+                    <div className="py-2">
+                      <span className="text-sm text-slate-600 block mb-1">Special Request</span>
+                      <span className="text-sm text-slate-900">{booking.special}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Support Section */}
+              <div className="pt-4 border-t border-slate-200">
+                <h3 className="text-sm font-medium text-slate-900 mb-3">
+                  Need Assistance?
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-600">
+                  <a href="tel:0993210694" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                    <Phone size={14} className="text-slate-400" />
+                    <span>099 321 0694</span>
+                  </a>
+                  <a href="mailto:creativetourguru@hotmail.com" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                    <Mail size={14} className="text-slate-400" />
+                    <span>creativetourguru@hotmail.com</span>
+                  </a>
+                </div>
+
+                <div className="flex gap-3 mt-4 pt-3 border-t border-slate-100">
+                  <a
+                    href="https://wa.me/0993210694"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
+                    title="WhatsApp"
+                  >
+                    <FaWhatsapp size={16} />
+                  </a>
+                  <a
+                    href="https://line.me/ti/p/~0993210694"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
+                    title="LINE"
+                  >
+                    <FaLine size={16} />
+                  </a>
+                  <a
+                    href="tel:0993210694"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
+                    title="Call"
+                  >
+                    <Phone size={16} />
+                  </a>
+                  <a
+                    href="mailto:creativetourguru@hotmail.com"
+                    className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
+                    title="Email"
+                  >
+                    <Mail size={16} />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* RIGHT PANEL — PAYMENT CONFIRMATION */}
+          <section className="lg:col-span-2">
+            <div className="bg-white border border-slate-200 rounded-lg p-6 sticky top-6">
+              
+              {/* Success Badge */}
+              <div className="flex items-center justify-center mb-6">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
+                  <CheckCircle className="w-10 h-10 text-green-600" />
+                </div>
+              </div>
+
+              <div className="text-center mb-6">
+                <h2 className="text-xl font-semibold text-slate-900 mb-1">Payment Successful</h2>
+                <p className="text-sm text-slate-600">Your booking has been confirmed</p>
+              </div>
+
+              {/* Payment Details */}
+              <div className="space-y-3 mb-6 pb-6 border-b border-slate-200">
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-600">Booking ID</span>
+                  <span className="font-medium text-slate-900">{booking.id}</span>
+                </div>
+                
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-600">Payment Date</span>
+                  <span className="font-medium text-slate-900">{booking.paymentDate}</span>
+                </div>
+                
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-600">Payment Method</span>
+                  <span className="font-medium text-slate-900">{booking.paymentMethod}</span>
+                </div>
+                
+              
+              </div>
+
+              {/* Total Amount */}
+              <div className="bg-slate-50 rounded-lg p-4 mb-6">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-slate-900">Total Paid</span>
+                  <span className="text-2xl font-bold text-slate-900">
+                    {booking.totalPrice?.toLocaleString()} THB
+                  </span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              {/* <div className="space-y-3">
+                <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center text-sm">
+                  <Download size={16} className="mr-2" />
+                  Download Receipt
+                </button>
+                
+                <button className="w-full border border-slate-300 hover:border-slate-400 text-slate-700 font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center text-sm">
+                  <Calendar size={16} className="mr-2" />
+                  Add to Calendar
+                </button>
+              </div> */}
+
+              {/* Confirmation Note */}
+              <div className="mt-6 pt-6 border-t border-slate-200">
+                <p className="text-xs text-slate-600 text-center">
+                  A confirmation email has been sent to<br />
+                  <span className="font-medium text-slate-900">{booking.email}</span>
+                </p>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </main>
 
   if (isError)
     return (

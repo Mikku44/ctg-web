@@ -8,6 +8,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const clientSecret = url.searchParams.get("clientSecret");
 
 
+
   if (!clientSecret) {
     return Response.json({
       status: "failed",
@@ -35,14 +36,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
         message = "Unknown payment status.";
     }
 
+    // console.log("RESULT : ",paymentIntent)
+
     return Response.json({
       status: paymentIntent.status,
       message,
+      bookingID: paymentIntent.description,
+      paymentId: paymentIntent.id,            
+      paymentMethod: "Online",
+      paymentDate: new Date(paymentIntent.created * 1000).toISOString()
     });
   } catch (error) {
     return Response.json({
       status: "failed",
       message: "Unable to retrieve payment information.",
+
     });
   }
 }

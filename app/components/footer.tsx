@@ -103,17 +103,25 @@ export default function Footer() {
             {/* --- Bottom Bar --- */}
             <div className="container-x mt-8 pt-4 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-sm text-white/80">
                 <p>© {new Date().getFullYear()} Creative Tour Guru. All Rights Reserved.</p>
-                {/* <p>
-                    Designed & Developed by{" "}
+                <p className=" space-x-2">
+                  
                     <a
-                        href="https://khain.app"
+                        href="/terms-of-use"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-white"
                     >
-                        Khain.app
+                        Terms of use
                     </a>
-                </p> */}
+                    <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white"
+                    >
+                        Privacy policy
+                    </a>
+                </p>
             </div>
         </footer>
     );
