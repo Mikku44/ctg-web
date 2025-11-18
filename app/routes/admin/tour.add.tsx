@@ -23,6 +23,9 @@ export default function AddTourAdminPage() {
     program_detail: "",
     status: "draft",
     tour_type: "",
+    style: "",
+    pickup: "",
+    short: "",
   });
 
   const generateSlug = (title: string) => {
@@ -147,6 +150,9 @@ export default function AddTourAdminPage() {
         program_detail: "",
         status: "draft",
         tour_type: "",
+        pickup : "",
+        style : "",
+        short : "",
       });
       setNote([]);
       setItinerary([]);
@@ -317,6 +323,18 @@ export default function AddTourAdminPage() {
           <div>
             <label className="block text-sm font-medium mb-1">Program Detail</label>
             <textarea name="program_detail" value={form.program_detail} onChange={handleChange} rows={5} className="w-full admin-input" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">style</label>
+            <textarea name="style" value={form.style} onChange={handleChange} rows={5} className="w-full admin-input" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">pickup</label>
+            <textarea name="pickup" value={form.pickup} onChange={handleChange} rows={5} className="w-full admin-input" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">short</label>
+            <textarea name="short" value={form.short} onChange={handleChange} rows={5} className="w-full admin-input" />
           </div>
           <button
             type="submit"

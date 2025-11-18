@@ -1,10 +1,11 @@
-import { useSearchParams } from "react-router";
+import { useLoaderData, useSearchParams, type LoaderFunction } from "react-router";
 import { useState, useMemo } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { tourList } from "~/const/app";
 import type { Route } from "./+types/search";
-import { TourCard } from "~/components/featureCard";
+import { TourCard, type TourCardProps } from "~/components/featureCard";
+import { tourService } from "~/services/tourService";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -17,16 +18,24 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
+export const loader: LoaderFunction = async () => {
+    const tours = await tourService.getAllForCard();
+    return Response.json({ tours });
+};
+
 export default function Search() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query")?.toLowerCase() || "";
   const [page, setPage] = useState(1);
 
+   const loader : any = useLoaderData<typeof loader>();
+   const tourList = loader.tours;
+
   // ✅ Filter tours by query (title + description + category)
   const filteredTours = useMemo(() => {
     if (!query) return [];
-    return tourList.filter((tour) =>
-      [tour.title, tour.description, tour.category]
+    return tourList.filter((tour : TourCardProps) =>
+      [tour.title, tour.description, tour.place_location]
         .join(" ")
         .toLowerCase()
         .includes(query)
@@ -66,7 +75,7 @@ export default function Search() {
       {query && paginatedTours.length > 0 ? (
         <>
           <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 px-2 gap-6">
-            {paginatedTours.map((tour) => (
+            {paginatedTours.map((tour : TourCardProps) => (
               <TourCard
                 key={tour.id}
                 {...tour}

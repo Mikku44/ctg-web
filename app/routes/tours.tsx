@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import type { Route } from "./+types/tours";
 import { TourCard, type TourCardProps } from "~/components/featureCard";
 import { tourService } from "~/services/tourService";
+import { useLoaderData, type LoaderFunction } from "react-router";
 
 const filterItems = [
     { label: "All destination", key: "" },
@@ -21,18 +22,23 @@ export function meta({ }: Route.MetaArgs) {
     ];
 }
 
+export const loader: LoaderFunction = async () => {
+  const items = await tourService.getAllForCard();
+  return Response.json(items);
+};
+
 export default function Tours() {
     const [filterOptions, setFilterOptions] = useState("");
-    const [tourList, setTours] = useState<TourCardProps[]>([]);
+     const tourList = useLoaderData<TourCardProps[]>();
     const [page, setPage] = useState(1);
 
 
-    useEffect(() => {
-        tourService.getAllForCard().then((items) => {
-            console.log("ITEMS : ", items)
-            setTours(items)
-        });
-    }, []);
+    // useEffect(() => {
+    //     tourService.getAllForCard().then((items) => {
+    //         console.log("ITEMS : ", items)
+    //         setTours(items)
+    //     });
+    // }, []);
 
     // pagination setup
     const itemsPerPage = 8;

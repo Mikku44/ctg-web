@@ -8,6 +8,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import type { TourCardProps } from "~/components/featureCard";
 import { db } from "~/lib/firebase/config";
@@ -40,8 +41,8 @@ export const tourService = {
     return tours.map((tour) => {
       const firstPackage = tour.packages?.[0];
       return {
-        id : tour.id,
-        slug : tour.slug,
+        id: tour.id,
+        slug: tour.slug,
         image: tour.featured_image || tour.images?.[0]?.image_url || "",
         title: tour.title,
         description: tour.description,
@@ -50,10 +51,45 @@ export const tourService = {
         rating: tour.rating ?? 0,
         duration: tour.duration,
         route: `/tours/${tour.slug}`,
-        place_location : tour.location,
+        place_location: tour.location,
         maxPeople: firstPackage?.max_people,
         tourType: tour.tour_type,
       };
+    });
+  },
+
+  // search
+  async getSeachForCard(search?: string): Promise<TourCardProps[]> {
+    const toursRef = collection(db, "tours");
+    let q;
+
+    if (search) {
+      // Firestore does not support 'contains' or OR queries natively.
+      // Example: simple equality search on title (you can expand to multiple queries)
+      q = query(toursRef, where("title", "==", search));
+    } else {
+      q = query(toursRef);
+    }
+
+    const snapshot = await getDocs(q);
+    const tours = snapshot.docs.map((doc) => doc.data());
+
+    return tours.map((tour: any) => {
+      const firstPackage = tour.packages?.[0];
+      return {
+        id: tour.id,
+        slug: tour.slug,
+        image: tour.featured_image || tour.images?.[0]?.image_url || "",
+        title: tour.title,
+        description: tour.description,
+        price: tour.price_from ?? 0,
+        rating: tour.rating ?? 0,
+        duration: tour.duration,
+        route: `/tours/${tour.slug}`,
+        place_location: tour.location,
+        maxPeople: firstPackage?.max_people,
+        tourType: tour.tour_type,
+      } as TourCardProps;
     });
   },
 
@@ -150,6 +186,56 @@ export const tourService = {
     const q = query(collection(db, TOUR_IMAGES), where("tour_id", "==", tourId));
     const snapshot = await getDocs(q);
     await Promise.all(snapshot.docs.map((d) => deleteDoc(doc(db, TOUR_IMAGES, d.id))));
+  },
+
+  async updateImages(tourId: string, images: { image_url: string }[]): Promise<void> {
+    // 1. Delete all existing images for this tour
+    const q = query(collection(db, TOUR_IMAGES), where("tour_id", "==", tourId));
+    const snapshot = await getDocs(q);
+
+    await Promise.all(
+      snapshot.docs.map((d) => deleteDoc(doc(db, TOUR_IMAGES, d.id)))
+    );
+
+    // 2. Add new images with correct order
+    await Promise.all(
+      images.map((img, index) =>
+        addDoc(collection(db, TOUR_IMAGES), {
+          tour_id: tourId,
+          image_url: img.image_url,
+          order_index: index,
+          created_at: serverTimestamp(),
+        })
+      )
+    );
+  },
+
+  async updateImage(tourId: string, image_url: string, order_index: number): Promise<void> {
+    // Query for existing image with this order_index
+    const q = query(
+      collection(db, TOUR_IMAGES),
+      where("tour_id", "==", tourId),
+      where("order_index", "==", order_index)
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (!snapshot.empty) {
+      // Image exists → update
+      const docRef = doc(db, TOUR_IMAGES, snapshot.docs[0].id);
+      await updateDoc(docRef, {
+        image_url,
+        updated_at: serverTimestamp(),
+      });
+    } else {
+      // No image exists → create new doc
+      await addDoc(collection(db, TOUR_IMAGES), {
+        tour_id: tourId,
+        image_url,
+        order_index,
+        created_at: serverTimestamp(),
+      });
+    }
   },
 
   async deletePackagesByTour(tourId: string): Promise<void> {

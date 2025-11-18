@@ -28,6 +28,10 @@ export interface Tour {
   packages?: Package[];    // Related package options
   rating?: number;         // Average rating (optional, useful for TourCard)
   tour_type?: string;      // e.g. "Full Day", "Adventure", "Private"
+
+  style? : string;
+  pickup? :string;
+  short? :string;
 }
 
 

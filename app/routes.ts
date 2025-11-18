@@ -19,7 +19,9 @@ export default [
         route("/checkout-session","routes/checkout-session.tsx"),
         route("/tours/:tour_slug","routes/tourDetail.tsx"),
         route("/tours/:type_slug/:place","routes/tourCategory.tsx"),
+        route("/admin/tour/list","routes/admin/tour.list.tsx"),
         route("/admin/tour/add","routes/admin/tour.add.tsx"),
+        route("/admin/tour/update/:tourId","routes/admin/tour.update.tsx"),
         route("*", "components/NotFound.tsx"),
         
         // API
