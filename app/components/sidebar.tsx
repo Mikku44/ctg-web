@@ -104,7 +104,7 @@ export default function SidebarMenu() {
             >
                 <div className={`container-x flex overflow-hidden items-center   ${isScrolled ? "h-[62px] justify-between" : " h-[62px] justify-center"}`}>
                     <Link to="/">
-                        <img src="/logo/logo.jpg" className={`w-full max-w-[62px] aspect-square overflow-hidden duration-200 flex items-center justify-center ${isScrolled ? "h-[56px]" : "h-[0px]"}`}
+                        <img src="/logo/logo.jpg" className={`w-full max-w-[62px] aspect-square overflow-hidden duration-200 flex items-center justify-center ${isScrolled ? "h-[56px]" : "h-[0px] w-0"}`}
                             alt="creative tour guru" /></Link>
                     <SubNavbar menuItems={menuConfig as any} />
                 </div>
