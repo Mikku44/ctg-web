@@ -9,6 +9,7 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp,
+  limit as fbLimit
 } from "firebase/firestore";
 import type { TourCardProps } from "~/components/featureCard";
 import { db } from "~/lib/firebase/config";
@@ -21,8 +22,21 @@ const PACKAGES = "Packages";
 
 export const tourService = {
   /** 🧭 Get all published tours with related images + packages */
-  async getAll(): Promise<Tour[]> {
-    const q = query(collection(db, TOURS), where("status", "==", "published"));
+  async getAll(limit?: number): Promise<Tour[]> {
+    let q = query(
+      collection(db, TOURS),
+      where("status", "==", "published")
+    );
+
+    // Add Firestore limit if provided
+    if (limit && limit > 0) {
+      q = query(
+        collection(db, TOURS),
+        where("status", "==", "published"),
+        fbLimit(limit)
+      );
+    }
+
     const snapshot = await getDocs(q);
 
     const tours: Tour[] = [];
@@ -32,21 +46,22 @@ export const tourService = {
       tour.packages = await this.getPackages(tour.id);
       tours.push(tour);
     }
+
     return tours;
   },
 
-  async getAllForCard(): Promise<TourCardProps[]> {
-    const tours = await this.getAll();
+  async getAllForCard(limit?: number): Promise<TourCardProps[]> {
+    const tours = await this.getAll(limit);
 
     return tours.map((tour) => {
       const firstPackage = tour.packages?.[0];
+
       return {
         id: tour.id,
         slug: tour.slug,
         image: tour.featured_image || tour.images?.[0]?.image_url || "",
         title: tour.title,
         description: tour.description,
-        // price: firstPackage ? firstPackage.price.toLocaleString("en-US") + " THB" : tour.price_from.toLocaleString("en-US") + " THB",
         price: tour.price_from ?? 0,
         rating: tour.rating ?? 0,
         duration: tour.duration,
@@ -57,7 +72,6 @@ export const tourService = {
       };
     });
   },
-
   // search
   async getSeachForCard(search?: string): Promise<TourCardProps[]> {
     const toursRef = collection(db, "tours");

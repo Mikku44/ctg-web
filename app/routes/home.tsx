@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
-import { useLoaderData, useLocation, useNavigate } from "react-router";
+import { Link, useLoaderData, useLocation, useNavigate } from "react-router";
 import { popularDestinations, tourList } from "~/const/app";
 import FadeImageSlideshow from "~/components/FadeImage";
 import { motion } from "framer-motion";
@@ -39,7 +39,7 @@ const tours = [
 
 export async function loader() {
   try {
-    const items: TourCardProps[] = await tourService.getAllForCard();
+    const items: TourCardProps[] = await tourService.getAllForCard(9);
     return items;
   } catch (error) {
     console.error("Failed to load tours:", error);
@@ -274,12 +274,60 @@ export default function Home() {
               />
             ))}
           </div>
+
+          <div className="w-fit mx-auto">
+            <button
+              onClick={() => router("/tours")}
+              className="py-3 button-outline hover:w-[50vw] w-[200px] px-5 my-5 z-10 "
+            >
+              See more Tours
+            </button>
+          </div>
         </div>
 
         {/* Recommend */}
+
+        {/* CTA Explore */}
+        <div
+          className="flex md:items-center h-[450px]
+    bg-image2 bg-center bg-cover px-5
+    relative justify-center text-white overflow-hidden flex-col"
+        >
+          {/* Black overlay */}
+          <div className="absolute inset-0 bg-black/50 z-0"></div>
+
+          {/* Content */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-4xl font-bold z-10"
+          >
+            Explore Thailand With an Expert Guide
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            className="mt-3 opacity-95 text-sm z-10"
+          >
+            — Stories, Culture & Hidden Gems Await
+          </motion.div>
+
+          <motion.button
+            onClick={() => router("/guide-service")}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+            className="py-3 button px-5 mt-5 z-10"
+          >
+            Hire a Local Guide
+          </motion.button>
+        </div>
         {/* featured */}
         <div className="">
-          <h2 className="text-4xl font-medium mb-6 md:mt-10 mt-5 ">Recommend Tours</h2>
+          <h2 className="text-4xl font-medium mb-6 md:mt-10 mt-5 ">Recommended Tours</h2>
           <div className="grid md:grid-cols-3 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
             {/* Tour cards would go here */}
             {toursList.map((tour) => (

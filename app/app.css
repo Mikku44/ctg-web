@@ -158,6 +158,11 @@ body {
 .button {
   @apply bg-[var(--primary-color)] text-white  shadow hover:opacity-80 duration-200;
 }
+.button-outline {
+  @apply border-[var(--primary-color)] border-2 text-[var(--primary-color)]
+  hover:bg-[var(--primary-color)] hover:text-white
+  shadow hover:opacity-80 duration-200;
+}
 
 .input {
   @apply w-full border border-gray-300  px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
@@ -178,6 +183,11 @@ button {
 
 .bg-image1 {
   background: url("https://ctg-web-nine.vercel.app/images/bangkok(18).jpg");
+  background-position: center;
+}
+.bg-image2 {
+  background: url("https://ctg-web-nine.vercel.app/images/elephant (21).jpg");
+  background-position: center;
 }
 
 
