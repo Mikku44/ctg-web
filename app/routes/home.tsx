@@ -10,6 +10,7 @@ import { TourCard, type TourCardProps } from "~/components/featureCard";
 import { useEffect, useState } from "react";
 import { tourService } from "~/services/tourService";
 import type { Tour } from "~/models/tour";
+import Loading from "~/components/Loading";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -39,7 +40,7 @@ const tours = [
 
 export async function loader() {
   try {
-    const items: TourCardProps[] = await tourService.getAllForCard(9);
+    const items: TourCardProps[] = await tourService.getAllForCard(6);
     return items;
   } catch (error) {
     console.error("Failed to load tours:", error);
@@ -50,6 +51,8 @@ export async function loader() {
 export default function Home() {
 
   const toursList = useLoaderData() as TourCardProps[];
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useNavigate();
 
@@ -277,10 +280,13 @@ export default function Home() {
 
           <div className="w-fit mx-auto">
             <button
-              onClick={() => router("/tours")}
-              className="py-3 button-outline hover:w-[50vw] w-[200px] px-5 my-5 z-10 "
+              onClick={() => {
+                setIsLoading(true);
+                router("/tours")
+              }}
+              className="py-3 button-outline flex items-center justify-center hover:w-[50vw] w-[200px] px-5 my-5 z-10 "
             >
-              See more Tours
+              {isLoading ? <Loading /> : "See more Tours"}
             </button>
           </div>
         </div>
@@ -372,11 +378,17 @@ export default function Home() {
         <h2 className="text-4xl font-bold z-10">Beyond Sightseeing</h2>
         <div className="mt-3 opacity-95 text-sm z-10">— Experience Thailand Creatively</div>
         <button
-          onClick={() => router("/tours")}
-          className="py-3 button px-5 mt-5 z-10 "
+          onClick={() => {
+            setIsLoading(true);
+            router("/tours")
+          }}
+          className="py-3 button px-5 mt-5 z-10  flex items-center justify-center "
         >
-          Explore All Tours
+
+          {isLoading ? <Loading /> : "Explore All Tours"}
         </button>
+
+
       </div>
 
 

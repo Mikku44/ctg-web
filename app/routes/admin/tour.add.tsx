@@ -5,6 +5,7 @@ import type { TourImage } from "~/models/tour";
 // import { images_file } from "public/images/image_files"; // Not directly used in component logic post-cleanup
 import { Minus } from "lucide-react";
 import { images_file } from "public/images/image_files";
+import JsonPreview from "./components/JsonPreview";
 
 export default function AddTourAdminPage() {
   const [loading, setLoading] = useState(false);
@@ -346,20 +347,21 @@ export default function AddTourAdminPage() {
         </form>
 
         {/* json - display */}
-        <div className="max-w-3xl">
+        {/* <div className="max-w-3xl">
           <h3 className="text-xl font-semibold mb-3">Current Data Preview (JSON)</h3>
           {Object.entries(form).map(([key, value]) =>
             <div key={key} className="flex items-center gap-2">
               <div className="font-medium">{key} : </div>
               <div className="bg-zinc-200 px-2 w-fit">{value}</div>
             </div>)}
-          {/* list item */}
+          
           {Object.entries(KEYMAPPING).map(([key, value]) => <div key={key} className="flex items-center gap-2">
             <div className="font-medium">{key} : </div>
             <div className="bg-zinc-200 px-2 overflow-auto max-w-full text-wrap">{key === "images" ? JSON.stringify(value) :
               JSON.stringify(processArrayField(value as any))}</div>
           </div>)}
-        </div>
+        </div> */}
+         <JsonPreview form={form} KEYMAPPING={KEYMAPPING} />
       </div>
 
       {/* modal image */}

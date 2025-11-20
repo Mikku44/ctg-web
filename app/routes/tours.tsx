@@ -44,7 +44,7 @@ export default function Tours() {
     const itemsPerPage = 8;
     const totalPages = Math.ceil(tourList.length / itemsPerPage);
     const filteredTours = filterOptions
-        ? tourList.filter((tour) => tour.category?.toLocaleLowerCase()?.includes(filterOptions))
+        ? tourList.filter((tour) => tour.title?.toLocaleLowerCase()?.includes(filterOptions))
         : tourList;
 
     const paginatedTours = filteredTours.slice(
@@ -64,7 +64,7 @@ export default function Tours() {
                 <section className="flex justify-between items-center mb-2">
                     <div className="">
                         <h1 className="text-4xl font-semibold mt-5">Explore Tours Destination</h1>
-                        <p className=" text-zinc-500">{filterItems?.length || 0} Tours found.</p>
+                        <p className=" text-zinc-500">{filterItems?.length ? filterItems.length * totalPages : 0} Tours found.</p>
                     </div>
                     {/* <div className="md:max-w-[50vw] mx-auto text-center">
                         <h2 className="text-lg text-zinc-500 mb-6">

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
     Form,
     Link,
@@ -6,19 +7,11 @@ import {
     type ActionFunction,
     type LoaderFunction,
 } from "react-router";
+import Loading from "~/components/Loading";
+import type { Tour } from "~/models/tour";
 import { tourService } from "~/services/tourService";
 
-// =======================
-// LOADER
-// =======================
-export const loader: LoaderFunction = async () => {
-    const tours = await tourService.getAll();
-    return Response.json({ tours });
-};
 
-// =======================
-// ACTION (DELETE)
-// =======================
 export const action: ActionFunction = async ({ request }) => {
     const formData = await request.formData();
     const intent = formData.get("_action");
@@ -33,11 +26,17 @@ export const action: ActionFunction = async ({ request }) => {
     return null;
 };
 
-// =======================
-// UI (Minimal Style)
-// =======================
+
 export default function TourListPage() {
-    const { tours } = useLoaderData<typeof loader>();
+    const [isLoading, setIsLoading] = useState(true);
+    const [tours, setTours] = useState<Tour[]>([]);
+
+    useEffect(() => {
+        tourService.getAll().then((data) => {
+            setTours(data);
+            setIsLoading(false);
+        });
+    }, []);
 
     return (
         <div className="container-x mx-auto py-10">
@@ -118,7 +117,10 @@ export default function TourListPage() {
 
             {tours.length === 0 && (
                 <div className="text-center text-gray-500 mt-8">
-                    No tours found.
+                   {isLoading ? <div className="grid place-items-center">
+                       <Loading /> 
+                       <div className="mt-2">Tour list is Loading...</div>
+                   </div>: " No tours found."}
                 </div>
             )}
         </div>

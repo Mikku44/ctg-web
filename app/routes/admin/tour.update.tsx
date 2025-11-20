@@ -6,6 +6,7 @@ import { Minus } from "lucide-react";
 import { tourService } from "~/services/tourService";
 import { images_file } from "public/images/image_files";
 import type { Route } from "./+types/tour.update";
+import JsonPreview from "./components/JsonPreview";
 
 
 export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) {
@@ -432,21 +433,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 </form>
 
                 {/* JSON preview */}
-                <div className="max-w-3xl">
-                    <h3 className="text-xl font-semibold mb-3">Current Data Preview (JSON)</h3>
-                    {Object.entries(form).map(([key, value]) => (
-                        <div key={key} className="flex items-center gap-2">
-                            <div className="font-medium">{key} : </div>
-                            <div className="bg-zinc-200 px-2 w-fit">{String(value)}</div>
-                        </div>
-                    ))}
-                    {Object.entries(KEYMAPPING).map(([key, value]) => (
-                        <div key={key} className="flex items-center gap-2 mt-2">
-                            <div className="font-medium">{key} : </div>
-                            <div className="bg-zinc-200 px-2 overflow-auto max-w-full text-wrap">{key === "images" ? JSON.stringify(value) : JSON.stringify(value)}</div>
-                        </div>
-                    ))}
-                </div>
+                <JsonPreview form={form} KEYMAPPING={KEYMAPPING} />
             </div>
 
             {/* Modal */}
