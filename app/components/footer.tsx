@@ -5,7 +5,7 @@ import { FaLine, FaWhatsapp } from "react-icons/fa6";
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-[#3b444f] text-white pt-10 pb-4">
+        <footer className="w-full no-print bg-[#3b444f] text-white pt-10 pb-4">
             <div className="container-x grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-8">
                 {/* --- Brand --- */}
                 <div>

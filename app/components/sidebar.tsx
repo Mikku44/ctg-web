@@ -51,7 +51,7 @@ export default function SidebarMenu() {
 
             </div> */}
             {/* Top Navbar */}
-            <header className="container-x top-0 left-0 right-0 bg-white md:min-h-[100px]  min-h-[100px]
+            <header className="container-x no-print top-0 left-0 right-0 bg-white md:min-h-[100px]  min-h-[100px]
             flex flex-row-reverse items-center justify-between px-4 z-50 relative">
                 <form onSubmit={handleSubmit} className="relative md:block hidden w-full max-w-[250px]">
                     <div className="relative">
@@ -99,7 +99,7 @@ export default function SidebarMenu() {
 
 
             <section
-                className={`w-full sticky border-t-1 border-b-1 border-zinc-200 top-0 z-[40] bg-white  transition-shadow duration-300 h-[62px]  ${isScrolled ? "shadow-md " : "shadow-none"
+                className={`w-full no-print sticky border-t-1 border-b-1 border-zinc-200 top-0 z-[40] bg-white  transition-shadow duration-300 h-[62px]  ${isScrolled ? "shadow-md " : "shadow-none"
                     }`}
             >
                 <div className={`container-x flex overflow-hidden items-center   ${isScrolled ? "h-[62px] justify-between" : " h-[62px] justify-center"}`}>
