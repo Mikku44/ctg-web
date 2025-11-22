@@ -72,7 +72,7 @@ export default function TourDetailPage() {
   };
 
 
-  console
+
 
 
   return (
@@ -281,7 +281,10 @@ export default function TourDetailPage() {
         {<TourBookingForm
           // cover={tour.featured_image}
           price={tour.price_from}
-          tour={tour.id} />}
+          tourName={tour.title}
+          tour={tour.id}
+          
+          />}
       </section>
 
 

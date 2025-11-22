@@ -2,8 +2,7 @@ import { useState } from "react";
 import { tourService } from "~/services/tourService";
 import { v4 as uuidv4 } from "uuid";
 import type { TourImage } from "~/models/tour";
-// import { images_file } from "public/images/image_files"; // Not directly used in component logic post-cleanup
-import { Minus } from "lucide-react";
+import { Minus, Image as ImageIcon } from "lucide-react";
 import { images_file } from "public/images/image_files";
 import JsonPreview from "./components/JsonPreview";
 
@@ -27,6 +26,7 @@ export default function AddTourAdminPage() {
     style: "",
     pickup: "",
     short: "",
+    recommended: false,
   });
 
   const generateSlug = (title: string) => {
@@ -48,29 +48,47 @@ export default function AddTourAdminPage() {
 
   // Modal and Image Selection States
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImages, setSelectedImages] = useState<string[]>(images.map(i => i.image_url));
+  // NEW: Track which mode the modal is in
+  const [modalMode, setModalMode] = useState<"featured" | "gallery">("gallery");
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
   const handleCloseModal = () => {
     setIsOpen(false);
   }
 
-  const handleOpenModal = () => {
+  // Open modal for Featured Image (Single Select)
+  const handleOpenFeaturedModal = () => {
+    setModalMode("featured");
+    // Pre-select current featured image if it exists
+    setSelectedImages(form.featured_image ? [form.featured_image] : []);
+    setIsOpen(true);
+  };
+
+  // Open modal for Gallery (Multi Select)
+  const handleOpenGalleryModal = () => {
+    setModalMode("gallery");
     setSelectedImages(images.map(i => i.image_url));
     setIsOpen(true);
   };
 
-  // NOTE: You'll need to define `images_file` and `toggleSelect` in this component
-  // to make the modal functionality work if you copy the previous response's changes.
-  // For cleanup, I'm assuming you will define them elsewhere or already have them.
-
   const handleApplyImages = () => {
-    const newImages: TourImage[] = selectedImages.map((url, index) => ({
-      id: uuidv4(),
-      tour_id: "",
-      image_url: url,
-      order_index: index,
-    }));
-    setImages(newImages);
+    if (modalMode === "featured") {
+      // FEATURED IMAGE LOGIC
+      if (selectedImages.length > 0) {
+        const url = selectedImages[0];
+        setForm(prev => ({ ...prev, featured_image: url }));
+        setPreview(url);
+      }
+    } else {
+      // GALLERY LOGIC
+      const newImages: TourImage[] = selectedImages.map((url, index) => ({
+        id: uuidv4(),
+        tour_id: "",
+        image_url: url,
+        order_index: index,
+      }));
+      setImages(newImages);
+    }
     handleCloseModal();
   };
 
@@ -83,7 +101,6 @@ export default function AddTourAdminPage() {
       setForm((prev) => ({ ...prev, [name]: (value) }));
     }
 
-
     if (name === "featured_image") setPreview(value);
   };
 
@@ -91,12 +108,10 @@ export default function AddTourAdminPage() {
     e: React.ChangeEvent<HTMLTextAreaElement>,
     setState: React.Dispatch<React.SetStateAction<string[]>>
   ) => {
-    // Stores the entire textarea content as a single string in the state array.
     const lines = e.target.value;
-    setState([lines]);
+    setState([lines]); 
   };
 
-  // Helper to process array fields for submission
   const processArrayField = (arr: string[]) => arr.join().split("\n").filter((l) => l.trim() !== "");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -129,6 +144,7 @@ export default function AddTourAdminPage() {
         status: form.status as "draft" | "published",
         rating: 0,
         tour_type: form.tour_type,
+        recommended: form.recommended, 
       });
 
       // Submit gallery images
@@ -151,9 +167,10 @@ export default function AddTourAdminPage() {
         program_detail: "",
         status: "draft",
         tour_type: "",
-        pickup : "",
-        style : "",
-        short : "",
+        pickup: "",
+        style: "",
+        short: "",
+        recommended: false,
       });
       setNote([]);
       setItinerary([]);
@@ -171,26 +188,31 @@ export default function AddTourAdminPage() {
     }
   };
 
-  // Only for displaying raw data on the side
   const KEYMAPPING = {
     "images": images,
     "note": note,
     "itinerary": itinerary,
     "notInclude": notInclude,
     "tourInclude": tourInclude,
-    "cancellationPolicy": cancellationPolicy
+    "cancellationPolicy": cancellationPolicy,
+    "recommended": form.recommended 
   }
 
   const toggleSelect = (filename: string) => {
-    // Assuming 'filename' from images_file is the actual URL or path used in the form
-    // Since images_file seems to use `path`, let's assume the full URL is `/images/${item.path}`
     const imageUrl = `/images/${images_file.find(i => i.filename === filename)?.path || filename}`;
 
-    setSelectedImages((prev) =>
-      prev.includes(imageUrl)
-        ? prev.filter((f) => f !== imageUrl)
-        : [...prev, imageUrl]
-    );
+    if (modalMode === "featured") {
+        // SINGLE SELECT BEHAVIOR
+        // If clicking the already selected one, allow deselect, otherwise replace selection
+        setSelectedImages(prev => prev.includes(imageUrl) ? [] : [imageUrl]);
+    } else {
+        // MULTI SELECT BEHAVIOR (Gallery)
+        setSelectedImages((prev) =>
+          prev.includes(imageUrl)
+            ? prev.filter((f) => f !== imageUrl)
+            : [...prev, imageUrl]
+        );
+    }
   };
 
   return (
@@ -211,7 +233,6 @@ export default function AddTourAdminPage() {
               <label className="block text-sm font-medium mb-1">Title *</label>
               <input name="title" value={form.title} onChange={handleChange} required className="w-full admin-input" />
             </div>
-            {/* Slug is generated automatically, no need for an input field */}
             <div className="flex flex-col">
               <label className="block text-sm font-medium mb-1">Slug (Auto Generated)</label>
               <span className="w-full admin-input bg-gray-100 text-gray-500 py-2 px-3 rounded-md text-sm truncate">{form.slug || 'Enter title to generate slug'}</span>
@@ -243,36 +264,70 @@ export default function AddTourAdminPage() {
               <input name="category_id" value={form.category_id} onChange={handleChange} placeholder="temples / adventure / culture" className="w-full admin-input" />
             </div>
           </div>
-          {/* Type and Status */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
+
+          {/* Type, Status & Recommended */}
+          <div className="grid grid-cols-3 gap-4 items-end">
+            <div className="col-span-1">
               <label className="block text-sm font-medium mb-1">Tour Type</label>
               <input name="tour_type" value={form.tour_type} onChange={handleChange} placeholder="Full Day / Private" className="w-full admin-input" />
             </div>
-            <div>
+            <div className="col-span-1">
               <label className="block text-sm font-medium mb-1">Status</label>
               <select name="status" value={form.status} onChange={handleChange} className="w-full admin-input">
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
               </select>
             </div>
+            <div className="col-span-1 flex flex-col justify-end pb-2">
+              <label
+                className="block text-sm font-medium mb-2 text-gray-700 cursor-pointer"
+                onClick={() => setForm(prev => ({ ...prev, recommended: !prev.recommended }))}
+              >
+                Recommended?
+              </label>
+              <button
+                type="button"
+                onClick={() => setForm(prev => ({ ...prev, recommended: !prev.recommended }))}
+                className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${form.recommended ? "bg-green-500" : "bg-gray-300"
+                  }`}
+              >
+                <span
+                  className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform duration-200 ${form.recommended ? "translate-x-8" : "translate-x-1"
+                    }`}
+                />
+              </button>
+            </div>
           </div>
-          {/* Featured Image */}
+
+          {/* Featured Image Section */}
           <div>
             <label className="block text-sm font-medium mb-1">Featured Image URL</label>
+            
+            {/* BUTTON ADDED HERE */}
+            <div className="flex gap-2 mb-2">
+              <button
+                type="button"
+                onClick={handleOpenFeaturedModal}
+                className="bg-zinc-600 text-white py-1 px-4 rounded-lg hover:bg-zinc-700 transition flex items-center gap-2"
+              >
+                 <ImageIcon size={16} /> Select Featured Image
+              </button>
+            </div>
+
             <input name="featured_image" value={form.featured_image} onChange={handleChange} placeholder="https://..." className="w-full admin-input" />
             {preview && <img src={preview} alt="Preview" className="mt-3 w-full h-48 object-cover rounded-lg" />}
           </div>
-          {/* Gallery Images Field with Open Modal Button */}
+
+          {/* Gallery Images Section */}
           <div>
             <label className="block text-sm font-medium mb-1">Gallery Images (URLs)</label>
             <div className="flex gap-2 mb-2">
               <button
                 type="button"
-                onClick={handleOpenModal}
-                className="bg-purple-600 text-white py-1 px-4 rounded-lg hover:bg-purple-700 transition"
+                onClick={handleOpenGalleryModal}
+                className="bg-purple-600 text-white py-1 px-4 rounded-lg hover:bg-purple-700 transition flex items-center gap-2"
               >
-                Select Images from Library
+                <ImageIcon size={16} /> Select Gallery Images
               </button>
             </div>
             <textarea
@@ -296,6 +351,7 @@ export default function AddTourAdminPage() {
               value={images.map((i) => i.image_url).join("\n")}
             />
           </div>
+
           {/* Arrays */}
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -346,70 +402,52 @@ export default function AddTourAdminPage() {
           </button>
         </form>
 
-        {/* json - display */}
-        {/* <div className="max-w-3xl">
-          <h3 className="text-xl font-semibold mb-3">Current Data Preview (JSON)</h3>
-          {Object.entries(form).map(([key, value]) =>
-            <div key={key} className="flex items-center gap-2">
-              <div className="font-medium">{key} : </div>
-              <div className="bg-zinc-200 px-2 w-fit">{value}</div>
-            </div>)}
-          
-          {Object.entries(KEYMAPPING).map(([key, value]) => <div key={key} className="flex items-center gap-2">
-            <div className="font-medium">{key} : </div>
-            <div className="bg-zinc-200 px-2 overflow-auto max-w-full text-wrap">{key === "images" ? JSON.stringify(value) :
-              JSON.stringify(processArrayField(value as any))}</div>
-          </div>)}
-        </div> */}
-         <JsonPreview form={form} KEYMAPPING={KEYMAPPING} />
+        <JsonPreview form={form} KEYMAPPING={KEYMAPPING} />
       </div>
 
-      {/* modal image */}
-      {/* NOTE: Modal content is incomplete as it relies on external 'images_file' and 'toggleSelect' logic. */}
+      {/* MODAL */}
       {isOpen && <section className="w-full h-screen z-99 bg-black/30 fixed flex flex-col items-center justify-center top-0 left-0">
         <div className="bg-white rounded-xl w-full h-full p-5 max-w-[80vw] max-h-[80vh] flex flex-col">
           <div className="w-full flex items-center justify-between flex-shrink-0">
-            <div className="text-3xl font-bold">Gallery</div>
+            <div className="text-3xl font-bold">
+                {modalMode === "featured" ? "Select Featured Image" : "Select Gallery Images"}
+            </div>
             <button
               onClick={handleCloseModal}
               className="rounded-sm hover:bg-zinc-200 p-2" ><Minus size={24} className="text-zinc-500"></Minus></button>
           </div>
-          <div className="text-sm text-gray-500 mt-2 flex-shrink-0">{selectedImages.length} images selected.</div>
+          <div className="text-sm text-gray-500 mt-2 flex-shrink-0">
+            {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected 
+            {modalMode === "featured" && " (Max 1)"}
+          </div>
 
           <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3 w-full flex-grow">
-            {/* --- Image listing removed for cleanup/simplicity, restore if images_file is defined --- */}
-            <div className="text-gray-500">
-              <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3 w-full flex-grow">
-                {images_file.map((item) => {
-                  // The image URL in the modal is constructed as `/images/${item.path}`
-                  const imageUrl = `/images/${item.path}`;
-                  const isSelected = selectedImages.includes(imageUrl);
+            {images_file.map((item) => {
+              const imageUrl = `/images/${item.path}`;
+              const isSelected = selectedImages.includes(imageUrl);
 
-                  return (
-                    <div
-                      key={item.filename}
-                      // Pass the filename/id to toggleSelect to find the correct URL
-                      onClick={() => toggleSelect(item.filename)}
-                      className={`
+              return (
+                <div
+                  key={item.filename}
+                  onClick={() => toggleSelect(item.filename)}
+                  className={`
                     relative cursor-pointer max-w-[150px] rounded-lg overflow-hidden
                     border-4 transition-all duration-150
                     ${isSelected ? "border-blue-500" : "border-transparent"}
                   `}
-                    >
-                      <img
-                        src={imageUrl}
-                        alt={item.filename}
-                        className="w-full h-full object-cover"
-                      />
+                >
+                  <img
+                    src={imageUrl}
+                    alt={item.filename}
+                    className="w-full h-full object-cover"
+                  />
 
-                      {isSelected && (
-                        <div className="absolute inset-0 bg-blue-500/30"></div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+                  {isSelected && (
+                    <div className="absolute inset-0 bg-blue-500/30"></div>
+                  )}
+                </div>
+              );
+            })}
           </div>
           <div className="flex justify-end pt-4 border-t border-gray-200 flex-shrink-0">
             <button
@@ -424,7 +462,7 @@ export default function AddTourAdminPage() {
               onClick={handleApplyImages}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
-              Apply Selection ({selectedImages.length})
+              {modalMode === "featured" ? "Set Featured Image" : `Apply Selection (${selectedImages.length})`}
             </button>
           </div>
         </div>

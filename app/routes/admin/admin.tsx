@@ -9,21 +9,19 @@ import {
   Users,
   TrendingUp
 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 
-import {  useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
+import Loading from '~/components/Loading';
+import { formatCurrency } from '~/lib/utils/currencyFormator';
+import type { BookingModel } from '~/models/booking';
+import type { Tour } from '~/models/tour';
+import { bookingService } from '~/services/bookingService';
+import { tourService } from '~/services/tourService';
 
-// --- Sidebar Component ---
-interface SidebarProps {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-}
 
-const STATS = [
-  { label: 'Total Revenue', value: '$124,500', change: '+12%', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
-  { label: 'Active Tours', value: '45', change: '+3', icon: Map, color: 'text-blue-600', bg: 'bg-blue-100' },
-  { label: 'New Bookings', value: '182', change: '+24%', icon: Calendar, color: 'text-purple-600', bg: 'bg-purple-100' },
-  { label: 'Total Customers', value: '2,420', change: '+8%', icon: Users, color: 'text-orange-600', bg: 'bg-orange-100' },
-];
+
+
 
 const RECENT_BOOKINGS = [
   { id: 1, customer: 'Alice Johnson', tour: 'Kyoto Temple Run', date: 'Oct 24, 2023', amount: '$450', status: 'Confirmed' },
@@ -33,6 +31,9 @@ const RECENT_BOOKINGS = [
   { id: 5, customer: 'Evan Wright', tour: 'Kyoto Temple Run', date: 'Oct 21, 2023', amount: '$450', status: 'Confirmed' },
 ];
 
+
+
+
 const POPULAR_TOURS = [
   { name: 'Kyoto Temple Run', bookings: 84, trend: 12 },
   { name: 'Island Hopping Phi Phi', bookings: 65, trend: -5 },
@@ -40,7 +41,94 @@ const POPULAR_TOURS = [
 ];
 // --- Main Layout ---
 export default function AdminLayout() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const [bookingList, setBookingList] = useState<BookingModel[]>([]);
+  const [tourList, setTourList] = useState<Tour[]>([]);
+
+  const [loadingItems, setLoadingItems] = useState([false, false, false, false]);
+
+  const [stats, setStats] = useState([
+    { label: 'Total Revenue', value: '฿0', change: '+0%', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
+    { label: 'Active Tours', value: '0', change: '0', icon: Map, color: 'text-blue-600', bg: 'bg-blue-100' },
+    { label: 'Total Bookings', value: '0', change: '+0%', icon: Calendar, color: 'text-purple-600', bg: 'bg-purple-100' },
+    { label: 'Total Customers', value: '0', change: '+0%', icon: Users, color: 'text-orange-600', bg: 'bg-orange-100' },
+  ]);
+
+
+  const updateLoading = (index: number, value: boolean) => {
+    setLoadingItems(prevItems =>
+      prevItems.map((item, i) => (i === index ? value : item))
+    );
+  };
+
+
+  useEffect(() => {
+    // Fetch booking data here if needed
+    bookingService.getAllBookings().then((data) => {
+      setBookingList(data);
+      updateLoading(0, true);
+      updateLoading(2, true);
+      updateLoading(3, true);
+
+    });
+
+    tourService.getAll().then((data) => {
+      setTourList(data);
+      updateLoading(1, true);
+    });
+
+  }, []);
+
+  useEffect(() => {
+    // A. Calculate Revenue
+    const totalRevenue = bookingList.reduce((sum, booking) => {
+      return sum + (Number(booking.totalPrice) || 0);
+    }, 0);
+
+    // B. Calculate Active Tours
+    const activeToursCount = tourList.filter(t => t.status === 'published').length;
+
+    // C. Calculate Unique Customers
+    const uniqueCustomers = new Set(bookingList.map(b => b.email || b.firstName)).size;
+
+
+    setStats([
+      {
+        label: 'Total Revenue',
+        value: `฿${totalRevenue.toLocaleString()}`,
+        change: '+0%', // You can add logic here later to compare with last month
+        icon: DollarSign,
+        color: 'text-green-600',
+        bg: 'bg-green-100'
+      },
+      {
+        label: 'Active Tours',
+        value: activeToursCount.toString(),
+        change: `${activeToursCount > 0 ? '+' : ''}0`,
+        icon: Map,
+        color: 'text-blue-600',
+        bg: 'bg-blue-100'
+      },
+      {
+        label: 'Total Bookings',
+        value: bookingList.length.toString(),
+        change: '+0%',
+        icon: Calendar,
+        color: 'text-purple-600',
+        bg: 'bg-purple-100'
+      },
+      {
+        label: 'Total Customers',
+        value: uniqueCustomers.toString(),
+        change: '+0%',
+        icon: Users,
+        color: 'text-orange-600',
+        bg: 'bg-orange-100'
+      },
+    ]);
+
+  }, [bookingList, tourList]);
 
   return (
     <div className="flex min-h-screen  font-sans text-slate-900">
@@ -64,7 +152,7 @@ export default function AdminLayout() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {STATS.map((stat, index) => (
+          {stats.map((stat, index) => (
             <div key={index} className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between mb-4">
                 <div className={`p-3 rounded-lg ${stat.bg} ${stat.color}`}>
@@ -76,7 +164,12 @@ export default function AdminLayout() {
                 </span>
               </div>
               <p className="text-slate-500 text-sm font-medium">{stat.label}</p>
-              <h3 className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</h3>
+              {loadingItems[index] ? <h3 className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</h3> : 
+              <div className="relative">
+                <h3 className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</h3>
+                <Loading className='mt-2 size-4 top-0 right-0 border-blue-500 absolute' />
+              </div>
+              }
             </div>
           ))}
         </div>
@@ -100,16 +193,16 @@ export default function AdminLayout() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {RECENT_BOOKINGS.map((booking) => (
+                  {bookingList.map((booking) => (
                     <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-6 py-4 text-sm font-medium text-slate-900">{booking.customer}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-slate-900">{booking.firstName}</td>
                       <td className="px-6 py-4 text-sm text-slate-600">{booking.tour}</td>
                       <td className="px-6 py-4 text-sm text-slate-500">{booking.date}</td>
-                      <td className="px-6 py-4 text-sm font-medium text-slate-900">{booking.amount}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-slate-900">{formatCurrency(booking.totalPrice)}</td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                        ${booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' :
-                            booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                        <span className={`inline-flex capitalize items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        ${booking.status === 'complete' ? 'bg-green-100 text-green-800' :
+                            booking.status === 'paid' ? 'bg-yellow-100 text-yellow-800' :
                               'bg-red-100 text-red-800'}`}>
                           {booking.status}
                         </span>
@@ -125,25 +218,7 @@ export default function AdminLayout() {
           <div className="space-y-6">
             {/* Popular Tours */}
             <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
-              <h2 className="font-bold text-lg text-slate-900 mb-4">Popular Tours</h2>
-              <div className="space-y-4">
-                {POPULAR_TOURS.map((tour, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors border border-slate-100/50">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">
-                        #{i + 1}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-slate-900">{tour.name}</p>
-                        <p className="text-xs text-slate-500">{tour.bookings} bookings this month</p>
-                      </div>
-                    </div>
-                    <div className={`text-xs font-bold ${tour.trend > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                      {tour.trend > 0 ? '+' : ''}{tour.trend}%
-                    </div>
-                  </div>
-                ))}
-              </div>
+               <PopularTours bookingList={bookingList} />
               <button
                 onClick={() => navigate('/admin/tour/list')}
                 className="w-full mt-6 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
@@ -172,6 +247,137 @@ export default function AdminLayout() {
       </div>
 
 
+    </div>
+  );
+}
+
+
+
+interface PopularToursProps {
+  bookingList: BookingModel[];
+}
+
+ function PopularTours({ bookingList }: PopularToursProps) {
+
+  const popularTours = useMemo(() => {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    // Previous month calculation
+    const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const prevMonth = prevDate.getMonth();
+    const prevYear = prevDate.getFullYear();
+
+    // Map: Key = Tour (ID or Name), Value = Stats
+    const statsMap: Record<string, { name: string; current: number; previous: number }> = {};
+
+    bookingList.forEach((booking) => {
+      // CHANGED: Check 'tour' instead of 'tourName'
+      if (!booking.tour) return;
+
+      // CHANGED: Use 'tour' as the identifier
+      const tourIdentifier = booking.tour; 
+
+      // Initialize if not exists
+      if (!statsMap[tourIdentifier]) {
+        statsMap[tourIdentifier] = { 
+            name: tourIdentifier, // We use this field for display now
+            current: 0, 
+            previous: 0 
+        };
+      }
+
+      // Date Parsing
+      let dateObj: Date | null = null;
+      if (booking.created_at && typeof (booking.created_at as any).toDate === 'function') {
+        dateObj = (booking.created_at as any).toDate();
+      } else if (booking.created_at) {
+        dateObj = new Date(booking.created_at as any);
+      } else if (booking.date) {
+        dateObj = new Date(booking.date);
+      }
+
+      if (dateObj) {
+        const bMonth = dateObj.getMonth();
+        const bYear = dateObj.getFullYear();
+
+        if (bMonth === currentMonth && bYear === currentYear) {
+          statsMap[tourIdentifier].current += 1;
+        } else if (bMonth === prevMonth && bYear === prevYear) {
+          statsMap[tourIdentifier].previous += 1;
+        }
+      }
+    });
+
+    // Transform to array and calculate trend
+    const results = Object.values(statsMap).map((item) => {
+      let trend = 0;
+      if (item.previous === 0) {
+        trend = item.current > 0 ? 100 : 0;
+      } else {
+        trend = Math.round(((item.current - item.previous) / item.previous) * 100);
+      }
+
+      return {
+        name: item.name,
+        bookings: item.current,
+        trend: trend,
+      };
+    });
+
+    // Sort by bookings (Desc) and take top 5
+    return results.sort((a, b) => b.bookings - a.bookings).slice(0, 5);
+
+  }, [bookingList]);
+
+  return (
+    <div className="bg-white h-full">
+      <h3 className="text-lg font-bold text-gray-800 mb-4">Popular Tours</h3>
+
+      {popularTours.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-40 text-gray-400">
+          <p className="text-sm">No bookings found for this month.</p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {popularTours.map((item, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors border border-slate-100/50"
+            >
+              <div className="flex items-center gap-3 overflow-hidden">
+                <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm shrink-0">
+                  #{i + 1}
+                </div>
+
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-slate-900 truncate pr-2">
+                    {/* This now displays the 'tour' field */}
+                    {item.name} 
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    {item.bookings} bookings this month
+                  </p>
+                </div>
+              </div>
+
+              {/* <div
+                className={`text-xs font-bold whitespace-nowrap ${
+                  item.trend > 0
+                    ? "text-green-600"
+                    : item.trend < 0
+                    ? "text-red-500"
+                    : "text-gray-400"
+                }`}
+              >
+                {item.trend > 0 ? "+" : ""}
+                {item.trend}%
+              </div> */}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -54,6 +54,9 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+
+  const recommendedTours = toursList.filter(tour => tour.recommended === true);
+
   const router = useNavigate();
 
   // const [toursList, setTours] = useState<TourCardProps[]>([]);
@@ -333,17 +336,24 @@ export default function Home() {
         </div>
         {/* featured */}
         <div className="">
-          <h2 className="text-4xl font-medium mb-6 md:mt-10 mt-5 ">Recommended Tours</h2>
-          <div className="grid md:grid-cols-3 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
-            {/* Tour cards would go here */}
-            {toursList.map((tour) => (
-              <TourCard
-                key={tour.id}
-                {...tour}
+          <h2 className="text-4xl font-medium mb-6 md:mt-10 mt-5">Recommended Tours</h2>
 
-              />
-            ))}
-          </div>
+          {/* 2. Check if the list has items */}
+          {recommendedTours.length > 0 ? (
+            <div className="grid md:grid-cols-3 grid-cols-1 px-2 gap-2 overflow-x-auto pb-4">
+              {recommendedTours.map((tour) => (
+                <TourCard
+                  key={tour.id}
+                  {...tour}
+                />
+              ))}
+            </div>
+          ) : (
+            /* 3. Display this message if the list is empty */
+            <div className="w-full py-10 text-center bg-gray-50 rounded-lg border border-dashed border-gray-200">
+              <p className="text-gray-500 text-lg">No recommended tours available at the moment.</p>
+            </div>
+          )}
         </div>
 
 

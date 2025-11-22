@@ -32,6 +32,8 @@ export interface Tour {
   style? : string;
   pickup? :string;
   short? :string;
+
+  recommended  ?: boolean;
 }
 
 

@@ -176,9 +176,9 @@ export default function CheckoutPage() {
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-600">
-                  <a href="tel:0993210694" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                  <a href="tel:0615097533" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Phone size={14} className="text-slate-400" />
-                    <span>099 321 0694</span>
+                    <span>0615097533</span>
                   </a>
                   <a href="mailto:creativetourguru@hotmail.com" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Mail size={14} className="text-slate-400" />
@@ -188,21 +188,21 @@ export default function CheckoutPage() {
 
                 <div className="flex gap-3 mt-4 pt-3 border-t border-slate-100">
                   <a
-                    href="https://wa.me/0993210694"
+                    href="https://wa.me/0615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="WhatsApp"
                   >
                     <FaWhatsapp size={16} />
                   </a>
                   <a
-                    href="https://line.me/ti/p/~0993210694"
+                    href="https://line.me/ti/p/~0615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="LINE"
                   >
                     <FaLine size={16} />
                   </a>
                   <a
-                    href="tel:0993210694"
+                    href="tel:0615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="Call"
                   >
@@ -319,7 +319,7 @@ export default function CheckoutPage() {
 
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <a
-              href="https://wa.me/0993210694"
+              href="https://wa.me/0615097533"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-green-50 transition"
@@ -329,7 +329,7 @@ export default function CheckoutPage() {
               WhatsApp
             </a>
             <a
-              href="tel:0993210694"
+              href="tel:0615097533"
               className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-slate-50 transition"
               title="Call"
             >
@@ -345,7 +345,7 @@ export default function CheckoutPage() {
               Email
             </a>
             <a
-              href="https://line.me/ti/p/~0993210694"
+              href="https://line.me/ti/p/~0615097533"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-green-50 transition"
@@ -519,9 +519,9 @@ export default function CheckoutPage() {
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-600">
-                  <a href="tel:0993210694" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                  <a href="tel:0615097533" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Phone size={14} className="text-slate-400" />
-                    <span>099 321 0694</span>
+                    <span>0615097533</span>
                   </a>
                   <a href="mailto:creativetourguru@hotmail.com" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Mail size={14} className="text-slate-400" />
@@ -531,21 +531,21 @@ export default function CheckoutPage() {
 
                 <div className="flex gap-3 mt-4 pt-3 border-t border-slate-100">
                   <a
-                    href="https://wa.me/0993210694"
+                    href="https://wa.me/0615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="WhatsApp"
                   >
                     <FaWhatsapp size={16} />
                   </a>
                   <a
-                    href="https://line.me/ti/p/~0993210694"
+                    href="https://line.me/ti/p/~0615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="LINE"
                   >
                     <FaLine size={16} />
                   </a>
                   <a
-                    href="tel:0993210694"
+                    href="tel:0615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="Call"
                   >

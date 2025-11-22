@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "~/lib/firebase/config";
 import type { BookingModel } from "~/models/booking";
+import { tourService } from "./tourService";
 
 
 const BOOKINGS_COLLECTION = "bookings";
@@ -20,7 +21,7 @@ export const bookingService = {
   // CREATE
   async createBooking(data: Omit<BookingModel, "id" | "created_at" | "updated_at">) {
     const colRef = collection(db, BOOKINGS_COLLECTION);
-    
+
     const newBooking = {
       ...data,
       created_at: serverTimestamp(),
@@ -37,12 +38,32 @@ export const bookingService = {
     const colRef = collection(db, BOOKINGS_COLLECTION);
     const snapshot = await getDocs(colRef);
 
-    return snapshot.docs.map((docItem) => ({
-      id: docItem.id,
-      ...(docItem.data() as BookingModel),
-    }));
-  },
+    // Load all bookings with tourName resolved
+    const bookings = await Promise.all(
+      snapshot.docs.map(async (docItem) => {
+        const data = docItem.data() as BookingModel;
 
+        // Fetch tour data by id
+        let tourName = "";
+        try {
+          if (data.tour) {
+            const tour = await tourService.getById(data.tour);
+            tourName = tour?.title || "";
+          }
+        } catch (err) {
+          console.error("Failed to fetch tour:", err);
+        }
+
+        return {
+          id: docItem.id,
+          ...data,
+          tourName, // <--- Add new field
+        };
+      })
+    );
+
+    return bookings;
+  },
   // GET ONE
   async getBooking(id: string) {
     const docRef = doc(db, BOOKINGS_COLLECTION, id);

@@ -43,7 +43,7 @@ export default function AboutUs() {
               href="tel:+66993210694"
               className="inline-flex items-center justify-center px-5 py-3 rounded-md bg-emerald-600 text-white font-medium shadow hover:bg-emerald-700"
             >
-              Call us: 099 321 0694
+              Call us: 0615097533
             </a>
 
             <a
@@ -91,7 +91,7 @@ export default function AboutUs() {
         <p className="text-sm text-slate-600 mt-2">We’re happy to answer questions or start planning your trip.</p>
 
         <div className="mt-4 flex flex-col sm:flex-row gap-3">
-          <a href="tel:+66993210694" className="text-sm underline">Phone: 099 321 0694</a>
+          <a href="tel:+66993210694" className="text-sm underline">Phone: 0615097533</a>
           <a href="mailto:creativetourguru@hotmail.com" className="text-sm underline">Email: creativetourguru@hotmail.com</a>
         </div>
       </section>

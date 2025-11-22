@@ -8,6 +8,8 @@ import {
     LogOut,
     X
 } from 'lucide-react';
+
+import { LuNotebookText } from "react-icons/lu";
 import { Link, useLocation } from 'react-router';
 
 interface SidebarProps {
@@ -23,6 +25,7 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
         { icon: List, label: 'Tour List', path: '/admin/tour/list' },
         { icon: PlusCircle, label: 'Add Tour', path: '/admin/tour/add' },
+        { icon: LuNotebookText, label: 'Bookings', path: '/admin/bookings' },
 
         // { icon: Settings, label: 'Settings', path: '/admin/settings' },
     ];

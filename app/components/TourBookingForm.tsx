@@ -9,7 +9,9 @@ export default function TourBookingForm({
   tour,
   price,
   cover,
+  tourName
 }: {
+  tourName?: string;
   tour?: string;
   price?: number;
   cover?: string;
@@ -46,8 +48,10 @@ export default function TourBookingForm({
     try {
       const payload = {
         ...formData,
+        tourName: tourName || "",
         tour: tour || null,
         price: price || 0,
+
         totalPrice: totalPrice,
         status: "unpaid" as const,
       };
@@ -97,8 +101,8 @@ export default function TourBookingForm({
 
             <h3 className="font-semibold text-xl">Contact Us</h3>
             <ul className="space-y-3 text-sm">
-              <Link to="tel:0993210694" className="flex items-center gap-2">
-                <Phone size={16} /> 099 321 0694
+              <Link to="tel:0615097533" className="flex items-center gap-2">
+                <Phone size={16} /> 0615097533
               </Link>
               <Link
                 to="mailto:creativetourguru@hotmail.com"
@@ -113,7 +117,7 @@ export default function TourBookingForm({
 
             <div className="flex gap-4 mt-4">
               <a
-                href="https://wa.me/0993210694"
+                href="https://wa.me/0615097533"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -122,7 +126,7 @@ export default function TourBookingForm({
                 <FaWhatsapp size={18} />
               </a>
               <a
-                href="tel:0993210694"
+                href="tel:0615097533"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
                 title="Call us"
               >
@@ -136,7 +140,7 @@ export default function TourBookingForm({
                 <Mail size={18} />
               </a>
               <a
-                href="https://line.me/ti/p/~0993210694"
+                href="https://line.me/ti/p/~0615097533"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"

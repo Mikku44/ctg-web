@@ -2,23 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import type { Tour, TourImage } from "~/models/tour";
-import { Minus } from "lucide-react";
+import { Minus, Image as ImageIcon } from "lucide-react"; // <--- Added ImageIcon
 import { tourService } from "~/services/tourService";
 import { images_file } from "public/images/image_files";
 import type { Route } from "./+types/tour.update";
 import JsonPreview from "./components/JsonPreview";
 
-
 export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) {
-   
+    
     const tourId = params.tourId || "E3gXfncUqEjFcAfkowml"
 
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string>("");
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [isOpen, setIsOpen] = useState(false);
+    
+    // NEW: Track which mode the modal is in ('featured' or 'gallery')
+    const [modalMode, setModalMode] = useState<"featured" | "gallery">("gallery");
 
-    // form state (strings)
+    // form state
     const [form, setForm] = useState({
         title: "",
         slug: "",
@@ -31,16 +33,17 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         program_detail: "",
         status: "draft",
         tour_type: "",
+        recommended: false, 
     });
 
-    // array fields as arrays (store as arrays - easier)
+    // array fields
     const [note, setNote] = useState<string[]>([]);
     const [itinerary, setItinerary] = useState<string[]>([]);
     const [tourInclude, setTourInclude] = useState<string[]>([]);
     const [notInclude, setNotInclude] = useState<string[]>([]);
     const [cancellationPolicy, setCancellationPolicy] = useState<string[]>([]);
 
-    // gallery images (local state, includes id if exists or generated for new)
+    // gallery images (local state)
     const [images, setImages] = useState<TourImage[]>([]);
     // modal selection
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
@@ -69,6 +72,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     program_detail: tour.program_detail || "",
                     status: tour.status || "draft",
                     tour_type: tour.tour_type || "",
+                    recommended: tour.recommended ?? false,
                 });
 
                 setPreview(tour.featured_image || "");
@@ -93,7 +97,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         })();
     }, [tourId]);
 
-    // generate slug (same logic as create)
+    // generate slug
     const generateSlug = (title: string) => {
         const base = title
             .toLowerCase()
@@ -113,7 +117,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         if (name === "featured_image") setPreview(value);
     };
 
-    // handle array textarea changes (store as arrays)
+    // handle array textarea changes
     const handleArrayChange = (
         e: React.ChangeEvent<HTMLTextAreaElement>,
         setState: React.Dispatch<React.SetStateAction<string[]>>
@@ -122,55 +126,79 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         setState(lines);
     };
 
-    // process array to send to backend (already arrays)
+    // process array to send to backend
     const processArrayField = (arr: string[]) => arr.filter((l) => l.trim() !== "");
 
-    // Modal open/close
-    const handleOpenModal = () => {
+    // Modal Logic ------------------------------------------------------
+
+    const handleCloseModal = () => setIsOpen(false);
+
+    // Open for Featured Image (Single Select)
+    const handleOpenFeaturedModal = () => {
+        setModalMode("featured");
+        // Pre-select current featured image if exists
+        setSelectedImages(form.featured_image ? [form.featured_image] : []);
+        setIsOpen(true);
+    };
+
+    // Open for Gallery (Multi Select)
+    const handleOpenGalleryModal = () => {
+        setModalMode("gallery");
         setSelectedImages(images.map((i) => i.image_url));
         setIsOpen(true);
     };
-    const handleCloseModal = () => setIsOpen(false);
 
     const toggleSelect = (filenameOrUrl: string) => {
-        // If passed filename from images_file, build url; otherwise accept url
+        // Resolve URL from filename or use as is
         const file = images_file.find((f) => f.filename === filenameOrUrl);
         const imageUrl = file ? `/images/${file.path}` : filenameOrUrl;
 
-        setSelectedImages((prev) =>
-            prev.includes(imageUrl) ? prev.filter((f) => f !== imageUrl) : [...prev, imageUrl]
-        );
+        if (modalMode === "featured") {
+            // Single Select: Replace selection or toggle off
+            setSelectedImages(prev => prev.includes(imageUrl) ? [] : [imageUrl]);
+        } else {
+            // Multi Select: Append or remove
+            setSelectedImages((prev) =>
+                prev.includes(imageUrl) ? prev.filter((f) => f !== imageUrl) : [...prev, imageUrl]
+            );
+        }
     };
 
-    // apply images from modal to images state (convert to TourImage list)
+    // Apply Selection
     const handleApplyImages = () => {
-        const newImages: TourImage[] = selectedImages.map((url, index) => {
-            // Try to reuse existing id if exists
-            const exists = images.find((i) => i.image_url === url);
-            return {
-                id: exists?.id || uuidv4(),
-                tour_id: tourId || "",
-                image_url: url,
-                order_index: index,
-            };
-        });
-        setImages(newImages);
+        if (modalMode === "featured") {
+            // Set Featured Image
+            if (selectedImages.length > 0) {
+                const url = selectedImages[0];
+                setForm(prev => ({ ...prev, featured_image: url }));
+                setPreview(url);
+            }
+        } else {
+            // Set Gallery Images
+            const newImages: TourImage[] = selectedImages.map((url, index) => {
+                // Try to reuse existing id if exists
+                const exists = images.find((i) => i.image_url === url);
+                return {
+                    id: exists?.id || uuidv4(),
+                    tour_id: tourId || "",
+                    image_url: url,
+                    order_index: index,
+                };
+            });
+            setImages(newImages);
+        }
         handleCloseModal();
     };
 
-    // Add a new URL manually (below the textarea behavior also sets images)
-    const handleAddImageUrl = (url: string) => {
-        setImages((prev) => [...prev, { id: uuidv4(), tour_id: tourId || "", image_url: url, order_index: prev.length }]);
-        setSelectedImages((prev) => [...prev, url]);
-    };
+    // ------------------------------------------------------------------
 
-    // remove image (from local state). If the image existed on server, will delete on save.
+    // remove image (from local state)
     const handleRemoveImageLocal = (imageId: string) => {
         setImages((prev) => prev.filter((i) => i.id !== imageId));
         setSelectedImages((prev) => prev.filter((u) => u !== images.find((img) => img.id === imageId)?.image_url));
     };
 
-    // reorder helper: move up/down
+    // reorder helper
     const moveImage = (index: number, dir: "up" | "down") => {
         setImages((prev) => {
             const clone = [...prev];
@@ -179,7 +207,6 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
             const tmp = clone[target];
             clone[target] = clone[index];
             clone[index] = tmp;
-            // reassign order_index
             return clone.map((it, idx) => ({ ...it, order_index: idx }));
         });
     };
@@ -219,18 +246,18 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 featured_image: form.featured_image,
                 status: form.status as "draft" | "published",
                 tour_type: form.tour_type,
+                recommended: form.recommended,
             };
 
             // Update tour main record
             await tourService.update(tourId, payload);
 
-            // Sync images:
-            // 1) Get current server images to determine delete/update/add
+            // Sync images logic...
             const serverImages = await tourService.getImages(tourId);
             const serverByUrl = new Map(serverImages.map((si) => [si.image_url, si]));
             const localByUrl = new Map(images.map((li) => [li.image_url, li]));
 
-            // Delete images that are on server but not local
+            // Delete images
             await Promise.all(
                 serverImages
                     .filter((si) => !localByUrl.has(si.image_url))
@@ -243,12 +270,11 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     })
             );
 
-            // Update existing server images order or url if changed
+            // Update or Add images
             await Promise.all(
                 images.map(async (img, idx) => {
                     const server = serverByUrl.get(img.image_url);
                     if (server) {
-                        // ensure order_index is updated if changed
                         if ((server.order_index ?? -1) !== idx) {
                             try {
                                 await tourService.updateImage(server.id, img.image_url, idx);
@@ -257,7 +283,6 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                             }
                         }
                     } else {
-                        // new image -> add
                         try {
                             await tourService.addImage(tourId, img.image_url, idx);
                         } catch (err) {
@@ -284,6 +309,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         notInclude,
         tourInclude,
         cancellationPolicy,
+        recommended: form.recommended,
     };
 
     return (
@@ -336,24 +362,57 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                         </div>
                     </div>
 
-                    {/* Type & Status */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
+                    {/* Type, Status & Recommended Toggle */}
+                    <div className="grid grid-cols-3 gap-4 items-end">
+                        <div className="col-span-1">
                             <label className="block text-sm font-medium mb-1">Tour Type</label>
                             <input name="tour_type" value={form.tour_type} onChange={handleChange} placeholder="Full Day / Private" className="w-full admin-input" />
                         </div>
-                        <div>
+                        <div className="col-span-1">
                             <label className="block text-sm font-medium mb-1">Status</label>
                             <select name="status" value={form.status} onChange={handleChange} className="w-full admin-input">
                                 <option value="draft">Draft</option>
                                 <option value="published">Published</option>
                             </select>
                         </div>
+                        <div className="col-span-1 flex flex-col justify-end pb-2">
+                            <label 
+                                className="block text-sm font-medium mb-2 text-gray-700 cursor-pointer"
+                                onClick={() => setForm(prev => ({ ...prev, recommended: !prev.recommended }))}
+                            >
+                                Recommended?
+                            </label>
+                            <button
+                                type="button"
+                                onClick={() => setForm(prev => ({ ...prev, recommended: !prev.recommended }))}
+                                className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                                    form.recommended ? "bg-green-500" : "bg-gray-300"
+                                }`}
+                            >
+                                <span
+                                    className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform duration-200 ${
+                                        form.recommended ? "translate-x-8" : "translate-x-1"
+                                    }`}
+                                />
+                            </button>
+                        </div>
                     </div>
 
                     {/* Featured Image */}
                     <div>
                         <label className="block text-sm font-medium mb-1">Featured Image URL</label>
+                        
+                        {/* ADDED BUTTON FOR FEATURED IMAGE SELECTION */}
+                        <div className="flex gap-2 mb-2">
+                            <button
+                                type="button"
+                                onClick={handleOpenFeaturedModal}
+                                className="bg-zinc-600 text-white py-1 px-4 rounded-lg hover:bg-zinc-700 transition flex items-center gap-2"
+                            >
+                                <ImageIcon size={16} /> Select Featured Image
+                            </button>
+                        </div>
+
                         <input name="featured_image" value={form.featured_image} onChange={handleChange} placeholder="https://..." className="w-full admin-input" />
                         {preview && <img src={preview} alt="Preview" className="mt-3 w-full h-48 object-cover rounded-lg" />}
                     </div>
@@ -362,7 +421,13 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     <div>
                         <label className="block text-sm font-medium mb-1">Gallery Images (URLs)</label>
                         <div className="flex gap-2 mb-2">
-                            <button type="button" onClick={handleOpenModal} className="bg-purple-600 text-white py-1 px-4 rounded-lg hover:bg-purple-700 transition">Select Images from Library</button>
+                            <button 
+                                type="button" 
+                                onClick={handleOpenGalleryModal} 
+                                className="bg-purple-600 text-white py-1 px-4 rounded-lg hover:bg-purple-700 transition flex items-center gap-2"
+                            >
+                                <ImageIcon size={16} /> Select Gallery Images
+                            </button>
                         </div>
 
                         <textarea
@@ -441,13 +506,19 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 <section className="w-full h-screen z-99 bg-black/30 fixed flex flex-col items-center justify-center top-0 left-0">
                     <div className="bg-white rounded-xl w-full h-full p-5 max-w-[80vw] max-h-[80vh] flex flex-col">
                         <div className="w-full flex items-center justify-between flex-shrink-0">
-                            <div className="text-3xl font-bold">Gallery</div>
+                            {/* DYNAMIC TITLE */}
+                            <div className="text-3xl font-bold">
+                                {modalMode === "featured" ? "Select Featured Image" : "Select Gallery Images"}
+                            </div>
                             <button onClick={handleCloseModal} className="rounded-sm hover:bg-zinc-200 p-2">
                                 <Minus size={24} className="text-zinc-500" />
                             </button>
                         </div>
 
-                        <div className="text-sm text-gray-500 mt-2 flex-shrink-0">{selectedImages.length} images selected.</div>
+                        <div className="text-sm text-gray-500 mt-2 flex-shrink-0">
+                            {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected
+                            {modalMode === "featured" && " (Max 1)"}
+                        </div>
 
                         <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3 w-full flex-grow">
                             {images_file.map((item) => {
@@ -468,7 +539,13 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
                         <div className="flex justify-end pt-4 border-t border-gray-200 flex-shrink-0">
                             <button type="button" onClick={handleCloseModal} className="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition mr-3">Cancel</button>
-                            <button type="button" onClick={handleApplyImages} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Apply Selection ({selectedImages.length})</button>
+                            <button 
+                                type="button" 
+                                onClick={handleApplyImages} 
+                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                            >
+                                {modalMode === "featured" ? "Set Featured Image" : `Apply Selection (${selectedImages.length})`}
+                            </button>
                         </div>
                     </div>
                 </section>

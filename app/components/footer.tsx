@@ -44,8 +44,8 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold text-lg mb-3">Contact Us</h3>
                     <ul className="space-y-3 text-white/90 text-sm">
-                        <Link to="tel:0993210694" target="_blank" className="flex items-center gap-2">
-                            <Phone size={16} /> 099 321 0694
+                        <Link to="tel:0615097533" target="_blank" className="flex items-center gap-2">
+                            <Phone size={16} /> 0615097533
                         </Link >
                         <Link to="mailto:creativetourguru@hotmail.com" target="_blank" className="flex items-center gap-2">
                             <Mail size={16} /> creativetourguru@hotmail.com
@@ -59,7 +59,7 @@ export default function Footer() {
                     <div className="flex gap-4 mt-4">
                         {/* WhatsApp */}
                         <a
-                            href="https://wa.me/0993210694"
+                            href="https://wa.me/0615097533"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -70,7 +70,7 @@ export default function Footer() {
 
                         {/* Phone */}
                         <a
-                            href="tel:0993210694"
+                            href="tel:0615097533"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
                             title="Call us"
                         >
@@ -88,7 +88,7 @@ export default function Footer() {
 
                         {/* LINE */}
                         <a
-                            href="https://line.me/ti/p/~0993210694"
+                            href="https://line.me/ti/p/~0615097533"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"

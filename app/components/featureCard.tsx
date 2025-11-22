@@ -19,6 +19,7 @@ export type TourCardProps = {
   place_location?: string;
   maxPeople?: number;
   tourType?: string;
+  recommended?: boolean;
 };
 
 export function TourCard({
@@ -33,7 +34,8 @@ export function TourCard({
   place_location,
   maxPeople,
   tourType,
-  className
+  className,
+  recommended
 }: TourCardProps) {
 
   const router = useNavigate();
@@ -41,6 +43,7 @@ export function TourCard({
   return (
     <Link to={`/tours/${slug}`} target="_blank" draggable="false" className={`group select-none cursor-potiner w-full bg-white h-fit
      overflow-hidden border border-zinc-200 transition-all rounded-sm duration-300 ${className}`}>
+
       <div className="relative overflow-hidden">
         <img
           src={image}

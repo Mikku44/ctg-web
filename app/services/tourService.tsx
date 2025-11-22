@@ -68,6 +68,7 @@ export const tourService = {
         route: `/tours/${tour.slug}`,
         place_location: tour.location,
         maxPeople: firstPackage?.max_people,
+        recommended: tour.recommended,
         tourType: tour.tour_type,
       };
     });
@@ -102,10 +103,14 @@ export const tourService = {
         route: `/tours/${tour.slug}`,
         place_location: tour.location,
         maxPeople: firstPackage?.max_people,
+        recommended: tour.recommended,
         tourType: tour.tour_type,
       } as TourCardProps;
     });
   },
+
+
+  
 
   /** 🔍 Get a single tour by slug */
   async getBySlug(slug: string): Promise<Tour | null> {
