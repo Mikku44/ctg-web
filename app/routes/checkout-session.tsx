@@ -108,7 +108,7 @@ export default function CheckoutSession() {
     );
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center space-y-4 text-center p-6">
+    <main className="min-h-screen flex flex-col items-center justify-center space-y-4  p-6">
 
       {status === "succeeded" && bookingData && (
         <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto py-12">
@@ -116,9 +116,16 @@ export default function CheckoutSession() {
           <h1 className="text-3xl font-semibold text-gray-800 mb-2 text-center">
             Booking Confirmed
           </h1>
-          <p className="text-center text-zinc-600 mb-8 max-w-md">
+          <p className="text-center text-zinc-600 max-w-md">
             {message || "Your booking has been successfully confirmed. Find your detailed ticket below."}
           </p>
+
+          <p className="text-center text-zinc-500 text-sm mt-2 mb-2 max-w-md">
+            Please save or print your ticket for easy access during your trip.**
+          </p>
+
+
+
 
           {/* --- Ticket Card Container (for image generation) --- */}
           <div
@@ -187,6 +194,8 @@ export default function CheckoutSession() {
               )}
             </div>
           </div>
+
+
           {/* --- End Ticket Card Container --- */}
 
           {/* Action Buttons */}
