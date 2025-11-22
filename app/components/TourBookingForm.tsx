@@ -9,12 +9,14 @@ export default function TourBookingForm({
   tour,
   price,
   cover,
-  tourName
+  tourName,
+  pickup_area
 }: {
   tourName?: string;
   tour?: string;
   price?: number;
   cover?: string;
+  pickup_area?: string;
 }) {
 
   const router = useNavigate();
@@ -252,6 +254,7 @@ export default function TourBookingForm({
               <label className="text-sm font-medium text-gray-700 mb-1">
                 Hotel for Pick-Up
               </label>
+              <div className="text-sm text-gray-500">{pickup_area}</div>
               <input
                 name="hotel"
                 value={formData.hotel}

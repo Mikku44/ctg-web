@@ -64,7 +64,7 @@ export default function Tours() {
                 <section className="flex justify-between items-center mb-2">
                     <div className="">
                         <h1 className="text-4xl font-semibold mt-5">Explore Tours Destination</h1>
-                        <p className=" text-zinc-500">{filterItems?.length ? filterItems.length * totalPages : 0} Tours found.</p>
+                        <p className=" text-zinc-500">{tourList.length || 0} Tours found.</p>
                     </div>
                     {/* <div className="md:max-w-[50vw] mx-auto text-center">
                         <h2 className="text-lg text-zinc-500 mb-6">
@@ -118,7 +118,6 @@ export default function Tours() {
                         </p>
                     </div>
                 )}
-
 
                 {/* Pagination */}
                 <Stack

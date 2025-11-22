@@ -1,7 +1,8 @@
-import { Star, Users, MapPin, Clock, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState } from "react";
-import { TourCard } from "./featureCard";
-import { tourList } from "~/const/app";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { TourCard, type TourCardProps } from "./featureCard";
+import { tourService } from "~/services/tourService";
+// import { tourList } from "~/const/app";
 
 
 
@@ -12,6 +13,8 @@ export default function FeaturedTours() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+
+   const [tours, setTours] = useState<TourCardProps[]>([]);
 
   const checkScroll = () => {
     if (scrollContainerRef.current) {
@@ -24,10 +27,10 @@ export default function FeaturedTours() {
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const scrollAmount = 400;
-      const newScrollLeft = direction === 'left' 
+      const newScrollLeft = direction === 'left'
         ? scrollContainerRef.current.scrollLeft - scrollAmount
         : scrollContainerRef.current.scrollLeft + scrollAmount;
-      
+
       scrollContainerRef.current.scrollTo({
         left: newScrollLeft,
         behavior: 'smooth'
@@ -59,12 +62,28 @@ export default function FeaturedTours() {
     setIsDragging(false);
   };
 
- 
+  const PAGE_SIZE = 10;
+
+
+  useEffect(() => {
+    loadTours();
+  }, []);
+
+  async function loadTours() {
+    const res = await tourService.getPaginatedForCard(PAGE_SIZE);
+
+    setTours(res.tours);
+   
+  }
+
+  
+
+
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container-x mx-auto px-4 py-8">
       <h2 className="text-2xl font-semibold mb-6 md:mt-10 mt-5">Featured Tours</h2>
-      
+
       <div className="relative group/carousel">
         {/* Left Arrow */}
         {showLeftArrow && (
@@ -85,10 +104,10 @@ export default function FeaturedTours() {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
-          className={`grid grid-flow-col overflow-x-auto px-2 gap-6 pb-4 scrollbar-hide ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          className={`grid grid-flow-col overflow-x-auto gap-6 pb-4 scrollbar-hide ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {tourList.map((tour, index) => (
+          {tours.map((tour, index) => (
             <TourCard
               key={index}
               className="min-w-[340px]"
@@ -110,10 +129,10 @@ export default function FeaturedTours() {
       </div>
 
       <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
     </div>
   );
 }

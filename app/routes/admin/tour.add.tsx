@@ -23,9 +23,9 @@ export default function AddTourAdminPage() {
     program_detail: "",
     status: "draft",
     tour_type: "",
-    style: "",
-    pickup: "",
-    short: "",
+    style: "", // Added
+    pickup: "", // Added
+    short: "", // Added
     recommended: false,
   });
 
@@ -78,6 +78,9 @@ export default function AddTourAdminPage() {
         const url = selectedImages[0];
         setForm(prev => ({ ...prev, featured_image: url }));
         setPreview(url);
+      } else {
+        setForm(prev => ({ ...prev, featured_image: "" }));
+        setPreview("");
       }
     } else {
       // GALLERY LOGIC
@@ -97,6 +100,11 @@ export default function AddTourAdminPage() {
     if (name === "title") {
       setForm((prev) => ({ ...prev, slug: generateSlug(value), [name]: (value) }));
     }
+    else if (name === "recommended") {
+      // Handle checkbox change if recommended were a checkbox, but it's a button/toggle, so it's handled separately.
+      // Keeping this structure for general form changes.
+      setForm((prev : any) => ({ ...prev, [name]: (value) }));
+    }
     else {
       setForm((prev) => ({ ...prev, [name]: (value) }));
     }
@@ -104,15 +112,26 @@ export default function AddTourAdminPage() {
     if (name === "featured_image") setPreview(value);
   };
 
+  /**
+   * FIX: Stores the entire content of the textarea as the single element in the state array.
+   * The splitting logic is handled on submission by processArrayField.
+   */
   const handleArrayChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     setState: React.Dispatch<React.SetStateAction<string[]>>
   ) => {
     const lines = e.target.value;
-    setState([lines]); 
+    setState([lines]);
   };
 
-  const processArrayField = (arr: string[]) => arr.join().split("\n").filter((l) => l.trim() !== "");
+  const processArrayField = (arr: string[]) => {
+    // If the array is empty or contains only an empty string, return an empty array.
+    if (!arr || arr.length === 0 || arr[0].trim() === "") {
+      return [];
+    }
+    // Split the single string element by new line, filter out empty lines, and return.
+    return arr[0].split("\n").filter((l) => l.trim() !== "");
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,7 +163,11 @@ export default function AddTourAdminPage() {
         status: form.status as "draft" | "published",
         rating: 0,
         tour_type: form.tour_type,
-        recommended: form.recommended, 
+        recommended: form.recommended,
+        // FIX: Added missing fields to the submission payload
+        style: form.style,
+        pickup: form.pickup,
+        short: form.short,
       });
 
       // Submit gallery images
@@ -190,28 +213,30 @@ export default function AddTourAdminPage() {
 
   const KEYMAPPING = {
     "images": images,
-    "note": note,
-    "itinerary": itinerary,
-    "notInclude": notInclude,
-    "tourInclude": tourInclude,
-    "cancellationPolicy": cancellationPolicy,
-    "recommended": form.recommended 
+    "note": processArrayField(note), // Show processed version in preview
+    "itinerary": processArrayField(itinerary), // Show processed version in preview
+    "notInclude": processArrayField(notInclude), // Show processed version in preview
+    "tourInclude": processArrayField(tourInclude), // Show processed version in preview
+    "cancellationPolicy": processArrayField(cancellationPolicy), // Show processed version in preview
+    "recommended": form.recommended
   }
 
   const toggleSelect = (filename: string) => {
-    const imageUrl = `/images/${images_file.find(i => i.filename === filename)?.path || filename}`;
+    // Assuming image paths are correctly constructed here
+    const imageObject = images_file.find(i => i.filename === filename);
+    const imageUrl = `/images/${imageObject?.path || filename}`;
 
     if (modalMode === "featured") {
-        // SINGLE SELECT BEHAVIOR
-        // If clicking the already selected one, allow deselect, otherwise replace selection
-        setSelectedImages(prev => prev.includes(imageUrl) ? [] : [imageUrl]);
+      // SINGLE SELECT BEHAVIOR
+      // If clicking the already selected one, allow deselect, otherwise replace selection
+      setSelectedImages(prev => prev.includes(imageUrl) ? [] : [imageUrl]);
     } else {
-        // MULTI SELECT BEHAVIOR (Gallery)
-        setSelectedImages((prev) =>
-          prev.includes(imageUrl)
-            ? prev.filter((f) => f !== imageUrl)
-            : [...prev, imageUrl]
-        );
+      // MULTI SELECT BEHAVIOR (Gallery)
+      setSelectedImages((prev) =>
+        prev.includes(imageUrl)
+          ? prev.filter((f) => f !== imageUrl)
+          : [...prev, imageUrl]
+      );
     }
   };
 
@@ -302,7 +327,7 @@ export default function AddTourAdminPage() {
           {/* Featured Image Section */}
           <div>
             <label className="block text-sm font-medium mb-1">Featured Image URL</label>
-            
+
             {/* BUTTON ADDED HERE */}
             <div className="flex gap-2 mb-2">
               <button
@@ -310,7 +335,7 @@ export default function AddTourAdminPage() {
                 onClick={handleOpenFeaturedModal}
                 className="bg-zinc-600 text-white py-1 px-4 rounded-lg hover:bg-zinc-700 transition flex items-center gap-2"
               >
-                 <ImageIcon size={16} /> Select Featured Image
+                <ImageIcon size={16} /> Select Featured Image
               </button>
             </div>
 
@@ -356,26 +381,31 @@ export default function AddTourAdminPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Notes (one per line)</label>
-              <textarea onChange={(e) => handleArrayChange(e, setNote)} rows={4} className="w-full admin-input" value={note} />
+              {/* FIX: Use note[0] || "" for display */}
+              <textarea onChange={(e) => handleArrayChange(e, setNote)} rows={4} className="w-full admin-input" value={note[0] || ""} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Itinerary (one per line)</label>
-              <textarea onChange={(e) => handleArrayChange(e, setItinerary)} rows={4} className="w-full admin-input" value={itinerary.join("\n")} />
+              {/* FIX: Use itinerary[0] || "" for display */}
+              <textarea onChange={(e) => handleArrayChange(e, setItinerary)} rows={4} className="w-full admin-input" value={itinerary[0] || ""} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Tour Includes (one per line)</label>
-              <textarea onChange={(e) => handleArrayChange(e, setTourInclude)} rows={4} className="w-full admin-input" value={tourInclude.join("\n")} />
+              {/* FIX: Use tourInclude[0] || "" for display */}
+              <textarea onChange={(e) => handleArrayChange(e, setTourInclude)} rows={4} className="w-full admin-input" value={tourInclude[0] || ""} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Not Included (one per line)</label>
-              <textarea onChange={(e) => handleArrayChange(e, setNotInclude)} rows={4} className="w-full admin-input" value={notInclude.join("\n")} />
+              {/* FIX: Use notInclude[0] || "" for display */}
+              <textarea onChange={(e) => handleArrayChange(e, setNotInclude)} rows={4} className="w-full admin-input" value={notInclude[0] || ""} />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Cancellation Policy (one per line)</label>
-            <textarea onChange={(e) => handleArrayChange(e, setCancellationPolicy)} rows={3} className="w-full admin-input" value={cancellationPolicy.join("\n")} />
+            {/* FIX: Use cancellationPolicy[0] || "" for display */}
+            <textarea onChange={(e) => handleArrayChange(e, setCancellationPolicy)} rows={3} className="w-full admin-input" value={cancellationPolicy[0] || ""} />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Program Detail</label>
@@ -410,14 +440,14 @@ export default function AddTourAdminPage() {
         <div className="bg-white rounded-xl w-full h-full p-5 max-w-[80vw] max-h-[80vh] flex flex-col">
           <div className="w-full flex items-center justify-between flex-shrink-0">
             <div className="text-3xl font-bold">
-                {modalMode === "featured" ? "Select Featured Image" : "Select Gallery Images"}
+              {modalMode === "featured" ? "Select Featured Image" : "Select Gallery Images"}
             </div>
             <button
               onClick={handleCloseModal}
               className="rounded-sm hover:bg-zinc-200 p-2" ><Minus size={24} className="text-zinc-500"></Minus></button>
           </div>
           <div className="text-sm text-gray-500 mt-2 flex-shrink-0">
-            {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected 
+            {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected
             {modalMode === "featured" && " (Max 1)"}
           </div>
 

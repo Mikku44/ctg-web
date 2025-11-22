@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import type { Tour, TourImage } from "~/models/tour";
-import { Minus, Image as ImageIcon } from "lucide-react"; // <--- Added ImageIcon
+import { Minus, Image as ImageIcon } from "lucide-react";
 import { tourService } from "~/services/tourService";
 import { images_file } from "public/images/image_files";
 import type { Route } from "./+types/tour.update";
@@ -10,6 +9,7 @@ import JsonPreview from "./components/JsonPreview";
 
 export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) {
     
+    // NOTE: tourId is being derived from params, but using a default value for local testing
     const tourId = params.tourId || "E3gXfncUqEjFcAfkowml"
 
     const [loading, setLoading] = useState(false);
@@ -33,7 +33,11 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         program_detail: "",
         status: "draft",
         tour_type: "",
-        recommended: false, 
+        recommended: false,
+        // 👇 ADDED MISSING FIELDS
+        style: "",
+        pickup: "",
+        short: "", 
     });
 
     // array fields
@@ -54,7 +58,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         (async () => {
             try {
                 setLoading(true);
-                const tour: Tour = await tourService.getById(tourId);
+                const tour: Tour | any = await tourService.getById(tourId);
                 const gallery: TourImage[] = await tourService.getImages(tourId);
 
                 console.log("GALLERY : ", gallery)
@@ -73,6 +77,10 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     status: tour.status || "draft",
                     tour_type: tour.tour_type || "",
                     recommended: tour.recommended ?? false,
+                    // 👇 ADDED MISSING FIELDS TO LOADING LOGIC
+                    style: tour.style || "",
+                    pickup: tour.pickup || "",
+                    short: tour.short || "",
                 });
 
                 setPreview(tour.featured_image || "");
@@ -247,12 +255,16 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 status: form.status as "draft" | "published",
                 tour_type: form.tour_type,
                 recommended: form.recommended,
+                // 👇 ADDED MISSING FIELDS TO PAYLOAD
+                style: form.style,
+                pickup: form.pickup,
+                short: form.short,
             };
 
             // Update tour main record
             await tourService.update(tourId, payload);
 
-            // Sync images logic...
+            // Sync images logic... (unchanged)
             const serverImages = await tourService.getImages(tourId);
             const serverByUrl = new Map(serverImages.map((si) => [si.image_url, si]));
             const localByUrl = new Map(images.map((li) => [li.image_url, li]));
@@ -263,7 +275,8 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     .filter((si) => !localByUrl.has(si.image_url))
                     .map(async (si) => {
                         try {
-                            await tourService.deleteImagesByTour(si.id);
+                            // Assuming tourService.deleteImagesByTour deletes by image ID, not tour ID
+                            await tourService.deleteImagesByTour(si.id); 
                         } catch (err) {
                             console.warn("Failed to delete image", si, err);
                         }
@@ -310,11 +323,15 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         tourInclude,
         cancellationPolicy,
         recommended: form.recommended,
+        // 👇 ADDED MISSING FIELDS TO KEYMAPPING
+        style: form.style,
+        pickup: form.pickup,
+        short: form.short,
     };
 
     return (
         <div className="mx-auto p-6 container-x">
-            <h1 className="text-2xl font-bold mb-6"> Update Tour</h1>
+            <h1 className="text-2xl font-bold mb-6"> Update Tour: {form.title || tourId}</h1>
 
             {message && (
                 <div className={`mb-4 ${message.type === "error" ? "text-red-600" : "text-green-600"}`}>{message.text}</div>
@@ -402,7 +419,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     <div>
                         <label className="block text-sm font-medium mb-1">Featured Image URL</label>
                         
-                        {/* ADDED BUTTON FOR FEATURED IMAGE SELECTION */}
+                        {/* BUTTON FOR FEATURED IMAGE SELECTION */}
                         <div className="flex gap-2 mb-2">
                             <button
                                 type="button"
@@ -459,7 +476,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                         </div>
                     </div>
 
-                    {/* Arrays */}
+                    {/* Arrays (Notes, Itinerary, etc. - unchanged) */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium mb-1">Notes (one per line)</label>
@@ -491,6 +508,21 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                         <label className="block text-sm font-medium mb-1">Program Detail</label>
                         <textarea name="program_detail" value={form.program_detail} onChange={handleChange} rows={5} className="w-full admin-input" />
                     </div>
+                    
+                    {/* 👇 ADDED MISSING FIELDS TO JSX */}
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Style</label>
+                        <textarea name="style" value={form.style} onChange={handleChange} rows={5} className="w-full admin-input" />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Pickup</label>
+                        <textarea name="pickup" value={form.pickup} onChange={handleChange} rows={5} className="w-full admin-input" />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Short</label>
+                        <textarea name="short" value={form.short} onChange={handleChange} rows={5} className="w-full admin-input" />
+                    </div>
+                    {/* 👆 END ADDED MISSING FIELDS TO JSX */}
 
                     <button type="submit" disabled={loading} className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-60">
                         {loading ? "Updating..." : "Update Tour"}
@@ -501,7 +533,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 <JsonPreview form={form} KEYMAPPING={KEYMAPPING} />
             </div>
 
-            {/* Modal */}
+            {/* Modal (unchanged) */}
             {isOpen && (
                 <section className="w-full h-screen z-99 bg-black/30 fixed flex flex-col items-center justify-center top-0 left-0">
                     <div className="bg-white rounded-xl w-full h-full p-5 max-w-[80vw] max-h-[80vh] flex flex-col">

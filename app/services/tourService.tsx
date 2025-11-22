@@ -9,7 +9,9 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp,
-  limit as fbLimit
+  limit as fbLimit,
+  orderBy,
+  startAfter
 } from "firebase/firestore";
 import type { TourCardProps } from "~/components/featureCard";
 import { db } from "~/lib/firebase/config";
@@ -48,6 +50,106 @@ export const tourService = {
     }
 
     return tours;
+  },
+
+  async getPaginated(pageSize: number = 10, cursor?: string) {
+    const baseCollection = collection(db, TOURS);
+
+    let q;
+
+    // Cursor exists → load the document to startAfter
+    if (cursor) {
+      const cursorDoc = await getDoc(doc(db, TOURS, cursor));
+      if (!cursorDoc.exists()) {
+        throw new Error("Cursor document not found");
+      }
+
+      q = query(
+        baseCollection,
+        // where("status", "==", "published"),
+        // orderBy("createdAt", "desc"),
+        startAfter(cursorDoc),
+        fbLimit(pageSize)
+      );
+    } else {
+      // First page (no cursor)
+      q = query(
+        baseCollection,
+        // where("status", "==", "published"),
+        // orderBy("createdAt", "desc"),
+        fbLimit(pageSize)
+      );
+    }
+
+    const snapshot = await getDocs(q);
+
+    const tours: Tour[] = [];
+    for (const docSnap of snapshot.docs) {
+      const tour = { id: docSnap.id, ...docSnap.data() } as Tour;
+      tour.images = await this.getImages(tour.id);
+      tour.packages = await this.getPackages(tour.id);
+      tours.push(tour);
+    }
+
+    // Pagination metadata
+    const lastDoc = snapshot.docs[snapshot.docs.length - 1];
+
+    return {
+      tours,
+      nextCursor: lastDoc ? lastDoc.id : null,
+      hasMore: !!lastDoc,
+    };
+  },
+  async getPaginatedForCardByPage(page: number, pageSize: number = 8) {
+    if (page < 1) page = 1;
+
+    let cursor: string | undefined = undefined;
+    let result;
+
+    // Iterate until we reach desired page
+    for (let i = 1; i <= page; i++) {
+      result = await this.getPaginatedForCard(pageSize, cursor);
+      cursor = result.nextCursor || undefined;
+
+      // If there are no more pages, break early
+      if (!result.hasMore && i < page) {
+        break;
+      }
+    }
+
+    return result!;
+  },
+
+  async getPaginatedForCard(pageSize: number = 10, cursor?: string) {
+    // Reuse your main pagination logic
+    const { tours, nextCursor, hasMore } = await this.getPaginated(pageSize, cursor);
+
+    // Transform into Card Props
+    const cardTours: TourCardProps[] = tours.map((tour) => {
+      const firstPackage = tour.packages?.[0];
+
+      return {
+        id: tour.id,
+        slug: tour.slug,
+        image: tour.featured_image || tour.images?.[0]?.image_url || "",
+        title: tour.title,
+        description: tour.description,
+        price: tour.price_from ?? 0,
+        rating: tour.rating ?? 0,
+        duration: tour.duration,
+        route: `/tours/${tour.slug}`,
+        place_location: tour.location,
+        maxPeople: firstPackage?.max_people,
+        recommended: tour.recommended,
+        tourType: tour.tour_type,
+      };
+    });
+
+    return {
+      tours: cardTours,
+      nextCursor,
+      hasMore,
+    };
   },
 
   async getAllForCard(limit?: number): Promise<TourCardProps[]> {
@@ -110,7 +212,7 @@ export const tourService = {
   },
 
 
-  
+
 
   /** 🔍 Get a single tour by slug */
   async getBySlug(slug: string): Promise<Tour | null> {
