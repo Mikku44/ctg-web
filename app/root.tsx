@@ -11,6 +11,9 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
+// import '@uiw/react-md-editor/dist/mdeditor.css';
+// import '@uiw/react-markdown-preview/dist/markdown.css';
+
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

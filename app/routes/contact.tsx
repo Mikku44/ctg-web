@@ -6,6 +6,9 @@ import type { Route } from "./+types/home";
 import { toast } from "sonner";
 import { ContactService } from "~/services/contactService";
 import { grey } from "@mui/material/colors"; // Assuming you have MUI colors available
+import { Link } from "react-router";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { FaLine, FaWhatsapp } from "react-icons/fa";
 
 // Define primary color variable once (replace with your actual primary color variable if needed)
 const PRIMARY_COLOR = "var(--primary-color)"; // Example: A deep green for a premium, earthy feel
@@ -184,7 +187,7 @@ export default function Contact() {
             <p className="text-xl">Hello, I’m <b>Audi</b>, founder of Creative Tour Guru Thailand.
               For more than 25 years, I’ve been guiding travelers from all over the world to experience the real Thailand —
               from ancient temples and floating markets to charming local villages.</p>
-          
+
             <p className="text-xl">I started as a <b>Tour Guide</b>, then became a <b>Tour Leader, Tour Manager</b>, and finally an <b>Experienced Tour Designer</b>,
               creating tailor-made journeys that blend culture, comfort, and connection.</p>
           </div>
@@ -215,118 +218,168 @@ export default function Contact() {
       </section>
 
 
-      <div className="grid mt-10 max-w-4xl mx-auto gap-10 md:gap-16 mb-20 h-full overflow-hidden">
+      <section className="grid md:grid-cols-2 gap-3 max-w-4xl mx-auto ">
+        <div className="w-full flex flex-col justify-center space-y-6">
+          <div className="w-full h-full rounded-sm overflow-hidden">
+            
+          </div>
 
+          <h3 className="font-semibold text-xl">Contact Us</h3>
+          <ul className="space-y-3 text-sm">
+            <Link to="tel:0615097533" className="flex items-center gap-2">
+              <Phone size={16} /> 0615097533
+            </Link>
+            <Link
+              to="mailto:creativetourguru@hotmail.com"
+              className="flex items-center gap-2"
+            >
+              <Mail size={16} /> creativetourguru@hotmail.com
+            </Link>
+            <li className="flex items-center gap-2">
+              <MapPin size={16} /> Bangkok, Thailand
+            </li>
+          </ul>
 
-        <div className="md:col-span-5 order-2 px-4 md:order-1">
-          <Typography variant="h4" sx={{
-            fontSize: '26px',
-            fontWeight: 700,
-            mb: 4,
-
-          }}>
-            Talk to Creative Tour Guru
-          </Typography>
-
-
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3, // Increased gap for better spacing
-            }}
-          >
-            <TextField
-              name="name"
-              label="NAME"
-              variant="standard"
-              value={form.name}
-              onChange={handleChange}
-              fullWidth
-              sx={textFieldStyles}
-              required
-              InputLabelProps={{ required: false }}
-            />
-            <TextField
-              name="mobile"
-              label="MOBILE"
-              variant="standard"
-              value={form.mobile}
-              onChange={handleChange}
-              fullWidth
-              sx={textFieldStyles}
-              required
-              InputLabelProps={{ required: false }}
-            />
-            <TextField
-              name="email"
-              label="EMAIL"
-              variant="standard"
-              value={form.email}
-              onChange={handleChange}
-              fullWidth
-              sx={textFieldStyles}
-              required
-              InputLabelProps={{ required: false }}
-            />
-            <TextField
-              name="subject"
-              label="SUBJECT"
-              variant="standard"
-              value={form.subject}
-              onChange={handleChange}
-              fullWidth
-              sx={textFieldStyles}
-              required
-              InputLabelProps={{ required: false }}
-            />
-            <TextField
-              name="content"
-              label="CONTENT"
-              variant="outlined"
-              className="z-0"
-              value={form.content}
-              onChange={handleChange}
-              multiline
-              rows={4} // Increased rows for content
-              fullWidth
-              required
-              sx={contentFieldStyles} // Use new outlined styles
-              InputLabelProps={{ required: false }}
-            />
-            <Button
-              type="submit"
-              variant="contained"
+          <div className="flex gap-4 mt-4">
+            <a
+              href="https://wa.me/0615097533"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+              title="WhatsApp"
+            >
+              <FaWhatsapp size={18} />
+            </a>
+            <a
+              href="tel:0615097533"
+              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+              title="Call us"
+            >
+              <Phone size={18} />
+            </a>
+            <a
+              href="mailto:creativetourguru@hotmail.com"
+              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+              title="Send email"
+            >
+              <Mail size={18} />
+            </a>
+            <a
+              href="https://line.me/ti/p/~0615097533"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+              title="Chat on LINE"
+            >
+              <FaLine size={18} />
+            </a>
+          </div>
+        </div>
+        <div className="grid mt-10 gap-10 md:gap-16 h-full overflow-hidden">
+          <div className="md:col-span-5 order-2 px-4 md:order-1">
+            <Typography variant="h4" sx={{
+              fontSize: '26px',
+              fontWeight: 700,
+              mb: 4,
+            }}>
+              Talk to Creative Tour Guru
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
               sx={{
-                // maxWidth: 280, // Slightly wider button
-                mt: 2,
-                bgcolor: PRIMARY_COLOR, // Use consistent primary color
-                border: `2px solid ${PRIMARY_COLOR}`,
-                boxShadow: "none",
-                color: "white",
-                fontSize: "1rem",
-                fontWeight: 600, // Semi-bold for emphasis
-                borderRadius: 0,
-                py: 1.5,
-                transition: 'all 0.3s',
-                "&:hover": {
-                  bgcolor: "white",
-                  border: `2px solid ${PRIMARY_COLOR}`,
-                  boxShadow: "none",
-                  color: PRIMARY_COLOR
-                },
+                display: "flex",
+                flexDirection: "column",
+                gap: 3, // Increased gap for better spacing
               }}
             >
-              Send Message
-            </Button>
-          </Box>
+              <TextField
+                name="name"
+                label="NAME"
+                variant="standard"
+                value={form.name}
+                onChange={handleChange}
+                fullWidth
+                sx={textFieldStyles}
+                required
+                InputLabelProps={{ required: false }}
+              />
+              <TextField
+                name="mobile"
+                label="MOBILE"
+                variant="standard"
+                value={form.mobile}
+                onChange={handleChange}
+                fullWidth
+                sx={textFieldStyles}
+                required
+                InputLabelProps={{ required: false }}
+              />
+              <TextField
+                name="email"
+                label="EMAIL"
+                variant="standard"
+                value={form.email}
+                onChange={handleChange}
+                fullWidth
+                sx={textFieldStyles}
+                required
+                InputLabelProps={{ required: false }}
+              />
+              <TextField
+                name="subject"
+                label="SUBJECT"
+                variant="standard"
+                value={form.subject}
+                onChange={handleChange}
+                fullWidth
+                sx={textFieldStyles}
+                required
+                InputLabelProps={{ required: false }}
+              />
+              <TextField
+                name="content"
+                label="CONTENT"
+                variant="outlined"
+                className="z-0"
+                value={form.content}
+                onChange={handleChange}
+                multiline
+                rows={4} // Increased rows for content
+                fullWidth
+                required
+                sx={contentFieldStyles} // Use new outlined styles
+                InputLabelProps={{ required: false }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  // maxWidth: 280, // Slightly wider button
+                  mt: 2,
+                  bgcolor: PRIMARY_COLOR, // Use consistent primary color
+                  border: `2px solid ${PRIMARY_COLOR}`,
+                  boxShadow: "none",
+                  color: "white",
+                  fontSize: "1rem",
+                  fontWeight: 600, // Semi-bold for emphasis
+                  borderRadius: 0,
+                  py: 1.5,
+                  transition: 'all 0.3s',
+                  "&:hover": {
+                    bgcolor: "white",
+                    border: `2px solid ${PRIMARY_COLOR}`,
+                    boxShadow: "none",
+                    color: PRIMARY_COLOR
+                  },
+                }}
+              >
+                Send Message
+              </Button>
+            </Box>
+          </div>
         </div>
-
-
-
-      </div>
+      </section>
     </main>
   );
 }

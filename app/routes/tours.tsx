@@ -17,19 +17,28 @@ const filterItems = [
 
 export function meta({ }: Route.MetaArgs) {
     return [
-        { title: "Tours Destination - Creative Tour Guru" },
-        { name: "description", content: "Discover curated tours and destinations across Thailand — from adventures to relaxing escapes." },
+        { title: "Book Tickets Online – Creative Tour Guru" },
+        {
+            name: "description",
+            content:
+                "Book tour tickets easily and securely with Creative Tour Guru. Choose your preferred date, check availability, and get instant confirmation."
+        },
+        {
+            name: "keywords",
+            content:
+                "tour tickets, book tickets online, Thailand tours, Creative Tour Guru, instant booking, travel tickets"
+        }
     ];
 }
 
 export const loader: LoaderFunction = async () => {
-  const items = await tourService.getAllForCard();
-  return Response.json(items);
+    const items = await tourService.getAllForCard();
+    return Response.json(items);
 };
 
 export default function Tours() {
     const [filterOptions, setFilterOptions] = useState("");
-     const tourList = useLoaderData<TourCardProps[]>();
+    const tourList = useLoaderData<TourCardProps[]>();
     const [page, setPage] = useState(1);
 
 

@@ -15,6 +15,8 @@ export default [
         route("/search", "routes/search.tsx"),
         route("/reviews", "routes/reviews.tsx"),
         route("/checkout", "routes/CheckoutPage.tsx"),
+        route("/blogs", "routes/blogs.tsx"),
+        route("/blogs/:slug", "routes/slug/blog.tsx"),
         route("/checkout-session", "routes/checkout-session.tsx"),
         route("/tours/:tour_slug", "routes/tourDetail.tsx"),
         route("/tours/:type_slug/:place", "routes/tourCategory.tsx"),
@@ -32,6 +34,7 @@ export default [
     layout("routes/admin/layout.tsx", [
         route("/admin", "routes/admin/admin.tsx"),
         route("/admin/bookings", "routes/admin/bookings.tsx"),
+        route("/admin/blog/add", "routes/admin/blog.add.tsx"),
         route("/admin/tour/list", "routes/admin/tour.list.tsx"),
         route("/admin/tour/add", "routes/admin/tour.add.tsx"),
         route("/admin/tour/update/:tourId", "routes/admin/tour.update.tsx"),
