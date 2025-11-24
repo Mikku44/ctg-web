@@ -1,11 +1,42 @@
-import React from 'react'
+
 import { Outlet } from 'react-router'
 import FloatingButtons from '~/components/floatingButton'
 import Footer from '~/components/footer'
-import Header from '~/components/header'
-import NavigationMenuBase from '~/components/navigator'
+
 import SidebarMenu from '~/components/sidebar'
-import { menuItems } from '~/const/app'
+
+export function meta() {
+  const title = "Creative Tour Guru Thailand - Private Tours, Local Guides & Unique Travel Experiences";
+  const description =
+    "Creative Tour Guru Thailand provides customized private tours, cultural experiences, corporate trips, and professional tour guide services across Thailand. Explore Thailand with tailor-made journeys led by expert local guides.";
+  const url = "https://creativetourguruthailand.com";
+  const image = `${url}/og-images/og-image.jpg`;
+
+  return [
+    // Basic SEO
+    { title },
+    { name: "description", content: description },
+
+    // Open Graph
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: url },
+    { property: "og:image", content: image },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
+
+    // Twitter Card
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:image", content: image },
+
+    // Canonical URL
+    { rel: "canonical", href: url },
+  ];
+}
+
 
 export default function Layout() {
     return (
