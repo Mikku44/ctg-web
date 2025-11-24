@@ -21,8 +21,8 @@ export function meta() {
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: url },
-    { property: "og:image", content: image },
+    { property: "og:url", content: "https://creativetourguruthailand.com" },
+    { property: "og:image", content: "https://creativetourguruthailand.com/og-images/og-image.jpg" },
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
 

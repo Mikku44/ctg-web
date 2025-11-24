@@ -21,6 +21,11 @@ export function meta({ }: Route.MetaArgs) {
   { property: "og:description", content: "Explore unique tours and authentic local experiences in Thailand." },
   { property: "og:type", content: "website" },
   { property: "og:locale", content: "en_US" },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://creativetourguruthailand.com" },
+    { property: "og:image", content: "https://creativetourguruthailand.com/og-images/og-image.jpg" },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
   { name: "twitter:card", content: "summary_large_image" },
   { name: "twitter:title", content: "Creative Tour Guru (Thailand)" },
   { name: "twitter:description", content: "Discover Thailand through creative and local adventures." },];
