@@ -26,11 +26,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 // ----------------------
 export function meta() {
   return [
-    { title: "บทความทั้งหมด - Creative Tour Guru" },
+    { title: "All Articles - Creative Tour Guru" },
     {
       name: "description",
       content:
-        "อ่านบทความ เคล็ดลับ รีวิวท่องเที่ยว และวิธีแก้ปัญหาอย่างมืออาชีพ จาก Creative Tour Guru",
+        "Explore travel tips, guides, reviews, and professional insights from Creative Tour Guru.",
     },
   ];
 }
@@ -47,17 +47,19 @@ export default function BlogPage() {
         {/* Header */}
         <header className="mb-10 text-center">
           <h1 className="text-4xl font-extrabold mb-4 text-gray-900">
-            บทความทั้งหมด
+            All Articles
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            รวมบทความน่าสนใจ เคล็ดลับ และสาระดีๆ จาก Creative Tour Guru
+            Welcome to the Creative Tour Guru Blog — your go-to space for smart travel tips, cultural insights, and inspiring stories from all across Thailand.
+            Here, we share quick guides, insider recommendations, festival highlights, and meaningful travel ideas crafted from real experiences on the road.
+            Whether you’re a curious traveler or a passionate explorer, this is where your journey begins.
           </p>
         </header>
 
         {/* Grid of Cards */}
         {blogs.length === 0 ? (
           <div className="text-center text-gray-600 py-20">
-            ไม่พบบทความใดๆ
+            No articles found.
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -66,27 +68,6 @@ export default function BlogPage() {
             ))}
           </div>
         )}
-
-        {/* Pagination */}
-        {/* <div className="flex justify-center mt-12 gap-4">
-          {page > 1 && (
-            <Link
-              to={`/blogs?page=${page - 1}`}
-              className="px-5 py-2 border rounded-lg bg-white hover:bg-gray-100 text-gray-700"
-            >
-              ก่อนหน้า
-            </Link>
-          )}
-
-          {hasMore && (
-            <Link
-              to={`/blogs?page=${page + 1}`}
-              className="px-5 py-2 border rounded-lg bg-white hover:bg-gray-100 text-gray-700"
-            >
-              ถัดไป
-            </Link>
-          )}
-        </div> */}
       </div>
     </main>
   );
