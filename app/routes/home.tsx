@@ -136,6 +136,17 @@ export default function Home() {
           "/images/thailand5 (7).jpg",
           "/images/temple (46).jpg",
           "/images/temple (5).jpg",
+          "/images/album911 (72).jpg",
+          "/images/bangkok (26).jpg",
+          "/images/chaingmai (4).jpg",
+          "/images/chaingmai_3 (14).jpg",
+          "/images/chaingmai_3 (45).jpg",
+          "/images/elephant (13).jpg",
+          "/images/kohphiphi (11).jpg",
+          "/images/kohphiphi (26).jpg",
+          "/images/lempomthep (26).jpg",
+          "/images/wat_prayai (6).jpg",
+          "/images/wat_prayai (7).jpg",
 
         ]}
 

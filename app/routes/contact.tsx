@@ -102,7 +102,7 @@ export default function Contact() {
   return (
     <main className="min-h-screen w-full mb-20 relative">
 
-      <section className="container-x mx-auto">
+      <section className="container-x mx-auto px-4">
         <img
           className="w-[350px] mx-auto"
           src="/logo/logo.jpg" alt="creative tour guru logo" />
@@ -208,7 +208,7 @@ export default function Contact() {
             </p>
             <p className="text-xl">✨ Travel with a Professional, Feel like a Friend.</p>
             <div className="grid gap-2">
-              <img src="/licenese/drp.png" className="w-[100px]" alt="dr.prawit" />
+              <img src="/licenese/drp.png" className="w-[230px]" alt="dr.prawit" />
               <h3 className="text-sm text-zinc-600">By Dr. Prawit (Audi) Charoennuam</h3>
             </div>
           </div>
@@ -219,7 +219,7 @@ export default function Contact() {
 
 
       <section className="grid md:grid-cols-2 gap-3 max-w-4xl mx-auto ">
-        <div className="w-full flex flex-col justify-center space-y-6">
+        <div className="w-full flex flex-col justify-center space-y-6 px-4">
           <div className="w-full h-full rounded-sm overflow-hidden">
             
           </div>

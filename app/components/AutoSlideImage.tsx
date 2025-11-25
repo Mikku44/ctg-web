@@ -150,10 +150,10 @@ export default function AutoFadeImage({
             className="text-white md:ml-10"
           >
             <h2 className="text-4xl md:text-6xl font-bold drop-shadow-lg">
-              {titles[currentIndex] || `Image ${currentIndex + 1}`}
+              {titles[currentIndex] || `Thailand`}
             </h2>
             <p className="text-lg md:text-xl text-white/90 drop-shadow-md">
-              {descriptions[currentIndex] || ''}
+              {descriptions[currentIndex] || 'Tour with CTG to explore beautiful destinations.'}
             </p>
           </motion.div>
         </AnimatePresence>
