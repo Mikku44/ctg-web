@@ -142,10 +142,10 @@ export default function Contact() {
 
         <div className="">
           {/* <h1 className="text-3xl font-medium">Welcome travelers all around the world</h1> */}
-          <p className="text-4xl text-center py-5">Received an award from Thailand Tourism Awards 9th</p>
-          <p className="text-xl"><b>Creative Tour Guru Thailand</b>, we received an award from "Thailand Tourism Awards 9th"</p>
+          {/* <p className="text-4xl text-center py-5">Received an award from Thailand Tourism Awards 9th</p>
+          <p className="text-xl"><b>Creative Tour Guru Thailand</b>, we received an award from "Thailand Tourism Awards 9th"</p> */}
           <br />
-          <p className="text-xl"><b>Thailand Tourism Awards</b> Recipient of the Kinnaree Award 2013 (Thailand Tourism Awards) – Best Tour Guide Category.
+          <p className="text-xl">Recipient of the Kinnaree Award 2013 (Thailand Tourism Awards) – Best Tour Guide Category.
             Awarded by the Tourism Authority of Thailand (TAT) for outstanding professionalism, cultural knowledge, and exceptional service excellence.</p>
         </div>
 

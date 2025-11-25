@@ -2,9 +2,9 @@ export const MENU_LIST = [
   { name: "Home", path: "/" },
   { name: "Tours", path: "/tours" },
   { name: "Guide Service", path: "/guide-service" },
-  // { name: "Blog", path: "/blog" },
   // { name: "About", path: "/about" },
   { name: "Contact us", path: "/contact" },
+  { name: "Blogs", path: "/blogs" },
 ];
 
 export const menuConfig = [
