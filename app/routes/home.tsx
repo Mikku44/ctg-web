@@ -129,7 +129,7 @@ export default function Home() {
           "/images/thailand6 (4).jpg",
           "/images/thailand8 (8).jpg",
           "/images/tapu (37).jpg",
-          "/images/thailand8 (8).jpg",
+          // "/images/thailand8 (8).jpg",
           "/images/thailand7 (7).jpg",
           "/images/trips_market (1).jpg",
           "/images/train (3).jpg",
@@ -141,12 +141,12 @@ export default function Home() {
           "/images/chaingmai (4).jpg",
           "/images/chaingmai_3 (14).jpg",
           "/images/chaingmai_3 (45).jpg",
-          "/images/elephant (13).jpg",
+          // "/images/elephant (13).jpg",
           "/images/kohphiphi (11).jpg",
           "/images/kohphiphi (26).jpg",
           "/images/lempomthep (26).jpg",
           "/images/wat_prayai (6).jpg",
-          "/images/wat_prayai (7).jpg",
+          // "/images/wat_prayai (7).jpg",
 
         ]}
 
