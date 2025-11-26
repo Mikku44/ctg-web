@@ -201,3 +201,94 @@ button {
     display: none !important;
   }
 }
+
+
+.remark-content {
+  /* Base text styles */
+  @apply text-gray-700 leading-relaxed max-w-full;
+
+  /* Headings: Formal, well-separated */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-gray-900 mt-8 mb-4 border-b border-gray-100 pb-2;
+  }
+
+  h1 {
+    @apply text-3xl font-extrabold mb-6 mt-10 tracking-tight;
+  }
+
+  h2 {
+    /* Based on your original request: mt-8 mb-4 text-2xl font-semibold */
+    @apply mt-8 mb-4 text-2xl font-semibold;
+  }
+
+  h3 {
+    @apply mt-6 mb-3 text-xl font-semibold;
+  }
+
+  h4 {
+    @apply mt-5 mb-2 text-lg font-medium;
+  }
+
+  /* Paragraphs and Blockquotes */
+  p {
+    @apply my-5 text-base;
+  }
+
+  blockquote {
+    @apply border-l-4 border-gray-300 pl-4 py-1 italic text-gray-600 my-6 bg-gray-50/50 rounded-r;
+  }
+
+  /* Links: Subtle styling */
+  a {
+    @apply text-gray-800 font-medium hover:text-gray-600 transition duration-150 ease-in-out no-underline;
+  }
+
+  a:hover {
+    @apply underline;
+  }
+
+  /* Lists: Clean and minimal */
+  ul {
+    @apply list-disc ml-5 my-5 space-y-2;
+  }
+
+  ol {
+    @apply list-decimal ml-5 my-5 space-y-2;
+  }
+
+  li>p {
+    @apply my-0;
+    /* Remove vertical margin from paragraphs inside lists */
+  }
+
+  /* Code Blocks and Inline Code */
+  pre {
+    @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-6 text-sm font-mono;
+  }
+
+  code {
+    @apply bg-gray-100 text-gray-800 px-1 py-0.5 rounded text-sm font-mono;
+  }
+
+  /* Tables: Formal look with booktabs style */
+  table {
+    @apply w-full my-6 text-sm text-left border-collapse;
+  }
+
+  thead {
+    @apply border-b border-gray-300;
+  }
+
+  th {
+    @apply px-4 py-2 font-medium text-gray-900 uppercase tracking-wider;
+  }
+
+  td {
+    @apply px-4 py-2 border-b border-gray-100 align-top;
+  }
+}

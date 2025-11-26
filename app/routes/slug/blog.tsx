@@ -51,12 +51,8 @@ export default function BlogDetail({
   if (!blog?.title) return <NotFound />;
 
   // Format publish date if Firestore Timestamp
-  const publishDate =
-    typeof blog.publish_at === "string"
-      ? blog.publish_at
-      : blog.publish_at?.toDate
-      ? blog.publish_at.toDate().toLocaleDateString("th-TH")
-      : "";
+  const publishDate = blog.publish_at
+ 
 
   return (
     <main className="min-h-screen bg-gray-50 py-8">
@@ -145,9 +141,9 @@ export default function BlogDetail({
             )}
 
             {/* Blog Content */}
-            <div className="prose prose-lg max-w-none ">
-              {/* <ReactMarkdown>{blog.contents}</ReactMarkdown> */}
-              <RemarkPreview value={blog.contents} />
+            <div className="prose prose-lg max-w-none remark-content">
+              <ReactMarkdown>{blog.contents}</ReactMarkdown>
+              {/* <RemarkPreview value={blog.contents} /> */}
             </div>
 
             {/* Tags */}
