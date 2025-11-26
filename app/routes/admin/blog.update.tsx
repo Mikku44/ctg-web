@@ -1,12 +1,32 @@
-import { Form, redirect, useActionData, type ActionFunctionArgs } from "react-router";
-import { useState } from "react";
+// app/routes/blogs.$id.update.tsx
+
+import {
+  Form,
+  useLoaderData,
+  redirect,
+  useActionData,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
+} from "react-router";
+import { useState, useEffect } from "react";
 import { blogService } from "~/services/blogService";
-import { v4 as uuidv4 } from "uuid";
 import { Minus, Image as ImageIcon } from "lucide-react";
 import { images_file } from "public/images/image_files";
 import MarkdownEditor from "~/components/MarkdownEditor";
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+/* --------------------------
+   Loader — fetch Blog by ID
+--------------------------- */
+export async function loader({ params }: LoaderFunctionArgs) {
+  const blog = await blogService.getById(params.id!);
+  if (!blog) throw new Response("Blog Not Found", { status: 404 });
+  return blog;
+}
+
+/* --------------------------
+   Action — update blog
+--------------------------- */
+export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData();
 
   const title = formData.get("title")?.toString() || "";
@@ -16,14 +36,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const author = formData.get("author")?.toString() || "";
   const contents = formData.get("contents")?.toString() || "";
 
-  // Receive JSON from hidden input
+  // images JSON (hidden)
   const imagesJSON = formData.get("imagesJSON")?.toString() || "[]";
   const images = JSON.parse(imagesJSON);
 
   if (!title || !slug || !contents)
     return { error: "Title, slug, and contents are required." };
 
-  const newBlog = {
+  const updatedBlog = {
     title,
     slug,
     excerpt,
@@ -31,64 +51,64 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     author,
     contents,
     images,
-    publish_at: null,
+    updated_at: new Date(),
   };
 
-  await blogService.create(newBlog);
-  return redirect("/blogs");
+  await blogService.update(params.id!, updatedBlog);
+
+  return redirect(`/blogs/${params.id}`);
 };
 
-export default function BlogAddPage() {
+/* --------------------------
+   Component
+--------------------------- */
+export default function BlogUpdatePage() {
+  const blog = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
 
-  // Form state
+  /* --------------------------
+     Form State
+  --------------------------- */
   const [form, setForm] = useState({
-    title: "",
-    slug: "",
-    excerpt: "",
-    tags: "",
-    author: "",
-    contents: "",
+    title: blog.title,
+    slug: blog.slug,
+    excerpt: blog.excerpt || "",
+    tags: blog.tags || "",
+    author: blog.author || "",
+    contents: blog.contents || "",
   });
 
-  // Image state
-  const [images, setImages] = useState<string[]>([]);
-
-  // Modal state
+  /* --------------------------
+     Images State
+  --------------------------- */
+  const [images, setImages] = useState<string[]>(blog.images || []);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImages, setSelectedImages] = useState<string[]>([]);
-
-  // Auto-generate slug from title
-  const generateSlug = (title: string) => {
-    const base = title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)+/g, "");
-    const shortId = uuidv4().split("-")[0];
-    return `${base}-${shortId}`;
-  };
+  const [selectedImages, setSelectedImages] = useState<string[]>(blog.images || []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-
-    if (name === "title") {
-      setForm((prev) => ({
-        ...prev,
-        slug: generateSlug(value),
-        [name]: value
-      }));
-    } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
-    }
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
+  /* --------------------------
+     Modal functions
+  --------------------------- */
   const handleOpenModal = () => {
     setSelectedImages(images);
     setIsOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsOpen(false);
+  const handleCloseModal = () => setIsOpen(false);
+
+  const toggleSelect = (filename: string) => {
+    const file = images_file.find(i => i.filename === filename);
+    const imageUrl = `/images/${file?.path || filename}`;
+
+    setSelectedImages(prev =>
+      prev.includes(imageUrl)
+        ? prev.filter(img => img !== imageUrl)
+        : [...prev, imageUrl]
+    );
   };
 
   const handleApplyImages = () => {
@@ -96,26 +116,19 @@ export default function BlogAddPage() {
     handleCloseModal();
   };
 
-  const toggleSelect = (filename: string) => {
-    const imageObject = images_file.find(i => i.filename === filename);
-    const imageUrl = `/images/${imageObject?.path || filename}`;
-
-    setSelectedImages((prev) =>
-      prev.includes(imageUrl)
-        ? prev.filter((url) => url !== imageUrl)
-        : [...prev, imageUrl]
-    );
-  };
-
+  /* --------------------------
+     Page UI
+  --------------------------- */
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold mb-6">Create New Blog</h1>
+      <h1 className="text-3xl font-bold mb-6">Update Blog</h1>
 
       {actionData?.error && (
         <p className="mb-4 text-red-600">{actionData.error}</p>
       )}
 
       <Form method="post" className="space-y-6">
+
         {/* Title */}
         <div>
           <label className="block font-medium mb-1">Title</label>
@@ -129,16 +142,15 @@ export default function BlogAddPage() {
           />
         </div>
 
-        {/* Slug (Auto-generated) */}
+        {/* Slug */}
         <div>
-          <label className="block font-medium mb-1">Slug (Auto Generated)</label>
+          <label className="block font-medium mb-1">Slug</label>
           <input
             name="slug"
             type="text"
             value={form.slug}
-            readOnly
-            className="w-full input rounded-sm px-3 py-2 bg-gray-100 text-gray-500 border"
-            placeholder="Enter title to generate slug"
+            onChange={handleChange}
+            className="w-full input rounded-sm px-3 py-2 border"
             required
           />
         </div>
@@ -152,7 +164,6 @@ export default function BlogAddPage() {
             value={form.author}
             onChange={handleChange}
             className="w-full input rounded-sm px-3 py-2 border"
-            placeholder="By John Doe"
           />
         </div>
 
@@ -170,56 +181,48 @@ export default function BlogAddPage() {
 
         {/* Tags */}
         <div>
-          <label className="block font-medium mb-1">Tags (comma separated)</label>
+          <label className="block font-medium mb-1">Tags</label>
           <input
             name="tags"
             type="text"
             value={form.tags}
             onChange={handleChange}
             className="w-full input rounded-sm px-3 py-2 border"
-            placeholder="marketing, travel, blog"
+            placeholder="marketing, travel"
           />
         </div>
 
-        {/* Image Picker with Modal */}
+        {/* Image Picker */}
         <div>
           <label className="block font-medium mb-1">Blog Images</label>
-          <div className="flex gap-2 mb-2">
-            <button
-              type="button"
-              onClick={handleOpenModal}
-              className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition flex items-center gap-2"
-            >
-              <ImageIcon size={16} /> Select Images ({images.length})
-            </button>
-          </div>
 
-          {/* Preview selected images */}
+          <button
+            type="button"
+            onClick={handleOpenModal}
+            className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition flex items-center gap-2"
+          >
+            <ImageIcon size={16} /> Select Images ({images.length})
+          </button>
+
+          {/* Preview */}
           {images.length > 0 && (
             <div className="mt-3 grid grid-cols-4 gap-2">
-              {images.map((url, idx) => (
-                <img
-                  key={idx}
-                  src={url}
-                  alt={`Selected ${idx + 1}`}
-                  className="w-full h-24 object-cover rounded-lg border"
-                />
+              {images.map((url, i) => (
+                <img key={i} src={url} className="w-full h-24 object-cover rounded-lg border" />
               ))}
             </div>
           )}
         </div>
 
-        {/* Hidden input for images JSON */}
         <input type="hidden" name="imagesJSON" value={JSON.stringify(images)} />
 
-        {/* Contents */}
+        {/* Markdown Editor */}
         <div>
           <label className="block font-medium mb-1">Article Contents</label>
           <MarkdownEditor
             name="contents"
             value={form.contents}
-            onChange={(newValue) => setForm(prev => ({ ...prev, contents: newValue }))}
-            placeholder="Write your blog post here..."
+            onChange={(val) => setForm(prev => ({ ...prev, contents: val }))}
             minHeight="500px"
             required
           />
@@ -229,71 +232,61 @@ export default function BlogAddPage() {
           type="submit"
           className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700"
         >
-          Create Blog
+          Update Blog
         </button>
       </Form>
 
-      {/* IMAGE SELECTION MODAL */}
+      {/* Modal */}
       {isOpen && (
         <section className="w-full h-screen z-[99] bg-black/30 fixed flex flex-col items-center justify-center top-0 left-0">
           <div className="bg-white rounded-xl w-full h-full p-5 max-w-[80vw] max-h-[80vh] flex flex-col">
-            <div className="w-full flex items-center justify-between flex-shrink-0">
+
+            {/* Header */}
+            <div className="w-full flex items-center justify-between">
               <div className="text-3xl font-bold">Select Blog Images</div>
-              <button
-                onClick={handleCloseModal}
-                className="rounded-sm hover:bg-zinc-200 p-2"
-              >
+              <button onClick={handleCloseModal} className="rounded-sm hover:bg-zinc-200 p-2">
                 <Minus size={24} className="text-zinc-500" />
               </button>
             </div>
 
-            <div className="text-sm text-gray-500 mt-2 flex-shrink-0">
-              {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected
+            <div className="text-sm text-gray-500 mt-2">
+              {selectedImages.length} selected
             </div>
 
-            <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3 w-full flex-grow">
+            {/* Images grid */}
+            <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3 w-full">
               {images_file.map((item) => {
-                const imageUrl = `/images/${item.path}`;
-                const isSelected = selectedImages.includes(imageUrl);
+                const url = `/images/${item.path}`;
+                const isSelected = selectedImages.includes(url);
 
                 return (
                   <div
                     key={item.filename}
                     onClick={() => toggleSelect(item.filename)}
-                    className={`
-                      relative cursor-pointer max-w-[150px] rounded-lg overflow-hidden
-                      border-4 transition-all duration-150
-                      ${isSelected ? "border-blue-500" : "border-transparent"}
-                    `}
+                    className={`relative cursor-pointer max-w-[150px] rounded-lg overflow-hidden border-4 ${
+                      isSelected ? "border-blue-500" : "border-transparent"
+                    }`}
                   >
-                    <img
-                      src={imageUrl}
-                      alt={item.filename}
-                      className="w-full h-full object-cover"
-                    />
-
-                    {isSelected && (
-                      <div className="absolute inset-0 bg-blue-500/30"></div>
-                    )}
+                    <img src={url} className="w-full h-full object-cover" />
+                    {isSelected && <div className="absolute inset-0 bg-blue-500/30"></div>}
                   </div>
                 );
               })}
             </div>
 
-            <div className="flex justify-end pt-4 border-t border-gray-200 flex-shrink-0">
+            {/* Footer */}
+            <div className="flex justify-end pt-4 border-t border-gray-200">
               <button
-                type="button"
                 onClick={handleCloseModal}
-                className="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition mr-3"
+                className="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 mr-3"
               >
                 Cancel
               </button>
               <button
-                type="button"
                 onClick={handleApplyImages}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
-                Apply Selection ({selectedImages.length})
+                Apply ({selectedImages.length})
               </button>
             </div>
           </div>

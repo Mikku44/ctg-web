@@ -35,6 +35,7 @@ export default [
         route("/admin", "routes/admin/admin.tsx"),
         route("/admin/bookings", "routes/admin/bookings.tsx"),
         route("/admin/blog/add", "routes/admin/blog.add.tsx"),
+        route("/admin/blog/update/:blogId", "routes/admin/blog.update.tsx"),
         route("/admin/tour/list", "routes/admin/tour.list.tsx"),
         route("/admin/tour/add", "routes/admin/tour.add.tsx"),
         route("/admin/tour/update/:tourId", "routes/admin/tour.update.tsx"),

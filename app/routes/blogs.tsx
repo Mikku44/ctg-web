@@ -62,7 +62,7 @@ export default function BlogPage() {
             No articles found.
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-6">
             {blogs.map((blog, i) => (
               <BlogCard blog={blog} key={i} />
             ))}
