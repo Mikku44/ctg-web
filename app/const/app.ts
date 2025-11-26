@@ -64,7 +64,7 @@ export const menuConfig = [
     layout: "grid",
     links: [
       { href: "/tours/dinner-cruise/bangkok", title: "Dinner Cruise: Bangkok", description: "Fine dining on the Chao Phraya River." },
-      { href: "/tours/dinner-cruise/ayuthaya", title: "Dinner Cruise: Ayuthaya", description: "Sunset dining among ancient ruins." },
+      { href: "/tours/dinner-cruise/ayutthaya", title: "Dinner Cruise: Ayutthaya", description: "Sunset dining among ancient ruins." },
     ],
   },
   // You can keep a direct link, perhaps to a main booking page or contacts

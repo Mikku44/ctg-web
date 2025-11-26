@@ -6,9 +6,10 @@ import { tourService } from "~/services/tourService";
 import { images_file } from "public/images/image_files";
 import type { Route } from "./+types/tour.update";
 import JsonPreview from "./components/JsonPreview";
+import { toast } from "sonner";
 
 export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) {
-    
+
     // NOTE: tourId is being derived from params, but using a default value for local testing
     const tourId = params.tourId || "E3gXfncUqEjFcAfkowml"
 
@@ -16,7 +17,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
     const [preview, setPreview] = useState<string>("");
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [isOpen, setIsOpen] = useState(false);
-    
+
     // NEW: Track which mode the modal is in ('featured' or 'gallery')
     const [modalMode, setModalMode] = useState<"featured" | "gallery">("gallery");
 
@@ -37,7 +38,9 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         // 👇 ADDED MISSING FIELDS
         style: "",
         pickup: "",
-        short: "", 
+        short: "",
+        meal: "",
+        departure: "",
     });
 
     // array fields
@@ -81,6 +84,8 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     style: tour.style || "",
                     pickup: tour.pickup || "",
                     short: tour.short || "",
+                    meal: tour.meal || "",
+                    departure: tour.departure || "",
                 });
 
                 setPreview(tour.featured_image || "");
@@ -96,8 +101,10 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 const sorted = (gallery || []).slice().sort((a, b) => (a.order_index ?? 0) - (b.order_index ?? 0));
                 setImages(sorted);
                 setSelectedImages(sorted.map((i) => i.image_url));
+                toast.success("Tour loaded successfully");
             } catch (err: any) {
                 console.error("Failed to load tour", err);
+                toast.error("Failed to load tour");
                 setMessage({ type: "error", text: err?.message || "Failed to load tour" });
             } finally {
                 setLoading(false);
@@ -259,6 +266,8 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 style: form.style,
                 pickup: form.pickup,
                 short: form.short,
+                meal: form.meal,
+                departure: form.departure,
             };
 
             // Update tour main record
@@ -276,7 +285,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     .map(async (si) => {
                         try {
                             // Assuming tourService.deleteImagesByTour deletes by image ID, not tour ID
-                            await tourService.deleteImagesByTour(si.id); 
+                            await tourService.deleteImagesByTour(si.id);
                         } catch (err) {
                             console.warn("Failed to delete image", si, err);
                         }
@@ -379,6 +388,19 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                         </div>
                     </div>
 
+                    {/* meal */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm mb-1">Meal</label>
+                            <input name="meal" value={form.meal} onChange={handleChange} className="w-full admin-input" />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm mb-1">Departure</label>
+                            <input name="departure" value={form.departure} onChange={handleChange} className="w-full admin-input" />
+                        </div>
+                    </div>
+
                     {/* Type, Status & Recommended Toggle */}
                     <div className="grid grid-cols-3 gap-4 items-end">
                         <div className="col-span-1">
@@ -393,7 +415,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                             </select>
                         </div>
                         <div className="col-span-1 flex flex-col justify-end pb-2">
-                            <label 
+                            <label
                                 className="block text-sm font-medium mb-2 text-gray-700 cursor-pointer"
                                 onClick={() => setForm(prev => ({ ...prev, recommended: !prev.recommended }))}
                             >
@@ -402,14 +424,12 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                             <button
                                 type="button"
                                 onClick={() => setForm(prev => ({ ...prev, recommended: !prev.recommended }))}
-                                className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                                    form.recommended ? "bg-green-500" : "bg-gray-300"
-                                }`}
+                                className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${form.recommended ? "bg-green-500" : "bg-gray-300"
+                                    }`}
                             >
                                 <span
-                                    className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform duration-200 ${
-                                        form.recommended ? "translate-x-8" : "translate-x-1"
-                                    }`}
+                                    className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform duration-200 ${form.recommended ? "translate-x-8" : "translate-x-1"
+                                        }`}
                                 />
                             </button>
                         </div>
@@ -418,7 +438,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     {/* Featured Image */}
                     <div>
                         <label className="block text-sm font-medium mb-1">Featured Image URL</label>
-                        
+
                         {/* BUTTON FOR FEATURED IMAGE SELECTION */}
                         <div className="flex gap-2 mb-2">
                             <button
@@ -438,9 +458,9 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     <div>
                         <label className="block text-sm font-medium mb-1">Gallery Images (URLs)</label>
                         <div className="flex gap-2 mb-2">
-                            <button 
-                                type="button" 
-                                onClick={handleOpenGalleryModal} 
+                            <button
+                                type="button"
+                                onClick={handleOpenGalleryModal}
                                 className="bg-purple-600 text-white py-1 px-4 rounded-lg hover:bg-purple-700 transition flex items-center gap-2"
                             >
                                 <ImageIcon size={16} /> Select Gallery Images
@@ -508,7 +528,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                         <label className="block text-sm font-medium mb-1">Program Detail</label>
                         <textarea name="program_detail" value={form.program_detail} onChange={handleChange} rows={5} className="w-full admin-input" />
                     </div>
-                    
+
                     {/* 👇 ADDED MISSING FIELDS TO JSX */}
                     <div>
                         <label className="block text-sm font-medium mb-1">Style</label>
@@ -571,9 +591,9 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
                         <div className="flex justify-end pt-4 border-t border-gray-200 flex-shrink-0">
                             <button type="button" onClick={handleCloseModal} className="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition mr-3">Cancel</button>
-                            <button 
-                                type="button" 
-                                onClick={handleApplyImages} 
+                            <button
+                                type="button"
+                                onClick={handleApplyImages}
                                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                             >
                                 {modalMode === "featured" ? "Set Featured Image" : `Apply Selection (${selectedImages.length})`}

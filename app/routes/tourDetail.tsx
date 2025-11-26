@@ -9,6 +9,7 @@ import { FaClock } from "react-icons/fa6";
 import { RiChatPrivateFill } from "react-icons/ri";
 import TourBookingForm from "~/components/TourBookingForm";
 import ImageViewer from "~/components/ImageViewer";
+import { TbCodeAsterisk } from "react-icons/tb";
 import { Remark } from 'react-remark';
 
 
@@ -145,6 +146,12 @@ export default function TourDetailPage() {
                   <RiChatPrivateFill size={18} className="inline mr-2" />Type : <span className="font-medium">{tour.tour_type}</span>
                 </div>
               )}
+
+              <div className=" mt-2 text-gray-600 capitalize">
+                <TbCodeAsterisk size={18} className="inline mr-2" />ID : <span className="font-medium">{tour.id}</span>
+              </div>
+
+
             </div>
             {/* <p className="text-lg font-semibold mt-2 text-emerald-600">
               From ฿{tour.price_from.toLocaleString()}
@@ -173,7 +180,7 @@ export default function TourDetailPage() {
               <h2 className="text-2xl font-semibold mb-3">Description</h2>
               <p className="leading-relaxed indent-4 space-y-1 text-gray-700">
                 {/* {tour.description} */}
-                 <Remark >{tour.description}</Remark>
+                <Remark >{tour.description}</Remark>
               </p>
             </div>
 
@@ -196,12 +203,24 @@ export default function TourDetailPage() {
               <h2 className="text-2xl font-semibold mb-3">Itinerary</h2>
               <ul className="list-disc pl-5 space-y-1 text-gray-700">
                 {tour.itinerary.map((step, i) => (
-                  <li key={i} className={`${step.startsWith("[b]") && "font-bold"}`}>{step.replace("[b]","")}</li>
+                  <li key={i} className={`${step.startsWith("[b]") && "font-bold"}`}>{step.replace("[b]", "")}</li>
                 ))}
               </ul>
             </div>
           </div>
         )}
+
+        {/* Meal & departure */}
+        <section>
+          {tour?.meal && <div className="mb-3">
+            <h2 className="text-2xl font-semibold mb-3">Meal</h2>
+            <p className="text-gray-700 ">{tour?.meal}</p>
+          </div>}
+          {tour?.departure && <div className="mb-3">
+            <h2 className="text-2xl font-semibold mb-3">Departure</h2>
+            <p className="text-gray-700">{tour?.departure}</p>
+          </div>}
+        </section>
 
         {/* Included / Not Included */}
         {(tour.tour_include?.length || tour.not_include?.length) > 0 && (
@@ -263,17 +282,30 @@ export default function TourDetailPage() {
             </ul>
           </div>
         )}
+
+        {/* short */}
+        {tour.short && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">Short & Hightlight</h2>
+            <div className="list-disc text-wrap prose space-y-1 text-gray-700">
+              {tour.short.split("\n").map((line, i) => (
+                <p key={i}>{line}</p>
+              ))}
+            </div>
+
+          </div>
+        )}
       </section>
 
       <section className="max-w-4xl px-4 mx-auto grid gap-5">
         <ImageViewer
-        className="columns-3"
-        images={tour?.images?.sort((a, b) => {
+          className="columns-3"
+          images={tour?.images?.sort((a, b) => {
 
-          const indexA = a.order_index ?? Infinity;
-          const indexB = b.order_index ?? Infinity;
-          return indexA - indexB;
-        }).map(item => item.image_url) || []} />
+            const indexA = a.order_index ?? Infinity;
+            const indexB = b.order_index ?? Infinity;
+            return indexA - indexB;
+          }).map(item => item.image_url) || []} />
 
       </section>
 
@@ -284,8 +316,8 @@ export default function TourDetailPage() {
           tourName={tour.title}
           tour={tour.id}
           pickup_area={tour.pickup}
-          
-          />}
+
+        />}
       </section>
 
 

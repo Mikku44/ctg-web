@@ -26,6 +26,8 @@ export default function AddTourAdminPage() {
     style: "", // Added
     pickup: "", // Added
     short: "", // Added
+    meal : "",
+    departure : "",
     recommended: false,
   });
 
@@ -103,7 +105,7 @@ export default function AddTourAdminPage() {
     else if (name === "recommended") {
       // Handle checkbox change if recommended were a checkbox, but it's a button/toggle, so it's handled separately.
       // Keeping this structure for general form changes.
-      setForm((prev : any) => ({ ...prev, [name]: (value) }));
+      setForm((prev: any) => ({ ...prev, [name]: (value) }));
     }
     else {
       setForm((prev) => ({ ...prev, [name]: (value) }));
@@ -168,6 +170,8 @@ export default function AddTourAdminPage() {
         style: form.style,
         pickup: form.pickup,
         short: form.short,
+        meal : form.meal,
+        departure : form.departure,
       });
 
       // Submit gallery images
@@ -193,6 +197,8 @@ export default function AddTourAdminPage() {
         pickup: "",
         style: "",
         short: "",
+        meal : "",
+        departure : "",
         recommended: false,
       });
       setNote([]);
@@ -287,6 +293,19 @@ export default function AddTourAdminPage() {
             <div>
               <label className="block text-sm font-medium mb-1">Category ID</label>
               <input name="category_id" value={form.category_id} onChange={handleChange} placeholder="temples / adventure / culture" className="w-full admin-input" />
+            </div>
+          </div>
+
+          {/*  */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm mb-1">Meal</label>
+              <input name="meal" value={form.meal} onChange={handleChange} className="w-full admin-input" />
+            </div>
+
+            <div>
+              <label className="block text-sm mb-1">Departure</label>
+              <input name="departure" value={form.departure} onChange={handleChange} className="w-full admin-input" />
             </div>
           </div>
 

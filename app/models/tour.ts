@@ -33,6 +33,10 @@ export interface Tour {
   pickup? :string;
   short? :string;
 
+  // dinner cruise
+  meal ? : string;
+  departure ? : string;
+
   recommended  ?: boolean;
 }
 
