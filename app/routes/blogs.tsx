@@ -9,7 +9,7 @@ import BlogCard from "~/components/BlogCard";
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
   const page = Number(url.searchParams.get("page") || 1);
-  const limit = 9;
+  const limit = 20;
 
   const { blogs, lastVisible } = await blogService.getAll(limit, page);
   // console.log("lastVisible:", blogs);
