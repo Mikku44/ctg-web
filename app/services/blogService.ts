@@ -40,12 +40,12 @@ export const blogService = {
   async getAll(limit = 10, lastDoc: any = null) {
     const colRef = collection(db, BLOGS_COLLECTION);
 
-    let q = query(colRef, orderBy("created_at", "desc"), fbLimit(limit));
+    let q = query(colRef, orderBy("updated_at", "desc"), fbLimit(limit));
 
     if (lastDoc) {
       q = query(
         colRef,
-        // orderBy("created_at", "desc"),
+        orderBy("updated_at", "desc"),
         // startAfter(lastDoc),1
         fbLimit(limit)
       );

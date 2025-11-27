@@ -12,7 +12,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   const limit = 9;
 
   const { blogs, lastVisible } = await blogService.getAll(limit, page);
-  console.log("lastVisible:", blogs);
+  // console.log("lastVisible:", blogs);
 
   return {
     blogs,
