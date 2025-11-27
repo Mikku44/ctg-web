@@ -144,7 +144,7 @@ function TourPreview({ tour }) {
           <div>
             <img
               src={
-                get(tour.images, mock.images)[0].image_url
+                get(tour.images, mock.images)[0]?.image_url
               }
               alt="description"
             />
@@ -155,7 +155,7 @@ function TourPreview({ tour }) {
         <div className="grid md:grid-cols-2 gap-2">
           <div>
             <img
-              src={get(tour.images, mock.images)[1].image_url}
+              src={get(tour.images, mock.images)[1]?.image_url}
               alt="itinerary"
             />
           </div>
@@ -209,7 +209,7 @@ function TourPreview({ tour }) {
         {/* Image */}
         <div>
           <img
-            src={get(tour.images, mock.images)[2].image_url}
+            src={get(tour.images, mock.images)[2]?.image_url}
             alt="image3"
           />
         </div>

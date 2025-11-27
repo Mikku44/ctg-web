@@ -41,6 +41,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         short: "",
         meal: "",
         departure: "",
+
     });
 
     // array fields
@@ -48,7 +49,9 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
     const [itinerary, setItinerary] = useState<string[]>([]);
     const [tourInclude, setTourInclude] = useState<string[]>([]);
     const [notInclude, setNotInclude] = useState<string[]>([]);
+    const [removeImageLocal, setRemoveImageLocal] = useState<string[]>([]);
     const [cancellationPolicy, setCancellationPolicy] = useState<string[]>([]);
+    const [searchImage, setSearchImage] = useState("");
 
     // gallery images (local state)
     const [images, setImages] = useState<TourImage[]>([]);
@@ -209,6 +212,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
     // remove image (from local state)
     const handleRemoveImageLocal = (imageId: string) => {
+        setRemoveImageLocal(prev => [...prev, imageId]);
         setImages((prev) => prev.filter((i) => i.id !== imageId));
         setSelectedImages((prev) => prev.filter((u) => u !== images.find((img) => img.id === imageId)?.image_url));
     };
@@ -280,12 +284,11 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
             // Delete images
             await Promise.all(
-                serverImages
-                    .filter((si) => !localByUrl.has(si.image_url))
+                removeImageLocal
                     .map(async (si) => {
                         try {
                             // Assuming tourService.deleteImagesByTour deletes by image ID, not tour ID
-                            await tourService.deleteImagesByTour(si.id);
+                            await tourService.deleteImagesByTour(si);
                         } catch (err) {
                             console.warn("Failed to delete image", si, err);
                         }
@@ -476,14 +479,15 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                                 setImages(list.map((url, index) => ({ id: uuidv4(), tour_id: tourId || "", image_url: url, order_index: index })));
                                 setSelectedImages(list);
                             }}
-                            value={images.map((i) => i.image_url).join("\n")}
+                            value={images.map((i) => i?.image_url)?.join("\n")}
                         />
 
                         {/* Small gallery preview with remove / reorder */}
                         <div className="mt-3 flex flex-wrap gap-3">
-                            {images.map((img, idx) => (
+                            {images?.map((img, idx) => (
                                 <div key={img.id} className="relative max-w-[180px] rounded-lg overflow-hidden border p-1">
-                                    <img src={img.image_url} alt={img.id} className="w-40 h-24 object-cover rounded" />
+                                    <img src={img?.image_url} alt={img.id} className="w-40 h-24 object-cover rounded" />
+                                    <div className="">{img.id}</div>
                                     <div className="mt-1 flex justify-between items-center gap-2">
                                         <div className="flex gap-1">
                                             <button type="button" onClick={() => moveImage(idx, "up")} className="px-2 py-1 text-xs border rounded">↑</button>
@@ -567,13 +571,18 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                             </button>
                         </div>
 
-                        <div className="text-sm text-gray-500 mt-2 flex-shrink-0">
-                            {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected
-                            {modalMode === "featured" && " (Max 1)"}
+                        <div className="flex justify-between items-center">
+                            <div className="text-sm text-gray-500 mt-2 flex-shrink-0">
+                                {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected
+                                {modalMode === "featured" && " (Max 1)"}
+                            </div>
+                            <div className="">
+                                <input type="text" onChange={(e) => setSearchImage(e.target.value)} className="input rounded-sm" placeholder="Search" />
+                            </div>
                         </div>
 
                         <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3 w-full flex-grow">
-                            {images_file.map((item) => {
+                            {images_file.filter(item => item.filename.includes(searchImage)).map((item) => {
                                 const imageUrl = `/images/${item.path}`;
                                 const isSelected = selectedImages.includes(imageUrl);
                                 return (

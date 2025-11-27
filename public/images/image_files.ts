@@ -448,6 +448,38 @@ export const images_file = [
     "filename": "bangkok(18).jpg"
   },
   {
+    "path": "bangkok_temple (1).jpg",
+    "filename": "bangkok_temple (1).jpg"
+  },
+  {
+    "path": "bangkok_temple (2).jpg",
+    "filename": "bangkok_temple (2).jpg"
+  },
+  {
+    "path": "bangkok_temple (3).jpg",
+    "filename": "bangkok_temple (3).jpg"
+  },
+  {
+    "path": "bangkok_temple (4).jpg",
+    "filename": "bangkok_temple (4).jpg"
+  },
+  {
+    "path": "bangkok_temple (5).jpg",
+    "filename": "bangkok_temple (5).jpg"
+  },
+  {
+    "path": "bangkok_temple (6).jpg",
+    "filename": "bangkok_temple (6).jpg"
+  },
+  {
+    "path": "bangkok_temple (7).jpg",
+    "filename": "bangkok_temple (7).jpg"
+  },
+  {
+    "path": "bangkok_temple (8).jpg",
+    "filename": "bangkok_temple (8).jpg"
+  },
+  {
     "path": "beach (1).jpg",
     "filename": "beach (1).jpg"
   },
