@@ -1,6 +1,7 @@
 
 
 export interface IBlogModel {
+    id ? :string;
     title : string;
     slug : string;
     excerpt : string;

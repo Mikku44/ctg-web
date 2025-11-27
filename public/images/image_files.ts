@@ -12,6 +12,10 @@ export const images_file = [
     "filename": "9-awards.png"
   },
   {
+    "path": "a-local-thai-citizen-poses-for-a-photograph-after-receiving-9f4b23.jpg",
+    "filename": "a-local-thai-citizen-poses-for-a-photograph-after-receiving-9f4b23.jpg"
+  },
+  {
     "path": "album911 (1).jpg",
     "filename": "album911 (1).jpg"
   },
@@ -516,6 +520,46 @@ export const images_file = [
     "filename": "beach (9).jpg"
   },
   {
+    "path": "blog-cover-1.jpg",
+    "filename": "blog-cover-1.jpg"
+  },
+  {
+    "path": "blog-cover-10.jpg",
+    "filename": "blog-cover-10.jpg"
+  },
+  {
+    "path": "blog-cover-2.jpg",
+    "filename": "blog-cover-2.jpg"
+  },
+  {
+    "path": "blog-cover-3.jpg",
+    "filename": "blog-cover-3.jpg"
+  },
+  {
+    "path": "blog-cover-4.jpg",
+    "filename": "blog-cover-4.jpg"
+  },
+  {
+    "path": "blog-cover-5.jpg",
+    "filename": "blog-cover-5.jpg"
+  },
+  {
+    "path": "blog-cover-6.jpg",
+    "filename": "blog-cover-6.jpg"
+  },
+  {
+    "path": "blog-cover-7.jpg",
+    "filename": "blog-cover-7.jpg"
+  },
+  {
+    "path": "blog-cover-8.jpg",
+    "filename": "blog-cover-8.jpg"
+  },
+  {
+    "path": "blog-cover-9.jpg",
+    "filename": "blog-cover-9.jpg"
+  },
+  {
     "path": "boat (1).jpg",
     "filename": "boat (1).jpg"
   },
@@ -984,6 +1028,18 @@ export const images_file = [
     "filename": "elephant (9).jpg"
   },
   {
+    "path": "home_slide (1).jpg",
+    "filename": "home_slide (1).jpg"
+  },
+  {
+    "path": "home_slide (2).jpg",
+    "filename": "home_slide (2).jpg"
+  },
+  {
+    "path": "home_slide (3).jpg",
+    "filename": "home_slide (3).jpg"
+  },
+  {
     "path": "image_files.ts",
     "filename": "image_files.ts"
   },
@@ -1366,6 +1422,10 @@ export const images_file = [
   {
     "path": "old_town_phuket (9).jpg",
     "filename": "old_town_phuket (9).jpg"
+  },
+  {
+    "path": "sawasdee.jpg",
+    "filename": "sawasdee.jpg"
   },
   {
     "path": "simon (1).jpg",

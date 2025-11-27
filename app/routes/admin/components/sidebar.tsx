@@ -8,7 +8,7 @@ import {
     LogOut,
     X
 } from 'lucide-react';
-
+import { TbWriting } from "react-icons/tb";
 import { LuNotebookText } from "react-icons/lu";
 import { Link, useLocation } from 'react-router';
 
@@ -26,6 +26,7 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         { icon: List, label: 'Tour List', path: '/admin/tour/list' },
         { icon: PlusCircle, label: 'Add Tour', path: '/admin/tour/add' },
         { icon: LuNotebookText, label: 'Bookings', path: '/admin/bookings' },
+        { icon: TbWriting, label: 'Blogs', path: '/admin/blog/list' },
 
         // { icon: Settings, label: 'Settings', path: '/admin/settings' },
     ];

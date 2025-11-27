@@ -62,5 +62,5 @@ if __name__ == "__main__":
     print(json_output)
 
     with open('image_files.ts', 'w') as file:
-        file.write(f'export const images = {json_output}')
+        file.write(f'export const images_file = {json_output}')
         # file.write("This is the second line.\n")

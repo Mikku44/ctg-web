@@ -31,7 +31,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     author,
     contents,
     images,
-    publish_at: null,
+    publish_at: new Date().toISOString().split("T")[0],
   };
 
   await blogService.create(newBlog);
@@ -53,6 +53,7 @@ export default function BlogAddPage() {
 
   // Image state
   const [images, setImages] = useState<string[]>([]);
+  const [searchImage, setSearchImage] = useState("");
 
   // Modal state
   const [isOpen, setIsOpen] = useState(false);
@@ -247,12 +248,18 @@ export default function BlogAddPage() {
               </button>
             </div>
 
-            <div className="text-sm text-gray-500 mt-2 flex-shrink-0">
-              {selectedImages.length} image{selectedImages.length !== 1 && "s"} selected
+              <div className="flex justify-between items-center">
+              <div className="text-sm text-gray-500 mt-1">
+                {selectedImages.length} selected
+              </div>
+
+              <div className="">
+                <input type="text" onChange={(e) => setSearchImage(e.target.value)} className="input rounded-sm" placeholder="Search" />
+              </div>
             </div>
 
-            <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3 w-full flex-grow">
-              {images_file.map((item) => {
+            <div className="overflow-auto h-[65vh] mt-5 flex flex-wrap gap-3">
+              {images_file.filter(item => item.filename.includes(searchImage)).map((item) => {
                 const imageUrl = `/images/${item.path}`;
                 const isSelected = selectedImages.includes(imageUrl);
 

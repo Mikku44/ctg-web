@@ -89,6 +89,23 @@ export const blogService = {
     };
   },
 
+  async getPaged(page = 1, perPage = 9) {
+    const colRef = collection(db, BLOGS_COLLECTION);
+    const snap = await getDocs(colRef);
+
+    const allBlogs = snap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+   
+    const total = allBlogs.length;
+    const start = (page - 1) * perPage;
+    const data = allBlogs.slice(start, start + perPage);
+
+    return { data, total };
+  },
+
   /** GET BLOGS BY TAG */
   async getByTag(tag: string, limit = 10) {
     const colRef = collection(db, BLOGS_COLLECTION);

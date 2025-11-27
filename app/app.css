@@ -245,7 +245,7 @@ button {
 
   /* Links: Subtle styling */
   a {
-    @apply text-gray-800 font-medium hover:text-gray-600 transition duration-150 ease-in-out no-underline;
+    @apply text-[var(--primary-color)] font-medium hover:text-gray-600 transition duration-150 ease-in-out underline;
   }
 
   a:hover {

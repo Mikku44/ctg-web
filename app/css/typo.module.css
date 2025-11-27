@@ -42,7 +42,7 @@
 
   /* Links: Subtle styling */
   a {
-    @apply text-gray-800 font-medium hover:text-gray-600 transition duration-150 ease-in-out no-underline;
+    @apply text-blue-800 font-medium hover:text-gray-600 underline transition duration-150 ease-in-out no-underline;
   }
 
   a:hover {
@@ -74,7 +74,7 @@
 
   /* Tables: Formal look with booktabs style */
   table {
-    @apply w-full my-6 text-sm text-left border-collapse;
+    @apply w-full my-6 text-sm text-left border-collapse p-1 bg-zinc-50;
   }
 
   thead {
