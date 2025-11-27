@@ -74,7 +74,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
         </h2>
 
 
-        <div className="text-sm text-zinc-600">{blog.excerpt}</div>
+        <div className="text-sm text-zinc-600 line-clamp-3">{blog.excerpt}</div>
 
 
         {/* Review and Price Section - Clean, horizontal alignment */}

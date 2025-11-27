@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { tourService } from "~/services/tourService";
 import type { Tour } from "~/models/tour";
 import Loading from "~/components/Loading";
+import BlogCard from "~/components/BlogCard";
+import { blogService } from "~/services/blogService";
+import type { IBlogModel } from "~/models/blog";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Creative Tour Guru (Thailand) | Explore Unique Adventures & Local Experiences" },
@@ -46,7 +49,9 @@ const tours = [
 export async function loader() {
   try {
     const items: TourCardProps[] = await tourService.getAllForCard(6);
-    return items;
+    const all = await blogService.getAll(3);
+    // console.log("Loaded tours for home:", items);
+    return { toursList: items, blogs: all.blogs };
   } catch (error) {
     console.error("Failed to load tours:", error);
     return []; // fallback to empty array
@@ -55,7 +60,10 @@ export async function loader() {
 
 export default function Home() {
 
-  const toursList = useLoaderData() as TourCardProps[];
+  const loaderData = useLoaderData()
+
+  const toursList: TourCardProps[] = loaderData.toursList || [];
+  const blogs: IBlogModel[] = loaderData.blogs || [];
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,66 +72,15 @@ export default function Home() {
 
   const router = useNavigate();
 
-  // const [toursList, setTours] = useState<TourCardProps[]>([]);
 
-  // useEffect(() => {
-  //   tourService.getAllForCard().then((items) => {
-  //     console.log("ITEMS : ", items)
-  //     setTours(items)
-  //   });
-  // }, []);
 
   return (
     <main className="">
-      {/* <section className="md:min-h-[560px]  flex justify-between flex-col-reverse gap-5
-       md:px-0 px-4 py-2 items-center  container-x">
-     
-        <div className="flex flex-col justify-center relative z-1">
-
-          <div className="rounded-full bg-[var(--primary-color)] w-fit text-white mb-3 font-medium px-4 py-2">Online Booking | Local Guide</div>
-          <h1 className="md:text-5xl text-4xl font-semibold text-zinc-900">Travel with Heart,<br /> Explore with Meaning</h1>
-          <h2 className="text-2xl  mt-2 font-[300]">
-            Meaningful Journeys by Creative Tour Guru Thailand
-          </h2>
-
-          <div className="grid gap-2">
-            <img src="/licenese/drp.png" className="w-[100px]" alt="dr.prawit" />
-            <h3 className="text-sm text-zinc-600">By Dr. Prawit (Audi) Charoennuam</h3>
-          </div>
-
-          <div className="flex gap-4 items-center">
-
-            <img src="/logo/payments.svg"
-              className="md:w-[380px] w-[200px] mt-5"
-              alt="thailand-tourism-award-creative-tour-guru" />
-            <img src="/images/9-awards.png"
-              className="md:max-w-[150px] max-w-[100px] mt-5"
-              alt="thailand-tourism-award-creative-tour-guru" />
-
-          </div>
-
-        </div>
-
-       
-        <div className="">
-          <FadeImageSlideshow />
-        </div>
-
-      </section> */}
-
-
-      {/* <section className="w-full">
-        <img src="/logo/logo.jpg" alt="creative tour guru logo" className="h-[250px] mx-auto" />
-      </section> */}
-
+      
 
       {/* hero */}
       <section className="w-full md:h-[680px] h-[680px] overflow-hidden">
-        {/* <div className=" h-[500px] overflow-hidden w-full flex flex-col md:flex-row items-center gap-6">
-          <img src="https://images.unsplash.com/photo-1580327942498-53a877c6d0ce?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
-            className="w-full h-full object-cover"
-            alt="hero ctg page" />
-        </div> */}
+       
         <AutoFadeImage images={[
           "/images/thailand6 (9).jpg",
           "/images/thailand6 (4).jpg",
@@ -389,6 +346,34 @@ export default function Home() {
 
 
 
+      </section>
+
+      {/* blogs */}
+      <section className="mt-5 container-x mb-10">
+        <div className="border-t border-gray-200 pt-12">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Another Tips & Tricks
+              </h2>
+
+            </div>
+
+            <Link
+              to="/blogs"
+              className="border border-blue-500 px-4 py-2 text-blue-500 
+                      hover:bg-blue-500 hover:text-white transition-all"
+            >
+              See more
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-3 items-start gap-3">
+            {blogs.map((item, index) => (
+              <BlogCard blog={item} key={index} />
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* CTA Explore */}

@@ -204,7 +204,7 @@ export default function BlogDetail({
               </Link>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 items-start gap-6">
               {relatedBlogs.map((item, index) => (
                 <BlogCard blog={item} key={index} />
               ))}

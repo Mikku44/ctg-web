@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import type { TourCardProps } from "~/components/featureCard";
 import { db } from "~/lib/firebase/config";
+import { getCache, setCache } from "~/lib/utils/cache.server";
 import type { Package, Tour, TourImage } from "~/models/tour";
 
 
@@ -120,11 +121,23 @@ export const tourService = {
     return result!;
   },
 
+
   async getPaginatedForCard(pageSize: number = 10, cursor?: string) {
-    // Reuse your main pagination logic
+    const cacheKey = `tours_paginated_card_${pageSize}_${cursor ?? "start"}`;
+
+    // 1️⃣ Try cache first
+    const cached = getCache(cacheKey);
+    if (cached) {
+      console.log("CACHE HIT:", cacheKey);
+      return cached;
+    }
+
+    console.log("CACHE MISS:", cacheKey);
+
+    // 2️⃣ Fetch paginated raw tours
     const { tours, nextCursor, hasMore } = await this.getPaginated(pageSize, cursor);
 
-    // Transform into Card Props
+    // 3️⃣ Transform into card format
     const cardTours: TourCardProps[] = tours.map((tour) => {
       const firstPackage = tour.packages?.[0];
 
@@ -145,17 +158,34 @@ export const tourService = {
       };
     });
 
-    return {
+    const result = {
       tours: cardTours,
       nextCursor,
       hasMore,
     };
+
+    // 4️⃣ Cache the paginated result
+    //    Default TTL: 1 minute (configurable)
+    setCache(cacheKey, result);
+
+    return result;
   },
 
-  async getAllForCard(limit?: number): Promise<TourCardProps[]> {
+  async getAllForCard(limit?: number) {
+    const cacheKey = `tours_card_${limit ?? "all"}`;
+
+    // 1️⃣ Try to get from cache
+    const cached = getCache(cacheKey);
+    if (cached) {
+      // console.log("CACHE HIT:", cacheKey);
+      return cached;
+    }
+
+    // 2️⃣ Fetch from Firestore
+    // console.log("CACHE MISS:", cacheKey);
     const tours = await this.getAll(limit);
 
-    return tours.map((tour) => {
+    const result = tours.map((tour) => {
       const firstPackage = tour.packages?.[0];
 
       return {
@@ -174,6 +204,11 @@ export const tourService = {
         tourType: tour.tour_type,
       };
     });
+
+    // 3️⃣ Save to cache (1 minute)
+    setCache(cacheKey, result);
+
+    return result;
   },
   // search
   async getSeachForCard(search?: string): Promise<TourCardProps[]> {

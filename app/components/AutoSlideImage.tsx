@@ -117,7 +117,7 @@ export default function AutoFadeImage({
           src={image}
           alt=""
           className="hidden"
-          loading="eager"
+          loading="lazy"
         />
       ))}
 
