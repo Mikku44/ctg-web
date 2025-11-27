@@ -1060,6 +1060,10 @@ export const images_file = [
     "filename": "half-day-bangkok (7).jpg"
   },
   {
+    "path": "half-day-bangkok.jpg",
+    "filename": "half-day-bangkok.jpg"
+  },
+  {
     "path": "home_slide (1).jpg",
     "filename": "home_slide (1).jpg"
   },
