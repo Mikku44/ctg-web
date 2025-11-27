@@ -75,9 +75,9 @@ export default function MarkdownEditor({
 
 
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden">
+    <div className="border relative border-gray-300 rounded-lg overflow-hidden">
       {/* Toolbar */}
-      <div className="bg-gray-50 border-b border-gray-300 p-2 flex flex-wrap gap-1">
+      <div className="bg-gray-50 sticky top-0 border-b border-gray-300 p-2 flex flex-wrap gap-1">
         <button
           type="button"
           onClick={() => insertMarkdown("# ", "")}

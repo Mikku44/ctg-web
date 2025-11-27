@@ -528,6 +528,10 @@ export const images_file = [
     "filename": "blog-cover-10.jpg"
   },
   {
+    "path": "blog-cover-11.jpg",
+    "filename": "blog-cover-11.jpg"
+  },
+  {
     "path": "blog-cover-2.jpg",
     "filename": "blog-cover-2.jpg"
   },
@@ -1026,6 +1030,34 @@ export const images_file = [
   {
     "path": "elephant (9).jpg",
     "filename": "elephant (9).jpg"
+  },
+  {
+    "path": "half-day-bangkok (1).jpg",
+    "filename": "half-day-bangkok (1).jpg"
+  },
+  {
+    "path": "half-day-bangkok (2).jpg",
+    "filename": "half-day-bangkok (2).jpg"
+  },
+  {
+    "path": "half-day-bangkok (3).jpg",
+    "filename": "half-day-bangkok (3).jpg"
+  },
+  {
+    "path": "half-day-bangkok (4).jpg",
+    "filename": "half-day-bangkok (4).jpg"
+  },
+  {
+    "path": "half-day-bangkok (5).jpg",
+    "filename": "half-day-bangkok (5).jpg"
+  },
+  {
+    "path": "half-day-bangkok (6).jpg",
+    "filename": "half-day-bangkok (6).jpg"
+  },
+  {
+    "path": "half-day-bangkok (7).jpg",
+    "filename": "half-day-bangkok (7).jpg"
   },
   {
     "path": "home_slide (1).jpg",

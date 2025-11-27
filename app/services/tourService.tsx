@@ -15,7 +15,8 @@ import {
 } from "firebase/firestore";
 import type { TourCardProps } from "~/components/featureCard";
 import { db } from "~/lib/firebase/config";
-import { getCache, setCache } from "~/lib/utils/cache.server";
+import { getCache, setCache } from "~/lib/utils/cache";
+
 import type { Package, Tour, TourImage } from "~/models/tour";
 
 
