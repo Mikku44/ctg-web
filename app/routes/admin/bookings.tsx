@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { formatCurrency } from "~/lib/utils/currencyFormator";
 import type { BookingModel } from "~/models/booking";
 import { bookingService } from "~/services/bookingService";
+import BookingRow from "./components/BookingRow";
 
 type BookingStatus = 'complete' | 'paid' | 'unpaid';
 const ALL_STATUSES: BookingStatus[] = ['complete', 'paid', 'unpaid'];
@@ -99,47 +100,13 @@ export default function Bookings() {
 
                             <tbody className="divide-y divide-slate-100">
                                 {bookingList.map((booking) => (
-                                    <tr key={booking.id} className="hover:bg-slate-50">
-                                        <td className="px-6 py-4">{booking.firstName}</td>
-                                        <td className="px-6 py-4">
-                                            {booking.tourName ? (
-                                                // Standard display if tourName exists
-                                                <span className="text-sm text-slate-600">
-                                                    {booking.tourName}
-                                                </span>
-                                            ) : (
-                                                // Modified display if tourName is missing/removed
-                                                <span className="text-sm text-slate-400 italic">
-                                                    {booking.tour || 'N/A'} [Removed]
-                                                </span>
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4 text-slate-600">{booking.date}</td>
-                                        <td className="px-6 py-4 font-medium">{formatCurrency(booking.totalPrice)}</td>
-                                        <td className="px-6 py-4">
-                                            <span className={`inline-flex capitalize px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClasses(booking.status)}`}>
-                                                {booking.status}
-                                            </span>
-                                        </td>
-
-                                        {/* ACTIONS */}
-                                        <td className="px-6 py-4">
-                                            <select
-                                                disabled={isUpdating}
-                                                value={booking.status}
-                                                onChange={(e) =>
-                                                    openConfirmModal(booking.id!, e.target.value as BookingStatus)
-                                                }
-                                                className="block w-full text-sm border border-slate-300 rounded-md py-1.5 pl-3 pr-8 disabled:bg-slate-100 disabled:text-slate-400"
-                                            >
-                                                {ALL_STATUSES.map(status => (
-                                                    <option key={status} value={status}>
-                                                        {status.charAt(0).toUpperCase() + status.slice(1)}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </td>
-                                    </tr>
+                                    <BookingRow
+                                        key={booking.id}
+                                        booking={booking}
+                                        isUpdating={isUpdating}
+                                        openConfirmModal={openConfirmModal}
+                                        getStatusClasses={getStatusClasses}
+                                    />
                                 ))}
                             </tbody>
                         </table>

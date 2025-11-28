@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   onSnapshot,
   query,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "~/lib/firebase/config";
 import type { BookingModel } from "~/models/booking";
@@ -36,19 +37,24 @@ export const bookingService = {
   // GET ALL
   async getAllBookings() {
     const colRef = collection(db, BOOKINGS_COLLECTION);
-    const snapshot = await getDocs(colRef);
+
+    // ✅ ใช้ query + getDocs ให้เรียงตาม created_at
+    const q = query(colRef, orderBy("created_at", "desc"));
+    const snapshot = await getDocs(q);
 
     // Load all bookings with tourName resolved
     const bookings = await Promise.all(
       snapshot.docs.map(async (docItem) => {
         const data = docItem.data() as BookingModel;
 
-        // Fetch tour data by id
+        // Fetch tourName
         let tourName = "";
+        let tourSlug = "";
         try {
           if (data.tour) {
             const tour = await tourService.getById(data.tour);
             tourName = tour?.title || "";
+            tourSlug = tour?.slug || "";
           }
         } catch (err) {
           console.error("Failed to fetch tour:", err);
@@ -57,7 +63,8 @@ export const bookingService = {
         return {
           id: docItem.id,
           ...data,
-          tourName, // <--- Add new field
+          tourName,
+          tourSlug
         };
       })
     );

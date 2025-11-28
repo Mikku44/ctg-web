@@ -28,3 +28,7 @@ export interface BookingModel {
   created_at: Timestamp;
   updated_at: Timestamp;
 }
+
+
+export type BookingStatus = 'complete' | 'paid' | 'unpaid';
+export const ALL_STATUSES: BookingStatus[] = ['complete', 'paid', 'unpaid'];
