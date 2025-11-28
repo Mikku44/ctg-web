@@ -53,7 +53,7 @@ export default function SidebarMenu() {
             {/* Top Navbar */}
             <header className="container-x no-print top-0 left-0 right-0 bg-white md:min-h-[100px]  min-h-[100px]
             flex flex-row-reverse items-center justify-between px-4 z-50 relative">
-                <form onSubmit={handleSubmit} className="relative md:block hidden w-full max-w-[250px]">
+                <form onSubmit={handleSubmit} className="absolute md:flex gap-5 hidden w-full max-w-[350px]">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 w-5 h-5" />
 
@@ -78,8 +78,10 @@ export default function SidebarMenu() {
                             </button>
                         )}
                     </div>
+                    <button type="submit" className="button px-4 py-2 ">Search</button>
                 </form>
-
+                
+                <div className="w-[200px] md:block hidden"></div>
 
                 <Link to="/"><img src="/logo/logo.jpg" className="md:h-[100px] h-[100px] top-0 md:absolute" alt="creative tour guru" /></Link>
 

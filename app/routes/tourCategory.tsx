@@ -4,6 +4,7 @@ import { TourCard, type TourCardProps } from "~/components/featureCard";
 import { tourService } from "~/services/tourService";
 import { Pagination, Stack } from "@mui/material";
 import { useState, useEffect } from "react";
+import type { Tour } from "~/models/tour";
 
 // 🧩 Meta (SEO)
 export const meta: MetaFunction<typeof loader> = ({ params }) => {
@@ -24,20 +25,21 @@ const normalizeText = (text: string) => text?.toLowerCase().replace(/[-_]/g, " "
 export async function loader({ params }: LoaderFunctionArgs) {
   try {
     const { type_slug, place } = params;
-    const allTours = await tourService.getAllForCard();
+    const allTours : any = await tourService.getAllForCard();
 
     // 1. Prepare Search Terms from URL
     const typeTerm = normalizeText(type_slug || "");
     const placeTerm = normalizeText(place || "");
 
     // 2. Filter logic
-    const filteredTours = allTours.filter((tour: any) => {
+    const filteredTours = allTours?.filter((tour: Tour) => {
       
       const title = normalizeText(tour.title);
       const description = normalizeText(tour.description);
-      const style = normalizeText(tour.style); 
+      const style = normalizeText(tour.style || ""); 
+      const tour_type = normalizeText(tour.tour_type || ""); 
       
-      const searchableContent = `${title} ${description} ${style}`;
+      const searchableContent = `${title} ${description} ${style} ${tour_type}`;
 
       // Check Type Match
       const matchesType = !typeTerm || searchableContent.includes(typeTerm);
@@ -45,7 +47,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
       // Check Place Match
       const matchesPlace = !placeTerm || searchableContent.includes(placeTerm);
 
-      return matchesType && matchesPlace;
+      return  matchesPlace;
     });
 
     return Response.json({ tours: filteredTours });

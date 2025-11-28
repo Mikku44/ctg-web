@@ -48,7 +48,7 @@ export const menuConfig = [
         description: "Discover hidden temples, local eateries, and markets that only come alive after dark."
       },
       {
-        href: "/tours/unseen/around-thailand-tour",
+        href: "/tours/discover/thailand",
         title: "Around Thailand Tour",
         description: "Curated multi-day journeys exploring remote provinces, hidden beaches, and authentic regional culture."
       },
