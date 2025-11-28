@@ -1,13 +1,16 @@
+import { Link, NavLink, useNavigate, useNavigation } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
+import { MENU_LIST, menuConfig } from "~/const/app";
 import { Menu, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router";
-import { MENU_LIST, menuConfig } from "~/const/app";
 import SubNavbar from "./subNavbar";
 
 export default function SidebarMenu() {
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
     const [isScrolled, setIsScrolled] = useState(false);
+    const navigation = useNavigation();
+    const isLoading = navigation.state === "loading";
 
 
 
@@ -30,6 +33,49 @@ export default function SidebarMenu() {
 
     return (
         <>
+
+            {isLoading && (
+                <AnimatePresence>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed w-full flex flex-col items-center justify-end h-full pointer-events-none top-0 right-0 z-[999]"
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 200 }}
+                            className="bg-white shadow flex mb-5 items-center px-4 py-2 rounded-lg justify-center"
+                        >
+                            <div className="p-3 animate-spin">
+                                <svg
+                                    className="w-6 h-6 text-cyan-300"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <circle
+                                        className="opacity-25"
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        strokeWidth="4"
+                                    ></circle>
+                                    <path
+                                        className="opacity-75"
+                                        fill="currentColor"
+                                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div>Loading...</div>
+                        </motion.div>
+                    </motion.div>
+                </AnimatePresence>
+            )}
+
             {/* <div className="relative z-[50] bg-zinc-500 py-2 flex gap-2 justify-end items-center px-6">
                 <a href="line.me" target="_blank" className="text-sm size-8 bg-white rounded-full  
               flex gap-2 justify-center items-center">
@@ -80,7 +126,7 @@ export default function SidebarMenu() {
                     </div>
                     <button type="submit" className="button px-4 py-2 ">Search</button>
                 </form>
-                
+
                 <div className="w-[200px] md:block hidden"></div>
 
                 <Link to="/"><img src="/logo/logo.jpg" className="md:h-[100px] h-[100px] top-0 md:absolute" alt="creative tour guru" /></Link>
@@ -146,6 +192,7 @@ export default function SidebarMenu() {
                             </NavLink>
                         ))}
                     </nav>
+
 
                     <div className="mt-auto px-6 pb-4 text-xs text-gray-400">
                         © 2025 CTG All Reserved.
