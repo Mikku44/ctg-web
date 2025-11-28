@@ -324,6 +324,26 @@ export const images_file = [
     "filename": "album911 (9).jpg"
   },
   {
+    "path": "ayutthaya_ancient (1).jpg",
+    "filename": "ayutthaya_ancient (1).jpg"
+  },
+  {
+    "path": "ayutthaya_ancient (2).jpg",
+    "filename": "ayutthaya_ancient (2).jpg"
+  },
+  {
+    "path": "ayutthaya_ancient (3).jpg",
+    "filename": "ayutthaya_ancient (3).jpg"
+  },
+  {
+    "path": "ayutthaya_ancient (4).jpg",
+    "filename": "ayutthaya_ancient (4).jpg"
+  },
+  {
+    "path": "ayutthaya_ancient (5).jpg",
+    "filename": "ayutthaya_ancient (5).jpg"
+  },
+  {
     "path": "background.jpg",
     "filename": "background.jpg"
   },
@@ -916,6 +936,34 @@ export const images_file = [
     "filename": "chaingmai_3 (9).jpg"
   },
   {
+    "path": "chaingmai_old_town (1).jpg",
+    "filename": "chaingmai_old_town (1).jpg"
+  },
+  {
+    "path": "chaingmai_old_town (2).jpg",
+    "filename": "chaingmai_old_town (2).jpg"
+  },
+  {
+    "path": "chaingmai_old_town (3).jpg",
+    "filename": "chaingmai_old_town (3).jpg"
+  },
+  {
+    "path": "chaingmai_old_town (4).jpg",
+    "filename": "chaingmai_old_town (4).jpg"
+  },
+  {
+    "path": "chaingmai_old_town (5).jpg",
+    "filename": "chaingmai_old_town (5).jpg"
+  },
+  {
+    "path": "chaingmai_old_town (6).jpg",
+    "filename": "chaingmai_old_town (6).jpg"
+  },
+  {
+    "path": "chaingmai_old_town (7).jpg",
+    "filename": "chaingmai_old_town (7).jpg"
+  },
+  {
     "path": "elephant (1).jpg",
     "filename": "elephant (1).jpg"
   },
@@ -1490,6 +1538,34 @@ export const images_file = [
   {
     "path": "old_town_phuket (9).jpg",
     "filename": "old_town_phuket (9).jpg"
+  },
+  {
+    "path": "phi_phi (1).jpg",
+    "filename": "phi_phi (1).jpg"
+  },
+  {
+    "path": "phi_phi (2).jpg",
+    "filename": "phi_phi (2).jpg"
+  },
+  {
+    "path": "phi_phi (3).jpg",
+    "filename": "phi_phi (3).jpg"
+  },
+  {
+    "path": "phi_phi (4).jpg",
+    "filename": "phi_phi (4).jpg"
+  },
+  {
+    "path": "phi_phi (5).jpg",
+    "filename": "phi_phi (5).jpg"
+  },
+  {
+    "path": "phi_phi (6).jpg",
+    "filename": "phi_phi (6).jpg"
+  },
+  {
+    "path": "phi_phi (7).jpg",
+    "filename": "phi_phi (7).jpg"
   },
   {
     "path": "sawasdee.jpg",
