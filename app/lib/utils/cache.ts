@@ -5,7 +5,7 @@ type CacheEntry<T> = {
 
 const cache = new Map<string, CacheEntry<any>>();
 
-const DEFAULT_TTL = 1000 * (60 * 100); // 1 hour
+const DEFAULT_TTL = 1000 * (60 * 10); // 10 minutes
 
 export function getCache<T>(key: string): T | null {
   const entry = cache.get(key);

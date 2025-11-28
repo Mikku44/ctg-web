@@ -48,7 +48,7 @@ export function TourCard({
         <img
           src={image}
           alt={title}
-          className="w-full h-[220px] object-cover duration-300"
+          className="w-full max-h-[450px] aspect-auto object-cover duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 
