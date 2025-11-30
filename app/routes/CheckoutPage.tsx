@@ -17,6 +17,7 @@ import { bookingService } from "~/services/bookingService";
 import { tourService } from "~/services/tourService";
 import type { Route } from "./+types/CheckoutPage";
 import { toast } from "sonner";
+import { Terms } from "./terms-of-use";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -31,6 +32,7 @@ export function meta({ }: Route.MetaArgs) {
 export default function CheckoutPage() {
 
   const [clientSecret, setClientSecret] = useState("");
+  const [showTerms, setShowTerms] = useState(false);
   const [booking, setBooking] = useState<BookingModel | null>();
   const [tourDetail, setTourDetail] = useState<Tour | null>();
   const [isError, setIsError] = useState(false);
@@ -71,6 +73,8 @@ export default function CheckoutPage() {
     return <main className="min-h-screen w-full bg-slate-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
 
+
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-slate-900">Payment Completed</h1>
@@ -92,6 +96,8 @@ export default function CheckoutPage() {
                 />
               </div>
             )}
+
+
 
             <div className="p-6 space-y-6">
 
@@ -220,6 +226,7 @@ export default function CheckoutPage() {
 
             </div>
           </section>
+
 
           {/* RIGHT PANEL — PAYMENT CONFIRMATION */}
           <section className="lg:col-span-2">
@@ -421,6 +428,21 @@ export default function CheckoutPage() {
   return (
     <main className="min-h-screen w-full bg-slate-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
+
+        {showTerms && <div className="fixed top-0 left-0 bg-black/30 w-full h-screen z-99">
+          <div className="flex items-center  w-full h-screen justify-center">
+            <div className="relative md:w-[500px] w-[80vw] h-[500px] border border-zinc-300 overflow-auto p-5  mx-auto bg-white rounded-md shadow-sm">
+              <Terms></Terms>
+              <div className="sticky bottom-0 w-full bg-white border border-zinc-300 px-3 pb-2">
+                <div className="py-1 text-[12px] text-zinc-600">Scroll to the end to view all content</div>
+                <button
+                  className=" px-4 py-4 w-full button text-white transition"
+                  onClick={() => setShowTerms(false)} >Close & Accept our terms</button>
+              </div>
+            </div>
+          </div>
+        </div>}
+
 
         {/* Header */}
         <div className="mb-8">
@@ -643,7 +665,7 @@ function CheckoutForm({ booking }: { booking: BookingModel }) {
           description: `Booking: ${booking.tourName || ""}`,
           email: booking.email,
           bookingId: booking.id, // เก็บ metadata
-          date : booking.date,
+          date: booking.date,
         }),
       });
 
@@ -654,7 +676,7 @@ function CheckoutForm({ booking }: { booking: BookingModel }) {
       if (data.error) {
         setMessage("Something went wrong. Please contact support.");
       } else {
-        setMessage("Invoice created! Redirecting..." + data.invoiceUrl);
+        setMessage("Invoice created! Redirecting...");
 
         // เปิดลิงก์ Invoice ให้ลูกค้า
         // window.location.href = data.invoiceUrl;
