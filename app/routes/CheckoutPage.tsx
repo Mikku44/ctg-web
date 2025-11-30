@@ -32,7 +32,7 @@ export function meta({ }: Route.MetaArgs) {
 export default function CheckoutPage() {
 
   const [clientSecret, setClientSecret] = useState("");
-  const [showTerms, setShowTerms] = useState(false);
+  const [showTerms, setShowTerms] = useState(true);
   const [booking, setBooking] = useState<BookingModel | null>();
   const [tourDetail, setTourDetail] = useState<Tour | null>();
   const [isError, setIsError] = useState(false);
