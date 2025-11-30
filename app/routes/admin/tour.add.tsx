@@ -12,6 +12,7 @@ export default function AddTourAdminPage() {
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const [form, setForm] = useState({
+    tid: "",
     title: "",
     slug: "",
     description: "",
@@ -26,9 +27,10 @@ export default function AddTourAdminPage() {
     style: "", // Added
     pickup: "", // Added
     short: "", // Added
-    meal : "",
-    departure : "",
+    meal: "",
+    departure: "",
     recommended: false,
+    deposit: ""
   });
 
   const generateSlug = (title: string) => {
@@ -166,12 +168,13 @@ export default function AddTourAdminPage() {
         rating: 0,
         tour_type: form.tour_type,
         recommended: form.recommended,
+        deposit: Number(form.deposit),
         // FIX: Added missing fields to the submission payload
         style: form.style,
         pickup: form.pickup,
         short: form.short,
-        meal : form.meal,
-        departure : form.departure,
+        meal: form.meal,
+        departure: form.departure,
       });
 
       // Submit gallery images
@@ -183,6 +186,7 @@ export default function AddTourAdminPage() {
       setMessage({ type: "success", text: "✅ Tour created successfully!" });
       // Reset form
       setForm({
+        tid: "",
         title: "",
         slug: "",
         description: "",
@@ -197,9 +201,10 @@ export default function AddTourAdminPage() {
         pickup: "",
         style: "",
         short: "",
-        meal : "",
-        departure : "",
+        meal: "",
+        departure: "",
         recommended: false,
+        deposit: ""
       });
       setNote([]);
       setItinerary([]);
@@ -258,6 +263,10 @@ export default function AddTourAdminPage() {
 
       <div className="grid md:grid-cols-2 gap-2 overflow-hidden">
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">TID *</label>
+            <input name="tid" value={form.tid} onChange={handleChange} required className="w-full admin-input" />
+          </div>
           {/* Basic Info */}
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -286,9 +295,17 @@ export default function AddTourAdminPage() {
           </div>
           {/* Price and Category */}
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Starting Price (THB) *</label>
-              <input name="price_from" type="number" value={form.price_from} onChange={handleChange} className="w-full admin-input" />
+            <div className="space-y-2">
+              <div>
+                <label className="block text-sm font-medium mb-1">Starting Price (THB) *</label>
+                <input name="price_from" type="number" value={form.price_from} onChange={handleChange} className="w-full admin-input" />
+              </div>
+
+              {/*  */}
+              <div>
+                <label className="block text-sm font-medium mb-1">Deposit (THB) (Optional) </label>
+                <input name="deposit" type="number" value={form.deposit} onChange={handleChange} className="w-full admin-input" />
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Category ID</label>

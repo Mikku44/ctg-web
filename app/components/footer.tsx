@@ -57,8 +57,8 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold text-lg mb-3">Contact Us</h3>
                     <ul className="space-y-3 text-white/90 text-sm">
-                        <Link to="tel:+66886587286" target="_blank" className="flex items-center gap-2 hover:underline underline-offset-2">
-                            <Phone size={16} /> +66 88 658 7286
+                        <Link to="tel:+66615097533" target="_blank" className="flex items-center gap-2 hover:underline underline-offset-2">
+                            <Phone size={16} /> +66 615 097533
                         </Link >
                         <Link to="mailto:creativetourguru@hotmail.com" target="_blank" className="flex items-center gap-2 hover:underline underline-offset-2">
                             <Mail size={16} /> creativetourguru@hotmail.com
@@ -73,7 +73,7 @@ export default function Footer() {
                     <div className="flex gap-4 mt-4">
                         {/* WhatsApp */}
                         <a
-                            href="https://wa.me/+66886587286"
+                            href="https://wa.me/+66615097533"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -84,7 +84,7 @@ export default function Footer() {
 
                         {/* Phone */}
                         <a
-                            href="tel:+66886587286"
+                            href="tel:+66615097533"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
                             title="Call us"
                         >

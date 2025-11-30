@@ -4,8 +4,8 @@ import type { BookingModel } from "~/models/booking";
 import { bookingService } from "~/services/bookingService";
 import BookingRow from "./components/BookingRow";
 
-type BookingStatus = 'complete' | 'paid' | 'unpaid';
-const ALL_STATUSES: BookingStatus[] = ['complete', 'paid', 'unpaid'];
+type BookingStatus = 'complete' | 'paid' | 'unpaid' | 'invoiced';
+const ALL_STATUSES: BookingStatus[] = ['complete', 'paid', 'unpaid' , 'invoiced'];
 
 export default function Bookings() {
     const [isUpdating, setIsUpdating] = useState(false);
@@ -67,6 +67,7 @@ export default function Bookings() {
         switch (status) {
             case 'complete': return 'bg-green-100 text-green-800';
             case 'paid': return 'bg-yellow-100 text-yellow-800';
+            case 'invoiced': return 'bg-yellow-100 text-yellow-800';
             default: return 'bg-red-100 text-red-800';
         }
     };

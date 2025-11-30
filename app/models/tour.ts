@@ -1,6 +1,7 @@
 // --- Tour Model ---
 export interface Tour {
   id: string;
+  tid? : string; // unique tour identifier
   title: string;
   slug: string;
   description: string;
@@ -36,6 +37,11 @@ export interface Tour {
   // dinner cruise
   meal ? : string;
   departure ? : string;
+
+  // muti-day tour
+  deposit  ?: number;
+
+  
 
   recommended  ?: boolean;
 }

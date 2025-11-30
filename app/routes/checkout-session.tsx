@@ -177,7 +177,7 @@ export default function CheckoutSession() {
               <div className="flex justify-between items-center">
                 <span className="text-base text-gray-700 font-medium">Total Paid</span>
                 <span className="text-lg font-bold text-gray-900">
-                  {bookingData.currency || "THB"} {bookingData.totalPrice.toLocaleString()}
+                  {bookingData.currency || "THB"} {bookingData?.totalDepositPrice ? bookingData.totalDepositPrice.toLocaleString() :bookingData.totalPrice.toLocaleString()}
                 </span>
               </div>
               {bookingData.paymentMethod && (
@@ -189,7 +189,7 @@ export default function CheckoutSession() {
               {bookingData.id && (
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Booking Reference</span>
-                  <span className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">{bookingData.id}</span>
+                  <a href={`https://creativetourguruthailand.com/checkout?id=${bookingData.id}`} target="_blank"><span className="font-mono text-xs bg-gray-50 px-2 py-1 rounded">{bookingData.id}</span></a>
                 </div>
               )}
             </div>

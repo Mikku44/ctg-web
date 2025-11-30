@@ -51,7 +51,7 @@ export default function CheckoutPage() {
 
           fetch("/api/payment-intent", {
             method: "POST",
-            body: JSON.stringify({ amount: result.totalPrice,description : result.id }),
+            body: JSON.stringify({ amount: result.totalDepositPrice || result.totalPrice, description: result.id }),
             headers: { "Content-Type": "application/json" },
           })
             .then((res) => res.json())
@@ -67,7 +67,7 @@ export default function CheckoutPage() {
       })
   }, []);
 
-  if(booking?.status === "paid") 
+  if (booking?.status === "paid")
     return <main className="min-h-screen w-full bg-slate-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
 
@@ -103,29 +103,29 @@ export default function CheckoutPage() {
                 <div className="space-y-2.5">
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Tour</span>
-                    <span className="text-sm font-medium text-slate-900">{tourDetail?.title}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{tourDetail?.title}</span>
                   </div>
 
                   {booking.packageName && (
                     <div className="flex justify-between py-2 border-b border-slate-100">
                       <span className="text-sm text-slate-600">Package</span>
-                      <span className="text-sm font-medium text-slate-900">{booking.packageName}</span>
+                      <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.packageName}</span>
                     </div>
                   )}
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Date</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.date}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.date}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Number of Guests</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.people}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.people}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Price per Person</span>
-                    <span className="text-sm font-medium text-slate-900">
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">
                       {booking.price?.toLocaleString()} {booking.currency}
                     </span>
                   </div>
@@ -140,24 +140,24 @@ export default function CheckoutPage() {
                 <div className="space-y-2.5">
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Name</span>
-                    <span className="text-sm font-medium text-slate-900">
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">
                       {booking.firstName} {booking.lastName}
                     </span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Email</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.email}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.email}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Phone</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.contact}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.contact}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Hotel Pickup</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.hotel}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.hotel}</span>
                   </div>
 
                   {booking.special && (
@@ -171,14 +171,14 @@ export default function CheckoutPage() {
 
               {/* Support Section */}
               <div className="pt-4 border-t border-slate-200">
-                <h3 className="text-sm font-medium text-slate-900 mb-3">
+                <h3 className="text-sm font-medium text-slate-900 max-w-[300px] mb-3">
                   Need Assistance?
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-600">
-                  <a href="tel:+66886587286" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                  <a href="tel:+66615097533" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Phone size={14} className="text-slate-400" />
-                    <span>+66886587286</span>
+                    <span>+66615097533</span>
                   </a>
                   <a href="mailto:creativetourguru@hotmail.com" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Mail size={14} className="text-slate-400" />
@@ -188,7 +188,7 @@ export default function CheckoutPage() {
 
                 <div className="flex gap-3 mt-4 pt-3 border-t border-slate-100">
                   <a
-                    href="https://wa.me/+66886587286"
+                    href="https://wa.me/+66615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="WhatsApp"
                   >
@@ -202,7 +202,7 @@ export default function CheckoutPage() {
                     <FaLine size={16} />
                   </a>
                   <a
-                    href="tel:+66886587286"
+                    href="tel:+66615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="Call"
                   >
@@ -224,7 +224,7 @@ export default function CheckoutPage() {
           {/* RIGHT PANEL — PAYMENT CONFIRMATION */}
           <section className="lg:col-span-2">
             <div className="bg-white border border-slate-200 rounded-lg p-6 sticky top-6">
-              
+
               {/* Success Badge */}
               <div className="flex items-center justify-center mb-6">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
@@ -243,29 +243,38 @@ export default function CheckoutPage() {
                   <span className="text-slate-600">Booking ID</span>
                   <span className="font-medium text-slate-900">{booking.id}</span>
                 </div>
-                
+
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-600">Payment Date</span>
                   <span className="font-medium text-slate-900">{booking.paymentDate}</span>
                 </div>
-                
+
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-600">Payment Method</span>
                   <span className="font-medium text-slate-900">{booking.paymentMethod}</span>
                 </div>
-                
-              
+
+
               </div>
 
               {/* Total Amount */}
               <div className="bg-slate-50 rounded-lg p-4 mb-6">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-slate-900">Total Paid</span>
+                  <span className="text-sm font-medium text-slate-900 max-w-[300px]">Total Paid</span>
                   <span className="text-2xl font-bold text-slate-900">
-                    {booking.totalPrice?.toLocaleString()} THB
+
+                    {booking?.totalDepositPrice ? booking.totalDepositPrice.toLocaleString() : booking.totalPrice.toLocaleString()} {booking.currency || "THB"}
                   </span>
                 </div>
+
               </div>
+
+              {booking?.totalDepositPrice && <div className="flex  px-4 justify-between items-center">
+                <span className="text-sm font-medium text-slate-900 max-w-[300px]">Total Price</span>
+                <span className="text-xl font-bold text-slate-900">
+                  {booking.totalPrice?.toLocaleString()} THB
+                </span>
+              </div>}
 
               {/* Action Buttons */}
               {/* <div className="space-y-3">
@@ -297,77 +306,77 @@ export default function CheckoutPage() {
 
   if (isError)
     return (
-       <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 p-6">
-      <div className="max-w-fit w-full text-center p-8 space-y-6">
-        
-        {/* Icon */}
-        <div className="flex justify-center">
-          <VscError size={56} className="text-red-500" />
-        </div>
+      <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 p-6">
+        <div className="max-w-fit w-full text-center p-8 space-y-6">
 
-        {/* Message */}
-        <h1 className="text-2xl font-semibold text-zinc-800">
-          Oops! Something went wrong
-        </h1>
-        <p className="text-zinc-500 text-sm">
-          An unexpected error occurred. Please try again or contact support if the problem persists.
-        </p>
+          {/* Icon */}
+          <div className="flex justify-center">
+            <VscError size={56} className="text-red-500" />
+          </div>
 
-        {/* Contact Section */}
-        <div className="pt-4 border-t border-zinc-200">
-          <h2 className="text-sm font-medium text-zinc-700 mb-2">Need help?</h2>
+          {/* Message */}
+          <h1 className="text-2xl font-semibold text-zinc-800">
+            Oops! Something went wrong
+          </h1>
+          <p className="text-zinc-500 text-sm">
+            An unexpected error occurred. Please try again or contact support if the problem persists.
+          </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <a
-              href="https://wa.me/+66886587286"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-green-50 transition"
-              title="WhatsApp"
+          {/* Contact Section */}
+          <div className="pt-4 border-t border-zinc-200">
+            <h2 className="text-sm font-medium text-zinc-700 mb-2">Need help?</h2>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <a
+                href="https://wa.me/+66615097533"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-green-50 transition"
+                title="WhatsApp"
+              >
+                <FaWhatsapp size={18} className="text-green-500" />
+                WhatsApp
+              </a>
+              <a
+                href="tel:+66615097533"
+                className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-slate-50 transition"
+                title="Call"
+              >
+                <Phone size={18} className="text-zinc-700" />
+                Call
+              </a>
+              <a
+                href="mailto:creativetourguru@hotmail.com"
+                className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-slate-50 transition"
+                title="Email"
+              >
+                <Mail size={18} className="text-zinc-700" />
+                Email
+              </a>
+              <a
+                href="https://line.me/ti/p/Z-jqyT7THX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-green-50 transition"
+                title="LINE"
+              >
+                <FaLine size={18} className="text-green-600" />
+                LINE
+              </a>
+            </div>
+          </div>
+
+          {/* Back Home Button */}
+          <div className="pt-4">
+            <Link
+              to="/"
+              className="inline-block px-6 py-3 button text-white font-medium rounded-lg hover:bg-red-600 transition"
             >
-              <FaWhatsapp size={18} className="text-green-500" />
-              WhatsApp
-            </a>
-            <a
-              href="tel:+66886587286"
-              className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-slate-50 transition"
-              title="Call"
-            >
-              <Phone size={18} className="text-zinc-700" />
-              Call
-            </a>
-            <a
-              href="mailto:creativetourguru@hotmail.com"
-              className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-slate-50 transition"
-              title="Email"
-            >
-              <Mail size={18} className="text-zinc-700" />
-              Email
-            </a>
-            <a
-              href="https://line.me/ti/p/Z-jqyT7THX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-3 py-2 border border-zinc-200 rounded-md hover:bg-green-50 transition"
-              title="LINE"
-            >
-              <FaLine size={18} className="text-green-600" />
-              LINE
-            </a>
+              Back to Homepage
+            </Link>
           </div>
         </div>
-
-        {/* Back Home Button */}
-        <div className="pt-4">
-          <Link
-            to="/"
-            className="inline-block px-6 py-3 button text-white font-medium rounded-lg hover:bg-red-600 transition"
-          >
-            Back to Homepage
-          </Link>
-        </div>
       </div>
-    </div>
     );
 
   if (!clientSecret)
@@ -443,31 +452,31 @@ export default function CheckoutPage() {
                   Tour Information
                 </h2>
                 <div className="space-y-2.5">
-                  <div className="flex justify-between py-2 border-b border-slate-100">
-                    <span className="text-sm text-slate-600">Tour</span>
-                    <span className="text-sm font-medium text-slate-900">{tourDetail?.title}</span>
+                  <div className="flex justify-between gap-1 py-2 border-b border-slate-100">
+                    <span className="text-sm text-slate-600">Tour </span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]"> {tourDetail?.title}</span>
                   </div>
 
                   {booking.packageName && (
                     <div className="flex justify-between py-2 border-b border-slate-100">
                       <span className="text-sm text-slate-600">Package</span>
-                      <span className="text-sm font-medium text-slate-900">{booking.packageName}</span>
+                      <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.packageName}</span>
                     </div>
                   )}
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Date</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.date}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.date}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Number of Guests</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.people}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.people}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Price per Person</span>
-                    <span className="text-sm font-medium text-slate-900">
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">
                       {booking.price?.toLocaleString()} {booking.currency}
                     </span>
                   </div>
@@ -482,24 +491,24 @@ export default function CheckoutPage() {
                 <div className="space-y-2.5">
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Name</span>
-                    <span className="text-sm font-medium text-slate-900">
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">
                       {booking.firstName} {booking.lastName}
                     </span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Email</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.email}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.email}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Phone</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.contact}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.contact}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Hotel Pickup</span>
-                    <span className="text-sm font-medium text-slate-900">{booking.hotel}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.hotel}</span>
                   </div>
 
                   {booking.special && (
@@ -514,14 +523,14 @@ export default function CheckoutPage() {
 
               {/* Support Section */}
               <div className="pt-4 border-t border-slate-200">
-                <h3 className="text-sm font-medium text-slate-900 mb-3">
+                <h3 className="text-sm font-medium text-slate-900 max-w-[300px] mb-3">
                   Need Assistance?
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-600">
-                  <a href="tel:+66886587286" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                  <a href="tel:+66615097533" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Phone size={14} className="text-slate-400" />
-                    <span>+66886587286</span>
+                    <span>+66615097533</span>
                   </a>
                   <a href="mailto:creativetourguru@hotmail.com" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                     <Mail size={14} className="text-slate-400" />
@@ -531,7 +540,7 @@ export default function CheckoutPage() {
 
                 <div className="flex gap-3 mt-4 pt-3 border-t border-slate-100">
                   <a
-                    href="https://wa.me/+66886587286"
+                    href="https://wa.me/+66615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="WhatsApp"
                   >
@@ -545,7 +554,7 @@ export default function CheckoutPage() {
                     <FaLine size={16} />
                   </a>
                   <a
-                    href="tel:+66886587286"
+                    href="tel:+66615097533"
                     className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900 transition-colors"
                     title="Call"
                   >
@@ -603,12 +612,57 @@ function CheckoutForm({ booking }: { booking: BookingModel }) {
       confirmParams: {
         return_url: `${window.location.origin}/checkout-session`,
       },
+      // redirect: "if_required",
     });
+
+
+
 
 
 
     if (error) {
       setMessage(error.message || "Payment failed");
+      setLoading(false);
+    }
+
+
+
+  };
+
+  const handlePayLater = async () => {
+    setLoading(true);
+    setMessage("");
+
+    try {
+      // เรียก API Route ที่สร้าง Invoice
+      const res = await fetch("/api/create-invoice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: booking?.totalDepositPrice ? booking?.totalDepositPrice * 100 : booking?.totalPrice * 100, // สตางค์
+          description: `Booking: ${booking.tourName || ""}`,
+          email: booking.email,
+          bookingId: booking.id, // เก็บ metadata
+          date : booking.date,
+        }),
+      });
+
+      const data = await res.json();
+
+      console.log("Invoice Response:", data);
+
+      if (data.error) {
+        setMessage("Something went wrong. Please contact support.");
+      } else {
+        setMessage("Invoice created! Redirecting..." + data.invoiceUrl);
+
+        // เปิดลิงก์ Invoice ให้ลูกค้า
+        // window.location.href = data.invoiceUrl;
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("Failed to create invoice.");
+    } finally {
       setLoading(false);
     }
   };
@@ -626,9 +680,12 @@ function CheckoutForm({ booking }: { booking: BookingModel }) {
       <div className="text-xl font-bold">{booking.tourName}</div>
       <div className="pt-4 border-t-2 border-slate-200">
         <div className="flex justify-between items-center">
-          <span className="text-base font-semibold text-slate-900">Total Amount</span>
+          <div className="">
+            <span className="text-base font-semibold text-slate-900">Total Amount</span>
+            {booking?.totalDepositPrice != 0 && <span className="text-slate-800"> (deposit)</span>}
+          </div>
           <span className="text-xl font-bold text-slate-900">
-            {booking.totalPrice.toLocaleString()} THB
+            {booking?.totalDepositPrice ? booking.totalDepositPrice?.toLocaleString() : booking.totalPrice.toLocaleString()} THB
           </span>
         </div>
       </div>
@@ -643,21 +700,37 @@ function CheckoutForm({ booking }: { booking: BookingModel }) {
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={!stripe || loading}
-        className="w-full bg-[var(--primary-color)] text-white py-3 px-4 rounded-md text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
-        {loading ? (
-          <span className="flex items-center justify-center gap-2">
-            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-white border-r-transparent"></span>
-            Processing
-          </span>
-        ) : (
-          "Complete Payment"
-        )}
-      </button>
-
+      <div className="grid gap-3">
+        <button
+          type="submit"
+          disabled={!stripe || loading}
+          className="w-full bg-[var(--primary-color)] text-white py-3 px-4 rounded-md text-sm font-medium hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-white border-r-transparent"></span>
+              Processing
+            </span>
+          ) : (
+            "Complete Payment"
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={handlePayLater}
+          disabled={!stripe || loading}
+          className="w-full bg-white text-slate-900 py-3 px-4 rounded-md text-sm font-medium hover:bg-zinc-200 border border-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-white border-r-transparent"></span>
+              Processing
+            </span>
+          ) : (
+            "Pay Later with Invoice"
+          )}
+        </button>
+      </div>
       <p className="text-xs text-slate-500 leading-relaxed pt-2">
         By completing this payment, you agree to our{" "}
         <a href="/terms-of-use" className="text-slate-700 underline hover:text-slate-900">

@@ -23,6 +23,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
     // form state
     const [form, setForm] = useState({
+        tid : "",
         title: "",
         slug: "",
         description: "",
@@ -35,6 +36,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         status: "draft",
         tour_type: "",
         recommended: false,
+        deposit: 0,
         // 👇 ADDED MISSING FIELDS
         style: "",
         pickup: "",
@@ -71,6 +73,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
                 // Prefill form
                 setForm({
+                    tid : tour.tid || ""    ,
                     title: tour.title || "",
                     slug: tour.slug || "",
                     description: tour.description || "",
@@ -83,11 +86,13 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     status: tour.status || "draft",
                     tour_type: tour.tour_type || "",
                     recommended: tour.recommended ?? false,
+                    deposit: tour.deposit ?? 0,
                     // 👇 ADDED MISSING FIELDS TO LOADING LOGIC
                     style: tour.style || "",
                     pickup: tour.pickup || "",
                     short: tour.short || "",
                     meal: tour.meal || "",
+
                     departure: tour.departure || "",
                 });
 
@@ -249,6 +254,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         try {
             // build payload
             const payload: Partial<Tour> = {
+                tid : form.tid,
                 title: form.title,
                 slug: form.slug,
                 description: form.description,
@@ -266,6 +272,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 status: form.status as "draft" | "published",
                 tour_type: form.tour_type,
                 recommended: form.recommended,
+                deposit: Number(form.deposit),
                 // 👇 ADDED MISSING FIELDS TO PAYLOAD
                 style: form.style,
                 pickup: form.pickup,
@@ -352,6 +359,10 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
             <div className="grid md:grid-cols-2 gap-2 overflow-hidden">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Basic Info */}
+                    <div>
+                            <label className="block text-sm font-medium mb-1">TOUR ID *</label>
+                            <input name="tid" value={form.tid} onChange={handleChange} required className="w-full admin-input" />
+                        </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium mb-1">Title *</label>
@@ -381,9 +392,16 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium mb-1">Starting Price (THB) *</label>
-                            <input name="price_from" type="number" value={form.price_from} onChange={handleChange} className="w-full admin-input" />
+                        <div className="">
+                            <div>
+                                <label className="block text-sm font-medium mb-1">Starting Price (THB) *</label>
+                                <input name="price_from" type="number" value={form.price_from} onChange={handleChange} className="w-full admin-input" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1 mt-2">Deposit (THB) (Optional) </label>
+                                <input name="deposit" type="number" value={form.deposit} onChange={handleChange} className="w-full admin-input" />
+                            </div>
+                            
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-1">Category ID</label>

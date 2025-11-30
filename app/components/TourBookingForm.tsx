@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaWhatsapp, FaLine } from "react-icons/fa";
 import { Link, redirect, useNavigate } from "react-router";
 import { toast } from "sonner";
+import { formatCurrency } from "~/lib/utils/currencyFormator";
 import { bookingService } from "~/services/bookingService"; // <-- add import
 
 export default function TourBookingForm({
@@ -10,11 +11,13 @@ export default function TourBookingForm({
   price,
   cover,
   tourName,
-  pickup_area
+  pickup_area,
+  deposit
 }: {
   tourName?: string;
   tour?: string;
   price?: number;
+  deposit?: number;
   cover?: string;
   pickup_area?: string;
 }) {
@@ -35,6 +38,9 @@ export default function TourBookingForm({
   const totalPrice =
     price && formData.people ? price * parseInt(formData.people) : 0;
 
+  const totalDepositPrice =
+    deposit && formData.people ? deposit * parseInt(formData.people) : 0;
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -42,7 +48,7 @@ export default function TourBookingForm({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
- 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -53,19 +59,32 @@ export default function TourBookingForm({
         tourName: tourName || "",
         tour: tour || null,
         price: price || 0,
-
         totalPrice: totalPrice,
+        totalDepositPrice: totalDepositPrice,
         status: "unpaid" as const,
       };
 
+
+
       const result = await bookingService.createBooking(payload as any);
 
-      // console.log("📌 Booking saved:", result);
+      // 🛒 Save full confirmed booking as "cart"   
+      // Save booking into array in localStorage
+      const existing = JSON.parse(localStorage.getItem("lastBooking") || "[]");
+
+      // Push newest item to the front
+      const updated = [result, ...existing];
+
+      // Optional: limit saved bookings (example: last 5)
+      const limited = updated.slice(0, 5);
+
+      localStorage.setItem("lastBooking", JSON.stringify(limited));
+
       toast.success("Your booking request has been sent!");
 
+      // Redirect to checkout
+      router(`/checkout?id=${result.id}`);
 
-
-      router(`/checkout?id=${result.id}`)
       // Reset form
       setFormData({
         firstName: "",
@@ -77,6 +96,7 @@ export default function TourBookingForm({
         hotel: "",
         special: "",
       });
+
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong. Please try again.");
@@ -84,6 +104,7 @@ export default function TourBookingForm({
       setLoading(false);
     }
   };
+
 
   if (typeof window !== "undefined")
     return (
@@ -101,10 +122,21 @@ export default function TourBookingForm({
               )}
             </div>
 
+            <div className="">
+              <div className="text-sm">Full Price</div>
+              <span className="text-xl font-bold">{formatCurrency(price || 0)}</span>
+              <span> / person</span>
+            </div>
+            {deposit && <div className="">
+              <div className="text-sm">Deposit Price</div>
+              <span className="text-xl font-bold">{formatCurrency(deposit || 0)}</span>
+              <span> / person</span>
+            </div>}
+
             <h3 className="font-semibold text-xl">Contact Us</h3>
             <ul className="space-y-3 text-sm">
-              <Link to="tel:+66886587286" className="flex items-center gap-2">
-                <Phone size={16} /> +66886587286
+              <Link to="tel:+66615097533" className="flex items-center gap-2">
+                <Phone size={16} /> +66615097533
               </Link>
               <Link
                 to="mailto:creativetourguru@hotmail.com"
@@ -119,7 +151,7 @@ export default function TourBookingForm({
 
             <div className="flex gap-4 mt-4">
               <a
-                href="https://wa.me/+66886587286"
+                href="https://wa.me/+66615097533"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -128,7 +160,7 @@ export default function TourBookingForm({
                 <FaWhatsapp size={18} />
               </a>
               <a
-                href="tel:+66886587286"
+                href="tel:+66615097533"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
                 title="Call us"
               >
@@ -277,13 +309,28 @@ export default function TourBookingForm({
               />
             </div>
 
-            {(formData.people) && (
+            {(formData.people) && !totalDepositPrice && (
               <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
                 <div>
                   Price per person: <strong>฿{price?.toLocaleString() || 0}</strong>
                 </div>
                 <div>
                   Total: <strong>฿{totalPrice.toLocaleString()}</strong>
+                </div>
+              </div>
+            )}
+            {(formData.people) && totalDepositPrice && (
+              <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
+                <div>
+                  Price per person: <strong>฿{price?.toLocaleString() || 0}</strong>
+                </div>
+                <div className="flex flex-col items-end justify-end" >
+                  <div>
+                    Deposit : <strong>฿{totalDepositPrice.toLocaleString()}</strong>
+                  </div>
+                  <div className="text-[12px]">
+                   Total : <strong>฿{totalPrice.toLocaleString()}</strong>
+                  </div>
                 </div>
               </div>
             )}

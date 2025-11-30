@@ -82,7 +82,9 @@ export default function TourListPage() {
           <div
             key={tour.id}
             className="flex items-center justify-between pb-4"
+            
           >
+            <div className="text-[12px] text-zinc-600">{tour.tid || tour.id}</div>
             {/* Left: Image & Info */}
             <div className="flex items-center gap-4">
               <div className="h-14 w-20 overflow-hidden">

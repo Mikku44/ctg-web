@@ -29,6 +29,7 @@ export default [
         // API
         route("/api/payment-intent", "api/paymentIntent.tsx"),
         route("/api/payment-status", "api/paymentStatus.tsx"),
+        route("/api/create-invoice", "api/invoiceItem.tsx"),
     ]),
     // admin
     route("/admin/login", "routes/admin/login.tsx"),

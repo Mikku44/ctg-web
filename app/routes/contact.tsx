@@ -226,8 +226,8 @@ export default function Contact() {
 
           <h3 className="font-semibold text-xl">Contact Us</h3>
           <ul className="space-y-3 text-sm">
-            <Link to="tel:+66886587286" className="flex items-center gap-2">
-              <Phone size={16} /> +66886587286
+            <Link to="tel:+66615097533" className="flex items-center gap-2">
+              <Phone size={16} /> +66615097533
             </Link>
             <Link
               to="mailto:creativetourguru@hotmail.com"
@@ -242,7 +242,7 @@ export default function Contact() {
 
           <div className="flex gap-4 mt-4">
             <a
-              href="https://wa.me/+66886587286"
+              href="https://wa.me/+66615097533"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -251,7 +251,7 @@ export default function Contact() {
               <FaWhatsapp size={18} />
             </a>
             <a
-              href="tel:+66886587286"
+              href="tel:+66615097533"
               className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
               title="Call us"
             >

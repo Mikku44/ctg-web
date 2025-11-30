@@ -43,7 +43,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [{ title: "Tour not found" }];
-  const { tour } = data;
+  const { tour } = data as any;
   return [
     { title: `${tour.title} | Creative Tour Guru` },
     { name: "description", content: tour.description || "Tour details and packages." },
@@ -148,7 +148,7 @@ export default function TourDetailPage() {
               )}
 
               <div className=" mt-2 text-gray-600 capitalize">
-                <TbCodeAsterisk size={18} className="inline mr-2" />ID : <span className="font-medium">{tour.id}</span>
+                <TbCodeAsterisk size={18} className="inline mr-2" />ID : <span className="font-medium">{tour.tid || tour.id}</span>
               </div>
 
 
@@ -313,6 +313,7 @@ export default function TourDetailPage() {
         {<TourBookingForm
           // cover={tour.featured_image}
           price={tour.price_from}
+          deposit={tour?.deposit}
           tourName={tour.title}
           tour={tour.id}
           pickup_area={tour.pickup}

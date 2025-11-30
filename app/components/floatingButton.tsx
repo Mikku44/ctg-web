@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowUp, FaWhatsapp } from "react-icons/fa";
+import CartButtonWithDrawer from "./CartButtonWithDrawer";
 
 export default function FloatingButtons() {
   const [showScroll, setShowScroll] = useState(false);
@@ -16,13 +17,15 @@ export default function FloatingButtons() {
 
   const openWhatsApp = () => {
     // format number for WhatsApp (remove spaces and leading 0)
-    const phone = "+66886587286"; // Thailand country code +66
+    const phone = "+66615097533"; // Thailand country code +66
     const message = encodeURIComponent("Hello! I would like to ask for more information.");
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
   };
 
   return (
-    <div className="fixed bottom-5 right-5 flex flex-col items-end gap-3 z-50">
+    <div className="fixed bottom-5 right-5 flex flex-col items-end gap-3 z-[99]">
+      {/* cart */}
+      <CartButtonWithDrawer />
       {/* WhatsApp Button */}
       <button
         onClick={openWhatsApp}

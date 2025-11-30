@@ -17,10 +17,13 @@ export interface BookingModel {
   hotel: string;
   special: string;
 
-  totalPrice: number;             // total price
+  totalPrice: number;    
+  totalDepositPrice?: number;         // total price
   currency: 'THB' | 'USD';
 
-  status: 'paid' | 'unpaid' | 'complete';
+  status: 'paid' | 'unpaid' | 'complete' | 'invoiced';
+
+  invoice? : string;
 
   paymentId?: string;         // stripe / promptpay
   paymentDate?: string;         // stripe / promptpay
