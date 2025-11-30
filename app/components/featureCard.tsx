@@ -42,13 +42,13 @@ export function TourCard({
 
   return (
     <Link to={`/tours/${slug}`} target="_blank" draggable="false" className={`group select-none cursor-potiner w-full bg-white h-fit
-     overflow-hidden border border-zinc-200 transition-all rounded-sm duration-300 ${className}`}>
+     overflow-hidden border border-zinc-200 group transition-all rounded-sm duration-300 ${className}`}>
 
       <div className="relative overflow-hidden">
         <img
           src={image}
           alt={title}
-          className="w-full max-h-[450px] aspect-auto object-cover duration-300"
+          className="w-full  max-h-[450px] aspect-auto object-cover duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 

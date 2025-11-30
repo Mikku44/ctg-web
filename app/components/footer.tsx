@@ -2,10 +2,11 @@ import React from "react";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router";
 import { FaLine, FaWhatsapp } from "react-icons/fa6";
+import { menuConfig } from "~/const/app";
 
 export default function Footer() {
     return (
-        <footer className="w-full no-print bg-[#3b444f] text-white pt-10 pb-4">
+        <footer className="w-full no-print bg-[#24282e] text-white pt-10 pb-4">
             <div className="container-x grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-8">
                 {/* --- Brand --- */}
                 <div>
@@ -32,11 +33,23 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold text-lg mb-3">Our Services</h3>
                     <ul className="space-y-2 text-white/90 text-sm">
-                        <li>Private Thailand Tours</li>
-                        <li>Airport Transfers</li>
-                        <li>English-Speaking Guides</li>
-                        <li>Custom Travel Planning</li>
-                        <li>Adventure & Island Trips</li>
+                        {menuConfig.slice(0,5).map((section) => (
+                            <li key={section.label}>
+                                <Link
+                                    to={section?.links?.[0]?.href ?? "#"}
+                                    className="hover:text-white transition  duration-200 hover:border-b"
+                                >
+                                    {section.label}
+                                </Link>
+                            </li>
+                        ))}
+
+                        {/* Optional: add a dedicated guide link */}
+                        <li>
+                            <Link to="/guide-service" className="hover:text-white transition  duration-200 hover:border-b">
+                                Private Local Expert Guide
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -44,22 +57,23 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold text-lg mb-3">Contact Us</h3>
                     <ul className="space-y-3 text-white/90 text-sm">
-                        <Link to="tel:0615097533" target="_blank" className="flex items-center gap-2">
-                            <Phone size={16} /> 0615097533
+                        <Link to="tel:+66886587286" target="_blank" className="flex items-center gap-2 hover:underline underline-offset-2">
+                            <Phone size={16} /> +66 88 658 7286
                         </Link >
-                        <Link to="mailto:creativetourguru@hotmail.com" target="_blank" className="flex items-center gap-2">
+                        <Link to="mailto:creativetourguru@hotmail.com" target="_blank" className="flex items-center gap-2 hover:underline underline-offset-2">
                             <Mail size={16} /> creativetourguru@hotmail.com
                         </Link>
-                        <li className="flex items-center gap-2">
-                            <MapPin size={16} /> Bangkok, Thailand
-                        </li>
+                        <Link to="https://maps.google.com/maps?q=13.812544,100.360551" target="_blank" className="flex items-start gap-2 hover:underline underline-offset-2">
+                            <MapPin size={16} className="size-5 min-w-4" /> Casa-Presto  Wongwaen Pinklao , Moo 3 Sala Klang Subdistrict , Bang Kruai District, Nonthaburi 11130, Thailand
+                        </Link>
                     </ul>
+
 
                     {/* Socials */}
                     <div className="flex gap-4 mt-4">
                         {/* WhatsApp */}
                         <a
-                            href="https://wa.me/0615097533"
+                            href="https://wa.me/+66886587286"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -70,7 +84,7 @@ export default function Footer() {
 
                         {/* Phone */}
                         <a
-                            href="tel:0615097533"
+                            href="tel:+66886587286"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
                             title="Call us"
                         >
@@ -88,7 +102,7 @@ export default function Footer() {
 
                         {/* LINE */}
                         <a
-                            href="https://line.me/ti/p/~0615097533"
+                            href="https://line.me/ti/p/Z-jqyT7THX"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -97,19 +111,24 @@ export default function Footer() {
                             <FaLine size={18} />
                         </a>
                     </div>
+
+                    {/* verified */}
+                    <div className=" mt-4">
+                        <a href="/license/dbd" target="_blank"><img src="/licenese/dbd.webp" className="max-w-[150px]" alt="dbd verified" /></a>
+                    </div>
                 </div>
             </div>
 
             {/* --- Bottom Bar --- */}
             <div className="container-x mt-8 pt-4 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-sm text-white/80">
                 <p>© {new Date().getFullYear()} Creative Tour Guru. All Rights Reserved.</p>
-                <p className=" space-x-2">
-                  
+                <p className=" space-x-2 ">
+
                     <a
                         href="/terms-of-use"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-white"
+                        className="hover:text-white border-r px-3"
                     >
                         Terms of use
                     </a>

@@ -11,7 +11,7 @@ export const meta: MetaFunction<typeof loader> = ({ params }) => {
   const { type_slug, place } = params;
   // Capitalize for nice title
   const formatTitle = (str?: string) => str?.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
-  
+
   return [
     { title: `${formatTitle(type_slug)} in ${formatTitle(place)} - Creative Tour Guru` },
     { name: "description", content: `Explore best ${type_slug} tours in ${place}.` },
@@ -25,30 +25,42 @@ const normalizeText = (text: string) => text?.toLowerCase().replace(/[-_]/g, " "
 export async function loader({ params }: LoaderFunctionArgs) {
   try {
     const { type_slug, place } = params;
-    const allTours : any = await tourService.getAllForCard();
+    const allTours: any = await tourService.getAllForCard();
 
     // 1. Prepare Search Terms from URL
     const typeTerm = normalizeText(type_slug || "");
     const placeTerm = normalizeText(place || "");
 
     // 2. Filter logic
-    const filteredTours = allTours?.filter((tour: Tour) => {
-      
-      const title = normalizeText(tour.title);
-      const description = normalizeText(tour.description);
-      const style = normalizeText(tour.style || ""); 
-      const tour_type = normalizeText(tour.tour_type || ""); 
-      
-      const searchableContent = `${title} ${description} ${style} ${tour_type}`;
+    const filteredTours = allTours
+      ?.map((tour: Tour) => {
+        const title = normalizeText(tour.title);
+        const description = normalizeText(tour.description);
+        const style = normalizeText(tour.style || "");
+        const tour_type = normalizeText(tour.tour_type || "");
+        const tour_iter = normalizeText(tour.itinerary?.join(",") || "");
 
-      // Check Type Match
-      const matchesType = !typeTerm || searchableContent.includes(typeTerm);
+        const searchableContent = `${title} ${description} ${style} ${tour_type} ${tour_iter}`;
 
-      // Check Place Match
-      const matchesPlace = !placeTerm || searchableContent.includes(placeTerm);
+        const matchesType = !typeTerm || searchableContent.includes(typeTerm);
+        const matchesPlace = !placeTerm || searchableContent.includes(placeTerm);
 
-      return  matchesPlace;
-    });
+        return {
+          tour,
+          matchesType,
+          matchesPlace,
+        };
+      })
+      // 1️⃣ Keep results only if at least one match exists
+      .filter((item : any) => item.matchesPlace || item.matchesType)
+      // 2️⃣ Sort with (both match) first
+      .sort((a :any, b : any) => {
+        const aScore = (a.matchesPlace && a.matchesType) ? 2 : 1;
+        const bScore = (b.matchesPlace && b.matchesType) ? 2 : 1;
+        return bScore - aScore; // higher score first
+      })
+      // 3️⃣ Extract back the tour objects
+      .map((item : any) => item.tour);
 
     return Response.json({ tours: filteredTours });
   } catch (error) {
@@ -117,7 +129,7 @@ export default function TourCategory({ params }: { params: { type_slug?: string;
                 No tours match these criteria
               </h3>
               <p className="text-sm text-zinc-500 mt-2 max-w-md">
-                We couldn't find any tours matching "{type_slug}" in "{place}". 
+                We couldn't find any tours matching "{type_slug}" in "{place}".
                 Try looking for a different category or destination.
               </p>
             </div>

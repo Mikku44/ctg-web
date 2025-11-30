@@ -103,8 +103,8 @@ export default function TourBookingForm({
 
             <h3 className="font-semibold text-xl">Contact Us</h3>
             <ul className="space-y-3 text-sm">
-              <Link to="tel:0615097533" className="flex items-center gap-2">
-                <Phone size={16} /> 0615097533
+              <Link to="tel:+66886587286" className="flex items-center gap-2">
+                <Phone size={16} /> +66886587286
               </Link>
               <Link
                 to="mailto:creativetourguru@hotmail.com"
@@ -112,14 +112,14 @@ export default function TourBookingForm({
               >
                 <Mail size={16} /> creativetourguru@hotmail.com
               </Link>
-              <li className="flex items-center gap-2">
-                <MapPin size={16} /> Bangkok, Thailand
+              <li className="flex items-start gap-2">
+                <MapPin size={16} className="size-5" /> Casa-Presto  Wongwaen Pinklao , Moo 3 Sala Klang Subdistrict , Bang Kruai District, Nonthaburi 11130, Thailand
               </li>
             </ul>
 
             <div className="flex gap-4 mt-4">
               <a
-                href="https://wa.me/0615097533"
+                href="https://wa.me/+66886587286"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
@@ -128,7 +128,7 @@ export default function TourBookingForm({
                 <FaWhatsapp size={18} />
               </a>
               <a
-                href="tel:0615097533"
+                href="tel:+66886587286"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
                 title="Call us"
               >
@@ -142,7 +142,7 @@ export default function TourBookingForm({
                 <Mail size={18} />
               </a>
               <a
-                href="https://line.me/ti/p/~0615097533"
+                href="https://line.me/ti/p/Z-jqyT7THX"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"

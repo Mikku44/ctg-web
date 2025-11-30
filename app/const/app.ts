@@ -21,11 +21,11 @@ export const menuConfig = [
     label: "One Day Tours",
     layout: "grid", // Suitable for a slightly longer list
     links: [
-      { href: "/tours/one-day/bangkok", title: "Bangkok City & Culture", description: "Full-day BKK immersion." },
-      { href: "/tours/one-day/kanchanaburi", title: "Kanchanaburi", description: "River Kwai and historical sites." },
-      { href: "/tours/one-day/pattaya", title: "Pattaya", description: "Coastal city escape." },
-      { href: "/tours/one-day/chiang-mai", title: "Chiang Mai Exploration", description: "Doi Suthep and local villages." },
-      { href: "/tours/one-day/phuket", title: "Phuket Island Hopping", description: "Beaches and viewpoints." },
+      { href: "/tours/full-day/bangkok", title: "Bangkok City & Culture", description: "Full-day BKK immersion." },
+      { href: "/tours/full-day/kanchanaburi", title: "Kanchanaburi", description: "River Kwai and historical sites." },
+      { href: "/tours/full-day/pattaya", title: "Pattaya", description: "Coastal city escape." },
+      { href: "/tours/full-day/chiang-mai", title: "Chiang Mai Exploration", description: "Doi Suthep and local villages." },
+      { href: "/tours/full-day/phuket", title: "Phuket Island Hopping", description: "Beaches and viewpoints." },
     ],
   },
   {

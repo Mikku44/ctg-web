@@ -20,6 +20,7 @@ export default [
         route("/checkout-session", "routes/checkout-session.tsx"),
         route("/tours/:tour_slug", "routes/tourDetail.tsx"),
         route("/tours/:type_slug/:place", "routes/tourCategory.tsx"),
+        route("/license/dbd", "routes/dbd.tsx"),
 
 
 
