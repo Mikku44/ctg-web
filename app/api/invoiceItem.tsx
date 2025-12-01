@@ -21,6 +21,9 @@ export async function action({ request }: ActionFunctionArgs) {
       description: bill_to || "Tour booking customer [from CTG Web]",
     });
 
+   
+
+
 
     // 3️⃣ สร้าง Invoice
     const bookingDate = new Date(date); // your booking date
@@ -40,13 +43,8 @@ export async function action({ request }: ActionFunctionArgs) {
       days_until_due: diffDays > 0 ? diffDays : 0, // must be >=0
     });
 
-    await stripe.invoiceItems.create({
-      customer: customer.id,
-      amount: amount, // amount เป็นสตางค์
-      currency: "thb",
-      description: description || "Custom booking payment",
+    
 
-    });
 
     await stripe.invoices.update(invoice.id, {
       metadata: {
@@ -54,11 +52,21 @@ export async function action({ request }: ActionFunctionArgs) {
       },
     });
 
+     await stripe.invoiceItems.create({
+      customer: customer.id,
+      amount: amount, // amount เป็นสตางค์
+      invoice: invoice.id,
+      currency: "thb",
+      description: description || "Custom booking payment",
+      
+
+    });
+
+
+    // const finalInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
 
 
     const finalInvoice = await stripe.invoices.sendInvoice(invoice.id);
-
-    // const finalInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
 
     // await sendInvoice(invoice.id);
 
@@ -68,7 +76,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return Response.json({
       message: "Invoice created successfully",
       invoiceId: invoice.id,
-      invoiceUrl: finalInvoice.invoice_pdf, // ลูกค้าสามารถเปิดเพื่อจ่าย
+      invoiceUrl:  finalInvoice.invoice_pdf, // ลูกค้าสามารถเปิดเพื่อจ่าย
     });
   } catch (error) {
     console.error("Stripe invoice error:", error);

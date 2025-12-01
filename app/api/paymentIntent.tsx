@@ -19,6 +19,10 @@ export async function action({ request }: ActionFunctionArgs) {
       automatic_payment_methods: {
         enabled: true               // เปิดให้ PaymentElement เลือกวิธีจ่ายอัตโนมัติ
       },
+
+      metadata : {
+        bookingId  : description
+      }
       // payment_method_types: [
       //   "card",
       //   "promptpay",

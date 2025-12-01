@@ -896,7 +896,7 @@ function CheckoutForm({ booking, id }: { booking: BookingModel, id: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: booking?.totalDepositPrice ? booking?.totalDepositPrice * 100 : booking?.totalPrice * 100, // สตางค์
-          description: `Booking: ${booking.tourName || ""}`,
+          description: `Booking: ${booking.tourName || ""} ${booking?.totalDepositPrice ? " (deposit)" : ""}`,
           email: booking.email,
           bookingId: id, // เก็บ metadata
           bill_to : `${booking.firstName} ${booking.lastName}`,
