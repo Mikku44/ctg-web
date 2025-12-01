@@ -23,7 +23,7 @@ export interface BookingModel {
 
   status: 'paid' | 'unpaid' | 'complete' | 'invoiced';
 
-  invoice? : string;
+  invoice? : {id : string , url : string};  // stripe invoice id and url
 
   paymentId?: string;         // stripe / promptpay
   paymentDate?: string;         // stripe / promptpay

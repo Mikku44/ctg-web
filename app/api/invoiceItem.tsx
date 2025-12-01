@@ -3,7 +3,7 @@ import { stripe } from "~/lib/stripe/server";
 
 export async function action({ request }: ActionFunctionArgs) {
   try {
-    const { amount, description, email, date } = await request.json();
+    const { amount, description, email, date, bookingId, bill_to } = await request.json();
     // amount หน่วยคือ "สตางค์" เช่น 100 = 1.00 บาท
 
     if (amount <= 0) {
@@ -13,21 +13,14 @@ export async function action({ request }: ActionFunctionArgs) {
       });
     }
 
-   
+
 
     // 1️⃣ สร้างหรือค้นหา Stripe Customer
     const customer = await stripe.customers.create({
       email: email || undefined,
-      description: "Tour booking customer [from CTG Web]",
+      description: bill_to || "Tour booking customer [from CTG Web]",
     });
 
-    // 2️⃣ สร้าง Invoice Item
-    await stripe.invoiceItems.create({
-      customer: customer.id,
-      amount: amount, // amount เป็นสตางค์
-      currency: "thb",
-      description: description || "Custom booking payment",
-    });
 
     // 3️⃣ สร้าง Invoice
     const bookingDate = new Date(date); // your booking date
@@ -47,20 +40,35 @@ export async function action({ request }: ActionFunctionArgs) {
       days_until_due: diffDays > 0 ? diffDays : 0, // must be >=0
     });
 
-    // 4️⃣ Optional: ส่งลิงก์ invoice PDF / hosted invoice
-    // const invoiceUrl = invoice.hosted_invoice_url;
+    await stripe.invoiceItems.create({
+      customer: customer.id,
+      amount: amount, // amount เป็นสตางค์
+      currency: "thb",
+      description: description || "Custom booking payment",
 
-    await stripe.invoices.sendInvoice(invoice.id);
+    });
+
+    await stripe.invoices.update(invoice.id, {
+      metadata: {
+        bookingID: bookingId,
+      },
+    });
+
+
+
+    const finalInvoice = await stripe.invoices.sendInvoice(invoice.id);
+
+    // const finalInvoice = await stripe.invoices.finalizeInvoice(invoice.id);
 
     // await sendInvoice(invoice.id);
 
-    console.log("Stripe invoice created:", invoice);
+    // console.log("Stripe invoice created:", invoice);
 
 
     return Response.json({
       message: "Invoice created successfully",
       invoiceId: invoice.id,
-      invoiceUrl: invoice.hosted_invoice_url, // ลูกค้าสามารถเปิดเพื่อจ่าย
+      invoiceUrl: finalInvoice.invoice_pdf, // ลูกค้าสามารถเปิดเพื่อจ่าย
     });
   } catch (error) {
     console.error("Stripe invoice error:", error);
