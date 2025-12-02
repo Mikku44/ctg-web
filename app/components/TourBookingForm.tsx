@@ -8,7 +8,7 @@ import { bookingService } from "~/services/bookingService"; // <-- add import
 
 export default function TourBookingForm({
   tour,
-  price,
+  from_price,
   cover,
   tourName,
   pickup_area,
@@ -20,7 +20,7 @@ export default function TourBookingForm({
 }: {
   tourName?: string;
   tour?: string;
-  price?: number;
+  from_price?: number;
   deposit?: number;
   cover?: string;
   pickup_area?: string;
@@ -43,16 +43,18 @@ export default function TourBookingForm({
     special: "",
   });
 
-  if (Number(formData.people) === 1) price = price
+  let price = from_price;
+  if (Number(formData.people) == 1) price = from_price
   else if (Number(formData.people) <= 4) price = prices.upto_4_people
   else if (Number(formData.people) <= 9) price = prices.upto_9_people
-  else price = 0; // for 10+ people, contact sale
+  else if (Number(formData.people) >= 10) price = 0; // for 10+ people, contact sale
+  else price = from_price;
 
   const totalPrice =
-    price && formData.people ? price * parseInt(formData.people) : 0;
+    price && formData.people ? price * Math.max(1, parseInt(formData.people)) : 0;
 
   const totalDepositPrice =
-    deposit && formData.people ? deposit * parseInt(formData.people) : 0;
+    deposit && formData.people ? deposit * Math.max(1, parseInt(formData.people)) : 0;
 
 
 
@@ -77,7 +79,7 @@ export default function TourBookingForm({
         price: price || 0,
         totalPrice: totalPrice,
         totalDepositPrice: totalDepositPrice,
-        status: totalPrice <= 0 ? "wait" : "unpaid" ,
+        status: totalPrice <= 0 ? "wait" : "unpaid",
       };
 
 
@@ -141,7 +143,7 @@ export default function TourBookingForm({
             <div className="space-y-2">
               <div className="">
                 <div className="text-sm">Group of 1</div>
-                <span className="text-xl font-bold">{formatCurrency(price || 0)}</span>
+                <span className="text-xl font-bold">{formatCurrency(from_price || 0)}</span>
                 <span> / person</span>
               </div>
               <div className="">

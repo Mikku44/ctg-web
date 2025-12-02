@@ -312,11 +312,12 @@ export default function TourDetailPage() {
       <section id="booking">
         {<TourBookingForm
           // cover={tour.featured_image}
-          price={tour.price_from}
+          from_price={tour.price_from}
           deposit={tour?.deposit}
           tourName={tour.title}
           tour={tour.id}
           pickup_area={tour.pickup}
+          prices={tour.prices}
 
         />}
       </section>
