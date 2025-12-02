@@ -26,17 +26,44 @@ const PACKAGES = "Packages";
 
 export const tourService = {
   /** 🧭 Get all published tours with related images + packages */
-  async getAll(limit?: number): Promise<Tour[]> {
+  async getAll(limit?: number,status = "published"): Promise<Tour[]> {
     let q = query(
       collection(db, TOURS),
-      where("status", "==", "published")
+      where("status", "==", status)
     );
 
     // Add Firestore limit if provided
     if (limit && limit > 0) {
       q = query(
         collection(db, TOURS),
-        where("status", "==", "published"),
+        where("status", "==", status),
+        fbLimit(limit)
+      );
+    }
+
+    const snapshot = await getDocs(q);
+
+    const tours: Tour[] = [];
+    for (const docSnap of snapshot.docs) {
+      const tour = { id: docSnap.id, ...docSnap.data() } as Tour;
+      tour.images = await this.getImages(tour.id);
+      tour.packages = await this.getPackages(tour.id);
+      tours.push(tour);
+    }
+
+    return tours;
+  },
+
+
+  async getAllwithLimit(limit?: number): Promise<Tour[]> {
+    let q = query(
+      collection(db, TOURS),
+    );
+
+    // Add Firestore limit if provided
+    if (limit && limit > 0) {
+      q = query(
+        collection(db, TOURS),
         fbLimit(limit)
       );
     }

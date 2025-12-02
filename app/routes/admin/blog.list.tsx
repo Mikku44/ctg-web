@@ -23,7 +23,7 @@ export async function action({ request }: Route.ActionArgs) {
 export async function loader({ request }: Route.LoaderArgs) {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page") || 1);
-    const limit = 9;
+    const limit = 100;
 
     const { data, total } = await blogService.getPaged(page, limit);
 
@@ -114,7 +114,7 @@ export default function BlogListPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-center gap-3 mt-10">
+            {/* <div className="flex items-center justify-center gap-3 mt-10">
                 {page > 1 && (
                     <Link
                         to={`/blogs?page=${page - 1}`}
@@ -136,7 +136,7 @@ export default function BlogListPage() {
                         Next
                     </Link>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 }

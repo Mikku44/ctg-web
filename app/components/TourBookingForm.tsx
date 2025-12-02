@@ -12,7 +12,11 @@ export default function TourBookingForm({
   cover,
   tourName,
   pickup_area,
-  deposit
+  deposit = 0,
+  prices = {
+    upto_4_people: 0,
+    upto_9_people: 0,
+  }
 }: {
   tourName?: string;
   tour?: string;
@@ -20,6 +24,10 @@ export default function TourBookingForm({
   deposit?: number;
   cover?: string;
   pickup_area?: string;
+  prices?: {
+    upto_4_people?: number;
+    upto_9_people?: number;
+  };
 }) {
 
   const router = useNavigate();
@@ -35,11 +43,19 @@ export default function TourBookingForm({
     special: "",
   });
 
+  if (Number(formData.people) === 1) price = price
+  else if (Number(formData.people) <= 4) price = prices.upto_4_people
+  else if (Number(formData.people) <= 9) price = prices.upto_9_people
+  else price = 0; // for 10+ people, contact sale
+
   const totalPrice =
     price && formData.people ? price * parseInt(formData.people) : 0;
 
   const totalDepositPrice =
     deposit && formData.people ? deposit * parseInt(formData.people) : 0;
+
+
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -61,7 +77,7 @@ export default function TourBookingForm({
         price: price || 0,
         totalPrice: totalPrice,
         totalDepositPrice: totalDepositPrice,
-        status: "unpaid" as const,
+        status: totalPrice <= 0 ? "wait" : "unpaid" ,
       };
 
 
@@ -122,12 +138,29 @@ export default function TourBookingForm({
               )}
             </div>
 
-            <div className="">
-              <div className="text-sm">Full Price</div>
-              <span className="text-xl font-bold">{formatCurrency(price || 0)}</span>
-              <span> / person</span>
+            <div className="space-y-2">
+              <div className="">
+                <div className="text-sm">Group of 1</div>
+                <span className="text-xl font-bold">{formatCurrency(price || 0)}</span>
+                <span> / person</span>
+              </div>
+              <div className="">
+                <div className="text-sm">Group of 2-4</div>
+                <span className="text-xl font-bold">{formatCurrency(prices?.upto_4_people || price || 0)}</span>
+                <span> / person</span>
+              </div>
+              <div className="">
+                <div className="text-sm">Group of 4-9</div>
+                <span className="text-xl font-bold">{formatCurrency(prices?.upto_9_people || price || 0)}</span>
+                <span> / person</span>
+              </div>
+              <div className="">
+                <div className="text-sm">Group of 10+</div>
+                <span className="text-xl font-bold">Contact Sale</span>
+                <span> / person</span>
+              </div>
             </div>
-            {deposit && <div className="">
+            {deposit > 0 && <div className="">
               <div className="text-sm">Deposit Price</div>
               <span className="text-xl font-bold">{formatCurrency(deposit || 0)}</span>
               <span> / person</span>
@@ -309,31 +342,53 @@ export default function TourBookingForm({
               />
             </div>
 
-            {(formData.people) && !totalDepositPrice && (
-              <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
-                <div>
-                  Price per person: <strong>฿{price?.toLocaleString() || 0}</strong>
-                </div>
-                <div>
-                  Total: <strong>฿{totalPrice.toLocaleString()}</strong>
-                </div>
+            {/* <div className="text-gray-800">{formData.people}</div> */}
+
+            {/* Pricing Logic */}
+            {formData.people && Number(formData.people) < 10 && (
+              <>
+                {/* No deposit */}
+                {!totalDepositPrice && (
+                  <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
+                    <div>
+                      Price per person: <strong>฿{price?.toLocaleString() || 0}</strong>
+                    </div>
+                    <div>
+                      Total: <strong>฿{totalPrice.toLocaleString()}</strong>
+                    </div>
+                  </div>
+                )}
+
+                {/* With deposit */}
+                {totalDepositPrice > 0 && (
+                  <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
+                    <div>
+                      Price per person: <strong>฿{price?.toLocaleString() || 0}</strong>
+                    </div>
+                    <div className="flex flex-col items-end justify-end">
+                      <div>
+                        Deposit: <strong>฿{totalDepositPrice.toLocaleString()}</strong>
+                      </div>
+                      <div className="text-[12px]">
+                        Total: <strong>฿{totalPrice.toLocaleString()}</strong>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* 10+ People Message */}
+            {Number(formData.people) >= 10 && (
+              <div className="p-4 bg-yellow-50 text-gray-800 border border-yellow-200 rounded">
+                <strong>Large Group Booking (10+)</strong>
+                <p className="mt-1 text-sm">
+                  For bookings of 10 or more people, pricing will be provided by our team
+                  after submission. Feel free to contact us in advance for a quote.
+                </p>
               </div>
             )}
-            {(formData.people) && totalDepositPrice && (
-              <div className="p-4 bg-gray-100 flex justify-between text-gray-800">
-                <div>
-                  Price per person: <strong>฿{price?.toLocaleString() || 0}</strong>
-                </div>
-                <div className="flex flex-col items-end justify-end" >
-                  <div>
-                    Deposit : <strong>฿{totalDepositPrice.toLocaleString()}</strong>
-                  </div>
-                  <div className="text-[12px]">
-                   Total : <strong>฿{totalPrice.toLocaleString()}</strong>
-                  </div>
-                </div>
-              </div>
-            )}
+
 
             <button
               type="submit"

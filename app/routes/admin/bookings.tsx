@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { formatCurrency } from "~/lib/utils/currencyFormator";
-import type { BookingModel } from "~/models/booking";
+import type { BookingModel, BookingStatus } from "~/models/booking";
 import { bookingService } from "~/services/bookingService";
 import BookingRow from "./components/BookingRow";
+import Loading from "~/components/Loading";
 
-type BookingStatus = 'complete' | 'paid' | 'unpaid' | 'invoiced';
-const ALL_STATUSES: BookingStatus[] = ['complete', 'paid', 'unpaid' , 'invoiced'];
+
+
 
 export default function Bookings() {
     const [isUpdating, setIsUpdating] = useState(false);
@@ -72,7 +73,7 @@ export default function Bookings() {
         }
     };
 
-    if (isLoading) return <main className="p-4 lg:p-8 max-w-7xl mx-auto">Loading bookings...</main>;
+    // if (isLoading) return <main className="p-4 lg:p-8 max-w-7xl mx-auto">Loading bookings...</main>;
     if (error) return <main className="p-4 lg:p-8 max-w-7xl mx-auto text-red-600">{error}</main>;
 
     return (
@@ -99,6 +100,8 @@ export default function Bookings() {
                                 </tr>
                             </thead>
 
+
+
                             <tbody className="divide-y divide-slate-100">
                                 {bookingList.map((booking) => (
                                     <BookingRow
@@ -111,6 +114,10 @@ export default function Bookings() {
                                 ))}
                             </tbody>
                         </table>
+                        {isLoading && <tbody className="col flex py-5 items-center justify-center gap-2 flex-col text-zinc-700 ">
+                            <Loading />
+                            <div className="">Loading...</div>
+                        </tbody>}
                     </div>
                 </div>
             </div>

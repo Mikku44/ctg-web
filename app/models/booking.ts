@@ -21,7 +21,7 @@ export interface BookingModel {
   totalDepositPrice?: number;         // total price
   currency: 'THB' | 'USD';
 
-  status: 'paid' | 'unpaid' | 'complete' | 'invoiced';
+  status: BookingStatus;
 
   invoice? : {id : string , url : string};  // stripe invoice id and url
 
@@ -33,5 +33,5 @@ export interface BookingModel {
 }
 
 
-export type BookingStatus = 'complete' | 'paid' | 'unpaid';
-export const ALL_STATUSES: BookingStatus[] = ['complete', 'paid', 'unpaid'];
+export type BookingStatus = 'wait' | 'paid' | 'unpaid' | 'complete' | 'invoiced';
+export const ALL_STATUSES: BookingStatus[] = ['wait' , 'paid' , 'unpaid' , 'complete' , 'invoiced'];

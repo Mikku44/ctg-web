@@ -78,13 +78,13 @@ export default function TourListPage() {
 
       {/* --- Tour List --- */}
       <div className="space-y-4">
-        {tours.map((tour) => (
+        {tours.map((tour,index) => (
           <div
             key={tour.id}
             className="flex items-center justify-between pb-4"
             
           >
-            <div className="text-[12px] text-zinc-600">{tour.tid || tour.id}</div>
+            {/* <div className="text-[12px] text-zinc-600">{tour.tid || tour.id}</div> */}
             {/* Left: Image & Info */}
             <div className="flex items-center gap-4">
               <div className="h-14 w-20 overflow-hidden">
@@ -96,7 +96,7 @@ export default function TourListPage() {
               </div>
 
               <div className="space-y-1">
-                <h2 className="font-semibold text-base">{tour.title}</h2>
+                <h2 className="font-semibold text-base">{index + 1}.{tour.title}</h2>
                 <p className="text-sm text-gray-500">{tour.location || "-"}</p>
                 <p className="text-sm font-medium text-green-700">
                   {tour.price_from.toLocaleString()} THB

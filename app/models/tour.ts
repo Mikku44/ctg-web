@@ -8,6 +8,10 @@ export interface Tour {
   duration: string;
   location: string;
   price_from: number;
+  prices? : {
+    upto_4_people?: number;
+    upto_9_people?: number;
+  };
 
   // details
   note: string[];

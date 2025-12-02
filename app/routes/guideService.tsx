@@ -96,57 +96,93 @@ export default function GuideService() {
         );
     };
 
-      const scrollToBottom = () => {
-    const el = document.getElementById("form");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+    const scrollToBottom = () => {
+        const el = document.getElementById("form");
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
 
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
             <section className="container-x py-16">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="grid md:grid-cols-2 gap-8 items-start">
                     <div className="h-[600px] overflow-hidden">
                         <img
                             src="/images/album911 (68).jpg"
                             className="w-full h-full object-cover"
-                            alt="Creative Tour Guru - Guide Service"
+                            alt="Creative Tour Guru - Guide Service Thailand"
                         />
                     </div>
 
                     <div className="space-y-5">
                         <h1 className="text-4xl font-bold text-gray-900">
-                            Guide Service in Thailand
+                            Guide Service – Private & Flexible
                         </h1>
+
                         <p className="text-gray-700 leading-relaxed">
-                            Hire a professional English-speaking guide to accompany your
-                            private journey across Thailand — knowledgeable, caring, and
-                            certified by the Tourism Authority of Thailand (TAT).
+                            Discover Thailand your way with a professional, licensed English-speaking
+                            guide based in Bangkok, Chiang Mai, Phuket, and other major destinations.
+                            Perfect for free days, custom routes, or special events.
                         </p>
 
-                        <div className="space-y-2 text-gray-700">
-                            <p className="font-semibold">🇹🇭 Around Thailand Tour</p>
-                            <p>
-                                <strong>Route:</strong> Bangkok – Ayutthaya – Chiang Mai – Phuket
-                                (10 Days)
-                            </p>
-                            <p>
-                                The ultimate Thailand experience — from royal palaces and
-                                floating markets to northern temples and southern beaches.
-                            </p>
+                        {/* Private Guide Service (Hourly) */}
+                        <div className="space-y-3 text-gray-700">
+                            <p className="font-semibold text-lg"> Private Guide Service (Hourly)</p>
+                            <ul className="list-disc ml-5 space-y-1">
+                                <li>Show you hidden spots, markets, and temples</li>
+                                <li>Assist with translation, shopping, and dining</li>
+                                <li>Design a custom walking or city tour on the spot</li>
+                            </ul>
+                            <p>Minimum hours apply. Ideal for travelers who want a flexible companion.</p>
                         </div>
 
-                        <button 
-                        onClick={scrollToBottom}
-                        className="button text-white font-medium px-6 py-3 transition duration-200">
+                        {/* Car & Guide Service */}
+                        <div className="space-y-3 text-gray-700">
+                            <p className="font-semibold text-lg"> Car & Guide Service (Full / Half Day)</p>
+                            <ul className="list-disc ml-5 space-y-1">
+                                <li>
+                                    Custom routes in and around Bangkok, Chiang Mai, Phuket, Pattaya,
+                                    Ayutthaya, Kanchanaburi, and more
+                                </li>
+                                <li>Great for temple visits, viewpoints, cafés, and photo stops</li>
+                                <li>Door-to-door hotel pickup and drop-off</li>
+                            </ul>
+                        </div>
+
+                        {/* Festival & Special Event Guiding */}
+                        <div className="space-y-3 text-gray-700">
+                            <p className="font-semibold text-lg"> Festival & Special Event Guiding</p>
+                            <ul className="list-disc ml-5 space-y-1">
+                                <li>
+                                    <strong>Loy Krathong & Yi Peng (Chiang Mai)</strong> – floating
+                                    krathongs & sky lanterns
+                                </li>
+                                <li>
+                                    <strong>Moon Festival</strong> (Mid-Autumn Ceremony, Phanat Nikhom)
+                                    – local traditions & community rituals
+                                </li>
+                                <li>Other cultural parades, fairs, and seasonal events on request</li>
+                            </ul>
+                        </div>
+
+                        <p className="text-gray-700">
+                            All services are private and fully customizable to your interests,
+                            timings, and preferred pace.
+                        </p>
+
+                        <button
+                            onClick={scrollToBottom}
+                            className="button text-white font-medium px-6 py-3 transition duration-200"
+                        >
                             Hire a Guide
                         </button>
                     </div>
                 </div>
             </section>
+
 
             {/* cert */}
             <section className="container-x grid md:grid-cols-2 gap-10 items-center py-10">
@@ -258,37 +294,12 @@ export default function GuideService() {
                             "/images/kohphiphi (33).jpg",
                         ]} />
 
-                    {/* <div className="columns-3 gap-5">
-
-
-                        {[
-                            "/images/thailand2 (5).jpg",
-                            "/images/thailand6 (2).jpg",
-                            "/images/thailand2 (4).jpg",
-                            "/images/album911 (77).jpg",
-                            "/images/album911 (76).jpg",
-                            "/images/album911 (66).jpg",
-                            "/images/album911 (22).jpg",
-                        ].map((item, index) => <div
-                            key={index}
-                            className=" bg-white mt-5 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                            <img
-                                src={item}
-                                className="w-full h-auto object-cover"
-                                alt="Flexible schedules"
-                            />
-
-                        </div>)}
-
-
-
-                    </div> */}
                 </div>
             </section>
 
-            <div 
-            id="form"
-            className="grid mt-10 max-w-4xl mx-auto gap-10 md:gap-16 mb-20 h-full overflow-hidden">
+            <div
+                id="form"
+                className="grid mt-10 max-w-4xl mx-auto gap-10 md:gap-16 mb-20 h-full overflow-hidden">
 
 
                 <div className="md:col-span-5 order-2 px-4 md:order-1">
