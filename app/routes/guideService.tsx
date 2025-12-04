@@ -24,6 +24,7 @@ export default function GuideService() {
         email: "",
         subject: "",
         content: "",
+        type : "Guide Service",
     });
 
     // Styles for the standard text fields

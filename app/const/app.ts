@@ -2,7 +2,7 @@ export const MENU_LIST = [
   { name: "Home", path: "/" },
   { name: "Tours", path: "/tours" },
   { name: "Guide Service", path: "/guide-service" },
-  // { name: "About", path: "/about" },
+  { name: "Our Service", path: "/our-service" },
   { name: "Contact us", path: "/contact" },
   { name: "Blogs", path: "/blogs" },
 ];

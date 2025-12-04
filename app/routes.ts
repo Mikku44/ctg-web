@@ -8,6 +8,7 @@ export default [
 
         //policies
         route("/terms-of-use", "routes/terms-of-use.tsx"),
+        route("/our-service", "routes/our-service.tsx"),
         route("/privacy-policy", "routes/privacy-policy.tsx"),
         route("/about", "routes/about.tsx"),
         route("/tours", "routes/tours.tsx"),
