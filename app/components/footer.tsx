@@ -24,6 +24,7 @@ export default function Footer() {
                         <li><a href="/" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Home</a></li>
                         <li><a href="/tours" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Tours</a></li>
                         <li><a href="/guide-service" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Guide Service</a></li>
+                        <li><a href="/our-service" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Our Service</a></li>
                         {/* <li><a href="/about" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">About Us</a></li> */}
                         <li><a href="/contact" className="hover:text-white border-b-2 hover:border-orange-500 border-transparent duration-200">Contact</a></li>
                     </ul>

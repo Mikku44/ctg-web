@@ -68,6 +68,7 @@ export const menuConfig = [
     ],
   },
   // You can keep a direct link, perhaps to a main booking page or contacts
+  { label: "Check Your Booking", href: "/check-your-booking" },
   { label: "Book Now", href: "/contact" },
 ];
 

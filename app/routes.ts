@@ -11,6 +11,7 @@ export default [
         route("/our-service", "routes/our-service.tsx"),
         route("/privacy-policy", "routes/privacy-policy.tsx"),
         route("/about", "routes/about.tsx"),
+        route("/check-your-booking", "routes/check-your-booking.tsx"),
         route("/tours", "routes/tours.tsx"),
         route("/guide-service", "routes/guideService.tsx"),
         route("/search", "routes/search.tsx"),

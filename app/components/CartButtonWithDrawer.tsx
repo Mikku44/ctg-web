@@ -57,7 +57,7 @@ export default function CartButtonWithDrawer() {
 
                 <div className="grid gap-2 p-3 h-[90%] overflow-auto">
                     {lastBooking ? lastBooking.map((lastBooking) =>
-                        <div key={lastBooking.id} className="bg-white rounded-lg p-4 shadow-sm flex flex-col space-y-2">
+                        <div key={lastBooking.id} className="bg-white h-fit rounded-lg p-4 shadow-sm flex flex-col space-y-2">
                             <p className="text-sm text-gray-800 font-medium">{lastBooking.tourName || "—"}</p>
 
                             <div className="flex justify-between text-xs text-gray-500">
