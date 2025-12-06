@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { tourService } from "~/services/tourService";
 import { v4 as uuidv4 } from "uuid";
 import type { TourImage } from "~/models/tour";
 import { Minus, Image as ImageIcon } from "lucide-react";
 import { images_file } from "public/images/image_files";
 import JsonPreview from "./components/JsonPreview";
+import { toast } from "sonner";
 
 export default function AddTourAdminPage() {
   const [loading, setLoading] = useState(false);
@@ -221,6 +222,10 @@ export default function AddTourAdminPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    toast(message?.text)
+  }, [message]);
 
   const KEYMAPPING = {
     "images": images,

@@ -117,6 +117,11 @@ export default function Footer() {
                     <div className=" mt-4">
                         <a href="/license/dbd" target="_blank"><img src="/licenese/dbd.webp" className="max-w-[150px]" alt="dbd verified" /></a>
                     </div>
+
+                    {/*  */}
+                    <div className="bg-white rounded-xl">
+                        <img src="/licenese/stripe-badge-transparent.webp" alt="creativetourguru thailand security payment with stripe" />
+                    </div>
                 </div>
             </div>
 

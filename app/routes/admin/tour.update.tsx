@@ -7,6 +7,7 @@ import { images_file } from "public/images/image_files";
 import type { Route } from "./+types/tour.update";
 import JsonPreview from "./components/JsonPreview";
 import { toast } from "sonner";
+import ImageInputs from "~/components/GalleryImage";
 
 export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) {
 
@@ -23,7 +24,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
     // form state
     const [form, setForm] = useState({
-        tid : "",
+        tid: "",
         title: "",
         slug: "",
         description: "",
@@ -60,6 +61,10 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
     // modal selection
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
+    useEffect(() => {
+        toast(message?.text)
+    }, [message]);
+
     // load tour + images on mount
     useEffect(() => {
         if (!tourId) return;
@@ -73,7 +78,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
 
                 // Prefill form
                 setForm({
-                    tid : tour.tid || ""    ,
+                    tid: tour.tid || "",
                     title: tour.title || "",
                     slug: tour.slug || "",
                     description: tour.description || "",
@@ -254,7 +259,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         try {
             // build payload
             const payload: Partial<Tour> = {
-                tid : form.tid,
+                tid: form.tid,
                 title: form.title,
                 slug: form.slug,
                 description: form.description,
@@ -360,9 +365,9 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Basic Info */}
                     <div>
-                            <label className="block text-sm font-medium mb-1">TOUR ID *</label>
-                            <input name="tid" value={form.tid} onChange={handleChange} required className="w-full admin-input" />
-                        </div>
+                        <label className="block text-sm font-medium mb-1">TOUR ID *</label>
+                        <input name="tid" value={form.tid} onChange={handleChange} required className="w-full admin-input" />
+                    </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium mb-1">Title *</label>
@@ -401,7 +406,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                                 <label className="block text-sm font-medium mb-1 mt-2">Deposit (THB) (Optional) </label>
                                 <input name="deposit" type="number" value={form.deposit} onChange={handleChange} className="w-full admin-input" />
                             </div>
-                            
+
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-1">Category ID</label>
@@ -488,16 +493,10 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                             </button>
                         </div>
 
-                        <textarea
-                            rows={4}
-                            className="w-full admin-input"
-                            placeholder="https://image1.jpg&#10;https://image2.jpg"
-                            onChange={(e) => {
-                                const list = e.target.value.split("\n").map((l) => l.trim()).filter(Boolean);
-                                setImages(list.map((url, index) => ({ id: uuidv4(), tour_id: tourId || "", image_url: url, order_index: index })));
-                                setSelectedImages(list);
-                            }}
-                            value={images.map((i) => i?.image_url)?.join("\n")}
+                        <ImageInputs
+                            images={images}
+                            setImages={setImages}
+                            tourId={tourId}
                         />
 
                         {/* Small gallery preview with remove / reorder */}

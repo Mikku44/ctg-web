@@ -107,6 +107,48 @@ export default function CheckoutSession() {
       </div>
     );
 
+  if (status === "requires_action")
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center text-center px-4">
+        <div className="flex flex-col items-center gap-3">
+
+          {/* Icon */}
+          <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-10 h-10 text-red-500"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z" />
+            </svg>
+          </div>
+
+          {/* Title */}
+          <h2 className="text-xl font-semibold text-zinc-700">
+            Payment Authorization Expired
+          </h2>
+
+          {/* Description */}
+          <p className="text-zinc-500 max-w-sm">
+            It looks like the payment wasn’t confirmed in time.
+            Please try again to continue.
+          </p>
+
+          {/* Button */}
+          <button
+            onClick={() => navigate(-1)}
+            className="px-5 py-2 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </main>
+    );
+
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center space-y-4  p-6">
 
@@ -177,7 +219,7 @@ export default function CheckoutSession() {
               <div className="flex justify-between items-center">
                 <span className="text-base text-gray-700 font-medium">Total Paid</span>
                 <span className="text-lg font-bold text-gray-900">
-                  {bookingData.currency || "THB"} {bookingData?.totalDepositPrice ? bookingData.totalDepositPrice.toLocaleString() :bookingData.totalPrice.toLocaleString()}
+                  {bookingData.currency || "THB"} {bookingData?.totalDepositPrice ? bookingData.totalDepositPrice.toLocaleString() : bookingData.totalPrice.toLocaleString()}
                 </span>
               </div>
               {bookingData.paymentMethod && (
@@ -241,6 +283,8 @@ export default function CheckoutSession() {
 
 
 
+
+
       {status === "failed" && (
         <>
           <div className="text-4xl">❌</div>
@@ -256,7 +300,7 @@ export default function CheckoutSession() {
       )}
 
 
-      {status === "requires_action" || status === "requires_payment_method" && (
+      {status === "requires_payment_method" && (
         <>
           <div className="text-4xl">⚡</div>
           <h1 className="text-2xl font-bold text-zinc-600">Payment Waiting</h1>
