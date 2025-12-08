@@ -4,6 +4,7 @@ import { FaWhatsapp, FaLine } from "react-icons/fa";
 import { Link, redirect, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { formatCurrency } from "~/lib/utils/currencyFormator";
+import type { BookingModel } from "~/models/booking";
 import { bookingService } from "~/services/bookingService"; // <-- add import
 
 export default function TourBookingForm({
@@ -97,6 +98,8 @@ export default function TourBookingForm({
       const limited = updated.slice(0, 5);
 
       localStorage.setItem("lastBooking", JSON.stringify(limited));
+
+      await bookingService.sendLineNotify(result as BookingModel);
 
       toast.success("Your booking request has been sent!");
 

@@ -11,6 +11,7 @@ import {
 import { TbWriting } from "react-icons/tb";
 import { LuNotebookText } from "react-icons/lu";
 import { Link, useLocation } from 'react-router';
+import { RiContactsBook3Fill } from 'react-icons/ri';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -27,6 +28,7 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         { icon: PlusCircle, label: 'Add Tour', path: '/admin/tour/add' },
         { icon: LuNotebookText, label: 'Bookings', path: '/admin/bookings' },
         { icon: TbWriting, label: 'Blogs', path: '/admin/blog/list' },
+        { icon: RiContactsBook3Fill , label: 'Contacts', path: '/admin/contacts' },
 
         // { icon: Settings, label: 'Settings', path: '/admin/settings' },
     ];

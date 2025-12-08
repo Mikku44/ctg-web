@@ -13,7 +13,7 @@ export async function action({ request }: ActionFunctionArgs) {
     const transporter = createTransport({
       service: "gmail",
       auth: {
-        user: "khain.app@gmail.com",
+        user: "creativetourguruthailand@gmail.com",
         pass: process.env.GOOGLE_APP_PASSWORD,
       },
     });
@@ -74,9 +74,9 @@ export async function action({ request }: ActionFunctionArgs) {
 `;
 
     const info = await transporter.sendMail({
-      from: `"Khain.app" <khain.app@gmail.com>`,
+      from: `"Creative Tour Guru Thailand <creativetourguruthailand@gmail.com>`,
       to: to_email,
-      subject: "Shop Khain.app - Thank you for your support!",
+      subject: "Tour Booking notification",
       html,
     });
 

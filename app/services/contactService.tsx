@@ -20,6 +20,7 @@ const contactRef = collection(db, "contacts");
 export const ContactService = {
   // ✅ Create
   async create(contact: Omit<Contact, "created_at">) {
+    await this.sendLineNotify(contact)
     return await addDoc(contactRef, {
       ...contact,
       created_at: serverTimestamp(), // best practice
@@ -71,4 +72,26 @@ export const ContactService = {
   async delete(id: string) {
     return await deleteDoc(doc(db, "contacts", id));
   },
+
+  
+    // Line Notification
+    async sendLineNotify(contact : Omit<Contact, "created_at">) {
+  
+      // console.log("BOOKING : ", bookingData)
+      const base_url =  import.meta.env.BASE_URL
+      // console.log("BASE URL : ",base_url)
+      // const base_url = "http://localhost:5173"
+  
+      const text = `แจ้งเตือนการติดต่อจากเว็บ Creative Tour Guru Thailand\nคุณ ${contact.name}\nบริการ : ${contact.type}\nเนื้อหา : ${contact.subject}\nแจ้งว่า ${contact.content}\nโปรดติดต่อกลับ ${contact.email} หรือโทร ${contact.mobile}`
+  
+      const res = await fetch(`${base_url}/api/line-message-api`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({text : text}),
+      });
+  
+      return res;
+    }
 };

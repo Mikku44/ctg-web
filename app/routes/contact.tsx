@@ -97,6 +97,14 @@ export default function Contact() {
         error: "Something went wrong. Please try again.",
       }
     );
+
+    setForm({
+      name: "",
+      content:"",
+      email : "",
+      mobile : "",
+      subject : ""
+    })
   };
 
   return (

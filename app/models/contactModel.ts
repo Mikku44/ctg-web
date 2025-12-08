@@ -7,5 +7,6 @@ export interface Contact {
     subject : string
     content : string
     status ? : "read" | "unread" | "done" | "progress"
+    type? : string
     created_at : Timestamp
 }

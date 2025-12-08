@@ -10,6 +10,8 @@ import {
   onSnapshot,
   query,
   orderBy,
+  setDoc,
+  increment,
 } from "firebase/firestore";
 import { db } from "~/lib/firebase/config";
 import type { BookingModel } from "~/models/booking";
@@ -20,8 +22,23 @@ const BOOKINGS_COLLECTION = "bookings";
 
 export const bookingService = {
   // CREATE
-  async createBooking(data: Omit<BookingModel, "id" | "created_at" | "updated_at">) {
-    const colRef = collection(db, BOOKINGS_COLLECTION);
+  async createBooking(
+    data: Omit<BookingModel, "id" | "created_at" | "updated_at">
+  ) {
+    const colName = BOOKINGS_COLLECTION;
+    const date = new Date();
+
+    // Format date: YYYYMMDD
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    const dateStr = `${y}${m}${d}`; // 20251208
+
+    // TODO: get booking count safely
+    const bookingCount = await this.getBookingCountForToday(); // return number
+
+    // Build custom ID
+    const customId = `CTG-${dateStr}-${String(bookingCount + 1).padStart(3, "0")}`;
 
     const newBooking = {
       ...data,
@@ -29,11 +46,48 @@ export const bookingService = {
       updated_at: serverTimestamp(),
     };
 
-    const docRef = await addDoc(colRef, newBooking);
+    // Use custom ID
+    await setDoc(doc(db, colName, customId), newBooking);
 
-    return { id: docRef.id, ...newBooking };
+    return { id: customId, ...newBooking };
   },
 
+  async getBookingCountForToday() {
+    const counterRef = doc(db, "counters", "bookings");
+    const snap = await getDoc(counterRef);
+
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, "0");
+    const d = String(today.getDate()).padStart(2, "0");
+    const todayStr = `${y}-${m}-${d}`; // 2025-12-08
+    let newCount = 1;
+
+    if (!snap.exists()) {
+      // First time: create counter
+      await setDoc(counterRef, { today: todayStr, count: 1 });
+      return 1;
+    }
+
+    const data = snap.data();
+
+    if (data.today !== todayStr) {
+      // New day → reset counter
+      await setDoc(counterRef, { today: todayStr, count: 1 });
+      return 1;
+    }
+
+    // Same day → atomically increment
+    await updateDoc(counterRef, {
+      count: increment(1)
+    });
+
+    // Read updated count
+    const updatedSnap = await getDoc(counterRef);
+    newCount = updatedSnap?.data()?.count || 1;
+
+    return newCount;
+  },
   // GET ALL
   async getAllBookings() {
     const colRef = collection(db, BOOKINGS_COLLECTION);
@@ -118,5 +172,25 @@ export const bookingService = {
       }));
       callback(list);
     });
+  },
+
+  // Line Notification
+  async sendLineNotify(booking: BookingModel) {
+
+    // console.log("BOOKING : ", bookingData)
+    const base_url =  import.meta.env.BASE_URL
+    // const base_url = "http://localhost:5173"
+
+    const text = `แจ้งเตือนการจองจากเว็บ Creative Tour Guru Thailand\nรหัสการจอง : ${booking.id}\nทัวร์ : ${booking.tourName}\nชื่อ : ${booking.firstName + " "  + booking.lastName}\nจำนวนคน : ${booking.people}\nวันที่ : ${booking.date}\nราคารวม : ${booking.totalPrice}\nติดต่อ : ${booking.contact}\nตรวจสอบที่ https://www.creativetourguruthailand.com/admin/bookings`
+
+    const res = await fetch(`${base_url}/api/line-message-api`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({text : text}),
+    });
+
+    return res;
   }
 };

@@ -32,12 +32,14 @@ export default [
         route("/api/payment-intent", "api/paymentIntent.tsx"),
         route("/api/payment-status", "api/paymentStatus.tsx"),
         route("/api/create-invoice", "api/invoiceItem.tsx"),
+        route("/api/line-message-api", "api/line-message-api.tsx"),
     ]),
     // admin
     route("/admin/login", "routes/admin/login.tsx"),
     layout("routes/admin/layout.tsx", [
         route("/admin", "routes/admin/admin.tsx"),
         route("/admin/bookings", "routes/admin/bookings.tsx"),
+        route("/admin/contacts", "routes/admin/contacts.tsx"),
         route("/admin/blog/add", "routes/admin/blog.add.tsx"),
         route("/admin/blog/list", "routes/admin/blog.list.tsx"),
         route("/admin/blog/update/:blogId", "routes/admin/blog.update.tsx"),
