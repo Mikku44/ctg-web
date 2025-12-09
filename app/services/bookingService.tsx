@@ -178,7 +178,7 @@ export const bookingService = {
   async sendLineNotify(booking: BookingModel) {
 
     // console.log("BOOKING : ", bookingData)
-    const base_url =  import.meta.env.BASE_URL
+    const base_url =  import.meta.env.VITE_BASE_URL
     // const base_url = "http://localhost:5173"
 
     const text = `แจ้งเตือนการจองจากเว็บ Creative Tour Guru Thailand\nรหัสการจอง : ${booking.id}\nทัวร์ : ${booking.tourName}\nชื่อ : ${booking.firstName + " "  + booking.lastName}\nจำนวนคน : ${booking.people}\nวันที่ : ${booking.date}\nราคารวม : ${booking.totalPrice}\nติดต่อ : ${booking.contact}\nตรวจสอบที่ https://www.creativetourguruthailand.com/admin/bookings`
@@ -187,7 +187,9 @@ export const bookingService = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-api-key" : `uiouoilakjddaljsawfhalsdfhjakle`
       },
+      
       body: JSON.stringify({text : text}),
     });
 

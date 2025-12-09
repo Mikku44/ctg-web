@@ -5,6 +5,12 @@ import { stripe } from "~/lib/stripe/server";
 export async function action({ request }: ActionFunctionArgs) {
   const { amount, description } = await request.json(); // amount หน่วยคือ "สตางค์" เช่น 100 = 1.00 บาท
 
+  // const apiKey = request.headers.get("x-api-key");
+
+  //   if (apiKey !== process.env.INTERNAL_API_KEY) {
+  //     return new Response("Unauthorized", { status: 401 });
+  //   }
+
   if (amount <= 0) {
     return Response.json({
       message: "Something went wrong , please contact us.",

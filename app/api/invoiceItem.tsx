@@ -3,6 +3,12 @@ import { stripe } from "~/lib/stripe/server";
 
 export async function action({ request }: ActionFunctionArgs) {
   try {
+    // const apiKey = request.headers.get("x-api-key");
+
+    // if (apiKey !== process.env.INTERNAL_API_KEY) {
+    //   return new Response("Unauthorized", { status: 401 });
+    // }
+
     const { amount, description, email, date, bookingId, bill_to } = await request.json();
     // amount หน่วยคือ "สตางค์" เช่น 100 = 1.00 บาท
 
@@ -21,7 +27,7 @@ export async function action({ request }: ActionFunctionArgs) {
       description: bill_to || "Tour booking customer [from CTG Web]",
     });
 
-   
+
 
 
 
@@ -43,7 +49,7 @@ export async function action({ request }: ActionFunctionArgs) {
       days_until_due: diffDays > 0 ? diffDays : 0, // must be >=0
     });
 
-    
+
 
 
     await stripe.invoices.update(invoice.id, {
@@ -52,13 +58,13 @@ export async function action({ request }: ActionFunctionArgs) {
       },
     });
 
-     await stripe.invoiceItems.create({
+    await stripe.invoiceItems.create({
       customer: customer.id,
       amount: amount, // amount เป็นสตางค์
       invoice: invoice.id,
       currency: "thb",
       description: description || "Custom booking payment",
-      
+
 
     });
 
@@ -76,7 +82,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return Response.json({
       message: "Invoice created successfully",
       invoiceId: invoice.id,
-      invoiceUrl:  finalInvoice.invoice_pdf, // ลูกค้าสามารถเปิดเพื่อจ่าย
+      invoiceUrl: finalInvoice.invoice_pdf, // ลูกค้าสามารถเปิดเพื่อจ่าย
     });
   } catch (error) {
     console.error("Stripe invoice error:", error);

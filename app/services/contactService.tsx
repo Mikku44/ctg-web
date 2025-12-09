@@ -78,7 +78,7 @@ export const ContactService = {
     async sendLineNotify(contact : Omit<Contact, "created_at">) {
   
       // console.log("BOOKING : ", bookingData)
-      const base_url =  import.meta.env.BASE_URL
+      const base_url =  import.meta.env.VITE_BASE_URL
       // console.log("BASE URL : ",base_url)
       // const base_url = "http://localhost:5173"
   
@@ -88,7 +88,9 @@ export const ContactService = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+    
         },
+        
         body: JSON.stringify({text : text}),
       });
   

@@ -1091,7 +1091,11 @@ function CheckoutForm({ booking, id }: { booking: BookingModel, id: string }) {
       // เรียก API Route ที่สร้าง Invoice
       const res = await fetch("/api/create-invoice", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": `uiouoilakjddaljsawfhalsdfhjakle`
+        },
+
         body: JSON.stringify({
           amount: booking?.totalDepositPrice ? booking?.totalDepositPrice * 100 : booking?.totalPrice * 100, // สตางค์
           description: `Booking: ${booking.tourName || ""} ${booking?.totalDepositPrice ? " (deposit)" : ""}`,

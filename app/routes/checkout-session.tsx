@@ -32,7 +32,12 @@ export default function CheckoutSession() {
 
     // Retrieve PaymentIntent from Stripe
     const fetchStatus = async () => {
-      const res = await fetch(`/api/payment-status?clientSecret=${clientSecret}`);
+      const res = await fetch(`/api/payment-status?clientSecret=${clientSecret}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": `uiouoilakjddaljsawfhalsdfhjakle`
+        },
+      });
       const data = await res.json();
 
       setStatus(data.status);

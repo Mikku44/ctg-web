@@ -7,6 +7,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const clientSecret = url.searchParams.get("clientSecret");
 
+  // const apiKey = request.headers.get("x-api-key");
+
+  // if (apiKey !== process.env.INTERNAL_API_KEY) {
+  //   return new Response("Unauthorized", { status: 401 });
+  // }
+
 
 
   if (!clientSecret) {
@@ -42,7 +48,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       status: paymentIntent.status,
       message,
       bookingID: paymentIntent.description,
-      paymentId: paymentIntent.id,            
+      paymentId: paymentIntent.id,
       paymentMethod: "Online",
       paymentDate: new Date(paymentIntent.created * 1000).toISOString()
     });
