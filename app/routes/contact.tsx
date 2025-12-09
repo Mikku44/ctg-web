@@ -27,6 +27,7 @@ export default function Contact() {
     email: "",
     subject: "",
     content: "",
+    type: "สอบถามเพิ่มเติม"
   });
 
   // Styles for the standard text fields
@@ -100,10 +101,11 @@ export default function Contact() {
 
     setForm({
       name: "",
-      content:"",
-      email : "",
-      mobile : "",
-      subject : ""
+      content: "",
+      email: "",
+      mobile: "",
+      subject: "",
+      type: ""
     })
   };
 
@@ -229,7 +231,7 @@ export default function Contact() {
       <section className="grid md:grid-cols-2 gap-3 max-w-4xl mx-auto ">
         <div className="w-full flex flex-col justify-center space-y-6 px-4">
           <div className="w-full h-full rounded-sm overflow-hidden">
-            
+
           </div>
 
           <h3 className="font-semibold text-xl">Contact Us</h3>
