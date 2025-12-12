@@ -20,6 +20,12 @@ export default function AddTourAdminPage() {
     duration: "",
     location: "",
     price_from: "",
+
+    prices: {
+      upto_4_people: "",
+      upto_9_people: "",
+    },
+
     category_id: "",
     featured_image: "",
     program_detail: "",
@@ -110,6 +116,16 @@ export default function AddTourAdminPage() {
       // Keeping this structure for general form changes.
       setForm((prev: any) => ({ ...prev, [name]: (value) }));
     }
+    else if (name.includes("upto_")) {
+
+      setForm(prev => ({
+        ...prev,
+        prices: {
+          ...prev.prices,
+          [name]: value
+        }
+      }));
+    }
     else {
       setForm((prev) => ({ ...prev, [name]: (value) }));
     }
@@ -157,6 +173,10 @@ export default function AddTourAdminPage() {
         duration: form.duration,
         location: form.location,
         price_from: Number(form.price_from),
+        prices: {
+          upto_4_people: Number(form.prices.upto_4_people),
+          upto_9_people: Number(form.prices.upto_9_people),
+        },
         note: processArrayField(note),
         itinerary: processArrayField(itinerary),
         program_detail: form.program_detail,
@@ -194,6 +214,12 @@ export default function AddTourAdminPage() {
         duration: "",
         location: "",
         price_from: "",
+
+        prices: {
+          upto_4_people: "",
+          upto_9_people: "",
+        },
+
         category_id: "",
         featured_image: "",
         program_detail: "",
@@ -304,6 +330,16 @@ export default function AddTourAdminPage() {
               <div>
                 <label className="block text-sm font-medium mb-1">Starting Price (THB) *</label>
                 <input name="price_from" type="number" value={form.price_from} onChange={handleChange} className="w-full admin-input" />
+              </div>
+
+              {/* prices */}
+              <div>
+                <label className="block text-sm font-medium mb-1">Up to 4 People (THB) *</label>
+                <input name="upto_4_people" type="number" value={form.prices.upto_4_people} onChange={handleChange} className="w-full admin-input" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Up to 9 People (THB) *</label>
+                <input name="upto_9_people" type="number" value={form.prices.upto_9_people} onChange={handleChange} className="w-full admin-input" />
               </div>
 
               {/*  */}

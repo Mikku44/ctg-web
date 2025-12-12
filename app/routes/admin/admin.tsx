@@ -82,7 +82,7 @@ export default function AdminLayout() {
 
   useEffect(() => {
     // A. Calculate Revenue
-    const totalRevenue = bookingList.reduce((sum, booking) => {
+    const totalRevenue = bookingList.filter(item => ["complete","paid"].includes(item.status)).reduce((sum, booking) => {
       return sum + (Number(booking.totalPrice) || 0);
     }, 0);
 

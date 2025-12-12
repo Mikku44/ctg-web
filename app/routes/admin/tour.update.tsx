@@ -31,6 +31,12 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         duration: "",
         location: "",
         price_from: "",
+
+        prices: {
+            upto_4_people: "",
+            upto_9_people: "",
+        },
+
         category_id: "",
         featured_image: "",
         program_detail: "",
@@ -85,6 +91,12 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                     duration: tour.duration || "",
                     location: tour.location || "",
                     price_from: (tour.price_from ?? "").toString(),
+
+                    prices: {
+                        upto_4_people: "",
+                        upto_9_people: "",
+                    },
+
                     category_id: tour.category_id || "",
                     featured_image: tour.featured_image || "",
                     program_detail: tour.program_detail || "",
@@ -138,10 +150,27 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         if (name === "title") {
-            setForm((prev) => ({ ...prev, slug: generateSlug(value), [name]: value }));
-        } else {
-            setForm((prev) => ({ ...prev, [name]: value }));
+            setForm((prev) => ({ ...prev, slug: generateSlug(value), [name]: (value) }));
         }
+        else if (name === "recommended") {
+            // Handle checkbox change if recommended were a checkbox, but it's a button/toggle, so it's handled separately.
+            // Keeping this structure for general form changes.
+            setForm((prev: any) => ({ ...prev, [name]: (value) }));
+        }
+        else if (name.includes("upto_")) {
+
+            setForm(prev => ({
+                ...prev,
+                prices: {
+                    ...prev.prices,
+                    [name]: value
+                }
+            }));
+        }
+        else {
+            setForm((prev) => ({ ...prev, [name]: (value) }));
+        }
+
         if (name === "featured_image") setPreview(value);
     };
 
@@ -274,6 +303,10 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                 cancellation_policy: processArrayField(cancellationPolicy),
                 category_id: form.category_id,
                 featured_image: form.featured_image,
+                prices: {
+                    upto_4_people: Number(form.prices.upto_4_people),
+                    upto_9_people: Number(form.prices.upto_9_people),
+                },
                 status: form.status as "draft" | "published",
                 tour_type: form.tour_type,
                 recommended: form.recommended,
@@ -405,6 +438,16 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                             <div>
                                 <label className="block text-sm font-medium mb-1 mt-2">Deposit (THB) (Optional) </label>
                                 <input name="deposit" type="number" value={form.deposit} onChange={handleChange} className="w-full admin-input" />
+                            </div>
+
+                            {/* prices */}
+                            <div>
+                                <label className="block text-sm font-medium mb-1">Up to 4 People (THB) *</label>
+                                <input name="upto_4_people" type="number" value={form.prices.upto_4_people} onChange={handleChange} className="w-full admin-input" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">Up to 9 People (THB) *</label>
+                                <input name="upto_9_people" type="number" value={form.prices.upto_9_people} onChange={handleChange} className="w-full admin-input" />
                             </div>
 
                         </div>
