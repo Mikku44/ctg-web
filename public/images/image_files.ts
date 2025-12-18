@@ -696,6 +696,10 @@ export const images_file = [
     "filename": "boat (9).jpg"
   },
   {
+    "path": "canal.jpg",
+    "filename": "canal.jpg"
+  },
+  {
     "path": "chaingmai (1).jpg",
     "filename": "chaingmai (1).jpg"
   },
@@ -1156,6 +1160,10 @@ export const images_file = [
     "filename": "home_slide (3).jpg"
   },
   {
+    "path": "images.jpg",
+    "filename": "images.jpg"
+  },
+  {
     "path": "image_files.ts",
     "filename": "image_files.ts"
   },
@@ -1400,6 +1408,14 @@ export const images_file = [
     "filename": "lempomthep (9).jpg"
   },
   {
+    "path": "longtail.jpg",
+    "filename": "longtail.jpg"
+  },
+  {
+    "path": "longtail1.jpg",
+    "filename": "longtail1.jpg"
+  },
+  {
     "path": "monkey (1).jpg",
     "filename": "monkey (1).jpg"
   },
@@ -1586,6 +1602,18 @@ export const images_file = [
   {
     "path": "simon (4).jpg",
     "filename": "simon (4).jpg"
+  },
+  {
+    "path": "sitemap_images.xml",
+    "filename": "sitemap_images.xml"
+  },
+  {
+    "path": "speedboat.jpeg",
+    "filename": "speedboat.jpeg"
+  },
+  {
+    "path": "speedboat.webp",
+    "filename": "speedboat.webp"
   },
   {
     "path": "sun (1).jpg",

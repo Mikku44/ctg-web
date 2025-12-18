@@ -1,6 +1,69 @@
 import os
 import json
 import sys
+from xml.etree.ElementTree import Element, SubElement, tostring
+from xml.dom import minidom
+
+def generate_image_sitemap(directory_path, base_url):
+    """
+    Scans a directory for images and creates a sitemap_images.xml file.
+    """
+    # Define supported image extensions
+    valid_extensions = ('.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg')
+    
+    # Create the root element with the required namespaces
+    urlset = Element('urlset')
+    urlset.set('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9')
+    urlset.set('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1')
+
+    # Ensure the directory exists
+    if not os.path.isdir(directory_path):
+        print(f"Error: Directory not found: {directory_path}")
+        return
+
+    # Count for reporting
+    image_count = 0
+
+    # Walk through the directory
+    for root, _, files in os.walk(directory_path):
+        for filename in files:
+            if filename.lower().endswith(valid_extensions):
+                # Calculate paths
+                filepath = os.path.join(root, filename)
+                relative_path = os.path.relpath(filepath, directory_path)
+                
+                # Convert OS path to URL path (handles Windows/Linux differences)
+                url_path = relative_path.replace(os.sep, '/')
+                full_image_url = f"{base_url.rstrip('/')}/images/{url_path}"
+                
+                # Create XML Structure
+                # Note: In a real sitemap, <loc> is the page the image is ON. 
+                # For simple asset tracking, we point <loc> to the image or the homepage.
+                url_node = SubElement(urlset, 'url')
+                loc = SubElement(url_node, 'loc')
+                loc.text = base_url # Usually the page URL, but here we use base for simplicity
+                
+                image_node = SubElement(url_node, 'image:image')
+                image_loc = SubElement(image_node, 'image:loc')
+                image_loc.text = full_image_url
+                
+                # Optional: Add title based on filename (SEO friendly)
+                image_title = SubElement(image_node, 'image:title')
+                image_title.text = os.path.splitext(filename)[0].replace('-', ' ').replace('_', ' ').capitalize()
+
+                image_count += 1
+
+    # Pretty print the XML
+    xml_str = minidom.parseString(tostring(urlset)).toprettyxml(indent="  ", encoding="UTF-8")
+
+    # Save to file
+    output_file = "sitemap_images.xml"
+    with open(output_file, "wb") as f:
+        f.write(xml_str)
+
+    print(f"Success! Created {output_file} with {image_count} images.")
+
+
 
 def convert_files_to_json(directory_path):
     """
@@ -64,3 +127,13 @@ if __name__ == "__main__":
     with open('image_files.ts', 'w') as file:
         file.write(f'export const images_file = {json_output}')
         # file.write("This is the second line.\n")
+        
+if __name__ == "__main__":
+    # Configuration for Creative Tour Guru Thailand
+    DOMAIN = "https://creativetourguruthailand.com"
+    
+    if len(sys.argv) < 2:
+        print("Usage: python script.py <path_to_images_directory>")
+    else:
+        target_dir = sys.argv[1]
+        generate_image_sitemap(target_dir, DOMAIN)
