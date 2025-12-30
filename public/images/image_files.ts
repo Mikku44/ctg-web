@@ -8,6 +8,14 @@ export const images_file = [
     "filename": "136364_0.jpg"
   },
   {
+    "path": "2224719.jpg",
+    "filename": "2224719.jpg"
+  },
+  {
+    "path": "2224720.jpg",
+    "filename": "2224720.jpg"
+  },
+  {
     "path": "9-awards.png",
     "filename": "9-awards.png"
   },
@@ -582,6 +590,10 @@ export const images_file = [
   {
     "path": "blog-cover-11.jpg",
     "filename": "blog-cover-11.jpg"
+  },
+  {
+    "path": "blog-cover-12.jpg",
+    "filename": "blog-cover-12.jpg"
   },
   {
     "path": "blog-cover-2.jpg",
@@ -1626,6 +1638,10 @@ export const images_file = [
   {
     "path": "sun (3).jpg",
     "filename": "sun (3).jpg"
+  },
+  {
+    "path": "suriyanchandra.jpg",
+    "filename": "suriyanchandra.jpg"
   },
   {
     "path": "tapu (1).jpg",
