@@ -318,6 +318,7 @@ export default function TourDetailPage() {
           tour={tour.id}
           pickup_area={tour.pickup}
           prices={tour.prices}
+          price_note={tour?.price_note || ""}
 
         />}
       </section>

@@ -12,6 +12,7 @@ export interface Tour {
     upto_4_people?: number;
     upto_9_people?: number;
   };
+  price_note?  : string;
 
   // details
   note: string[];
@@ -44,6 +45,7 @@ export interface Tour {
 
   // muti-day tour
   deposit  ?: number;
+  
 
   
 

@@ -1,5 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaWhatsapp, FaLine } from "react-icons/fa";
 import { Link, redirect, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -17,7 +17,8 @@ export default function TourBookingForm({
   prices = {
     upto_4_people: 0,
     upto_9_people: 0,
-  }
+  },
+  price_note
 }: {
   tourName?: string;
   tour?: string;
@@ -29,10 +30,12 @@ export default function TourBookingForm({
     upto_4_people?: number;
     upto_9_people?: number;
   };
+  price_note?: string;
 }) {
 
   const router = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isPriceEmpty, setIsPriceEmpty] = useState(true);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -58,6 +61,17 @@ export default function TourBookingForm({
     deposit && formData.people ? deposit * Math.max(1, parseInt(formData.people)) : 0;
 
 
+  const checkPriceEmpty = (): boolean => {
+    const isEmpty = (from_price ?? 0) + (prices?.upto_4_people ?? 0) + (prices?.upto_9_people ?? 0);
+
+    if (isEmpty <= 0) {
+      setIsPriceEmpty(false)
+      return false;
+    }
+
+    setIsPriceEmpty(true)
+    return true;
+  }
 
 
   const handleChange = (
@@ -126,6 +140,10 @@ export default function TourBookingForm({
     }
   };
 
+  useEffect(() => {
+    checkPriceEmpty();
+  }, [from_price]);
+
 
   if (typeof window !== "undefined")
     return (
@@ -143,28 +161,34 @@ export default function TourBookingForm({
               )}
             </div>
 
-            <div className="space-y-2">
+            {!isPriceEmpty ?
               <div className="">
-                <div className="text-sm">Group of 1</div>
-                <span className="text-xl font-bold">{formatCurrency(from_price || 0)}</span>
-                <span> / person</span>
-              </div>
-              <div className="">
-                <div className="text-sm">Group of 2-4</div>
-                <span className="text-xl font-bold">{formatCurrency(prices?.upto_4_people || price || 0)}</span>
-                <span> / person</span>
-              </div>
-              <div className="">
-                <div className="text-sm">Group of 4-9</div>
-                <span className="text-xl font-bold">{formatCurrency(prices?.upto_9_people || price || 0)}</span>
-                <span> / person</span>
-              </div>
-              <div className="">
-                <div className="text-sm">Group of 10+</div>
+                <div className="text-sm">To get price</div>
                 <span className="text-xl font-bold">Contact Sale</span>
                 <span> / person</span>
               </div>
-            </div>
+              : <div className="space-y-2">
+                <div className="">
+                  <div className="text-sm">Group of 1</div>
+                  <span className="text-xl font-bold">{formatCurrency(from_price || 0)}</span>
+                  <span> / person</span>
+                </div>
+                <div className="">
+                  <div className="text-sm">Group of 2-4</div>
+                  <span className="text-xl font-bold">{formatCurrency(prices?.upto_4_people || price || 0)}</span>
+                  <span> / person</span>
+                </div>
+                <div className="">
+                  <div className="text-sm">Group of 4-9</div>
+                  <span className="text-xl font-bold">{formatCurrency(prices?.upto_9_people || price || 0)}</span>
+                  <span> / person</span>
+                </div>
+                <div className="">
+                  <div className="text-sm">Group of 10+</div>
+                  <span className="text-xl font-bold">Contact Sale</span>
+                  <span> / person</span>
+                </div>
+              </div>}
             {deposit > 0 && <div className="">
               <div className="text-sm">Deposit Price</div>
               <span className="text-xl font-bold">{formatCurrency(deposit || 0)}</span>
@@ -347,10 +371,21 @@ export default function TourBookingForm({
               />
             </div>
 
+            {/* price note */}
+
+            {isPriceEmpty && (
+              <div className="p-4 bg-yellow-50 text-gray-800 border border-yellow-200 rounded">
+                <strong>Note</strong>
+                <p className="mt-1 text-sm">
+                  {price_note}
+                </p>
+              </div>
+            )}
+
             {/* <div className="text-gray-800">{formData.people}</div> */}
 
             {/* Pricing Logic */}
-            {formData.people && Number(formData.people) < 10 && (
+            {formData.people && Number(formData.people) < 10 && isPriceEmpty && (
               <>
                 {/* No deposit */}
                 {!totalDepositPrice && (
@@ -382,6 +417,8 @@ export default function TourBookingForm({
                 )}
               </>
             )}
+
+
 
             {/* 10+ People Message */}
             {Number(formData.people) >= 10 && (

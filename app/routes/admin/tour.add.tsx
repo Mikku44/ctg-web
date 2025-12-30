@@ -26,6 +26,8 @@ export default function AddTourAdminPage() {
       upto_9_people: "",
     },
 
+    price_note: "",
+
     category_id: "",
     featured_image: "",
     program_detail: "",
@@ -177,6 +179,7 @@ export default function AddTourAdminPage() {
           upto_4_people: Number(form.prices.upto_4_people),
           upto_9_people: Number(form.prices.upto_9_people),
         },
+        price_note: form.price_note,
         note: processArrayField(note),
         itinerary: processArrayField(itinerary),
         program_detail: form.program_detail,
@@ -219,6 +222,8 @@ export default function AddTourAdminPage() {
           upto_4_people: "",
           upto_9_people: "",
         },
+
+        price_note: "",
 
         category_id: "",
         featured_image: "",
@@ -326,28 +331,34 @@ export default function AddTourAdminPage() {
           </div>
           {/* Price and Category */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <div>
-                <label className="block text-sm font-medium mb-1">Starting Price (THB) *</label>
-                <input name="price_from" type="number" value={form.price_from} onChange={handleChange} className="w-full admin-input" />
-              </div>
 
-              {/* prices */}
-              <div>
-                <label className="block text-sm font-medium mb-1">Up to 4 People (THB) *</label>
-                <input name="upto_4_people" type="number" value={form.prices.upto_4_people} onChange={handleChange} className="w-full admin-input" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Up to 9 People (THB) *</label>
-                <input name="upto_9_people" type="number" value={form.prices.upto_9_people} onChange={handleChange} className="w-full admin-input" />
-              </div>
-
-              {/*  */}
-              <div>
-                <label className="block text-sm font-medium mb-1">Deposit (THB) (Optional) </label>
-                <input name="deposit" type="number" value={form.deposit} onChange={handleChange} className="w-full admin-input" />
-              </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Starting Price (THB) *</label>
+              <input name="price_from" type="number" value={form.price_from} onChange={handleChange} className="w-full admin-input" />
             </div>
+
+            {/* prices */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Up to 4 People (THB) *</label>
+              <input name="upto_4_people" type="number" value={form.prices.upto_4_people} onChange={handleChange} className="w-full admin-input" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Up to 9 People (THB) *</label>
+              <input name="upto_9_people" type="number" value={form.prices.upto_9_people} onChange={handleChange} className="w-full admin-input" />
+            </div>
+
+            {/* price note */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Price Note (Optional)</label>
+              <input name="price_note" type="text" value={form.price_note} onChange={handleChange} className="w-full admin-input" />
+            </div>
+
+            {/*  */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Deposit (THB) (Optional) </label>
+              <input name="deposit" type="number" value={form.deposit} onChange={handleChange} className="w-full admin-input" />
+            </div>
+
             <div>
               <label className="block text-sm font-medium mb-1">Category ID</label>
               <input name="category_id" value={form.category_id} onChange={handleChange} placeholder="temples / adventure / culture" className="w-full admin-input" />
