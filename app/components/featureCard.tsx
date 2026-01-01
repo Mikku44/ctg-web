@@ -40,6 +40,8 @@ export function TourCard({
 
   const router = useNavigate();
 
+  
+
   return (
     <Link to={`/tours/${slug}`} target="_blank" draggable="false" className={`group select-none cursor-potiner w-full bg-white h-fit
      overflow-hidden border border-zinc-200 group transition-all rounded-sm duration-300 ${className}`}>
@@ -114,8 +116,14 @@ export function TourCard({
           <div className="text-right flex flex-col items-end w-full">
             <p className="text-xs text-gray-500 font-medium">From</p>
             <div className="flex items-end flex-col">
+              {price ? 
+              <>
               <p className="text-sm text-zinc-500 decoration-1 line-through">{formatCurrency(price * 120 / 100)}</p>
               <p className="text-base font-semibold ">{formatCurrency(price)} / traveler</p>
+              </>
+             :
+             <p className="text-base font-semibold ">Contact Sale / traveler</p>
+            }
             </div>
             <div className="text-sm text-zinc-500"></div>
              <div className="text-sm mt-1 text-zinc-800"><Check size={16} className="text-sms inline" /> Taxes and additional fees included</div>
@@ -124,13 +132,13 @@ export function TourCard({
         </div>
 
      
-          <button
-          onClick={() => router(`/tours/${slug}`)}
+          <div
+          // onClick={() => router(`/tours/${slug}`)}
           className="w-full bg-[var(--primary-color)] text-white font-semibold py-3 
           mt-4  hover:shadow-lg  duration-300 flex items-center justify-center gap-2 group/btn">
             <span>Explore Tour</span>
             <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform duration-300" />
-          </button>
+          </div>
 
          
       

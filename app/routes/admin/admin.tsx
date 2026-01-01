@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Loading from '~/components/Loading';
 import { formatCurrency } from '~/lib/utils/currencyFormator';
 import type { BookingModel } from '~/models/booking';
@@ -179,7 +179,7 @@ export default function AdminLayout() {
           <div className="lg:col-span-2 bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center">
               <h2 className="font-bold text-lg text-slate-900">Recent Bookings</h2>
-              <button className="text-blue-600 text-sm font-medium hover:underline">View All</button>
+              <Link to="/admin/bookings" className="text-blue-600 text-sm font-medium hover:underline">View All</Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">

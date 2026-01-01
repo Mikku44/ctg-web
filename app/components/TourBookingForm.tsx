@@ -1,7 +1,8 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaWhatsapp, FaLine } from "react-icons/fa";
-import { Link, redirect, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { formatCurrency } from "~/lib/utils/currencyFormator";
 import type { BookingModel } from "~/models/booking";
@@ -26,9 +27,9 @@ export default function TourBookingForm({
   deposit?: number;
   cover?: string;
   pickup_area?: string;
-  prices?: {
-    upto_4_people?: number;
-    upto_9_people?: number;
+  prices: {
+    upto_4_people: number;
+    upto_9_people: number;
   };
   price_note?: string;
 }) {
@@ -49,9 +50,9 @@ export default function TourBookingForm({
 
   let price = from_price;
   if (Number(formData.people) == 1) price = from_price
-  else if (Number(formData.people) <= 4) price = prices.upto_4_people
-  else if (Number(formData.people) <= 9) price = prices.upto_9_people
-  else if (Number(formData.people) >= 10) price = 0; // for 10+ people, contact sale
+  else if (Number(formData.people) <= 4) price = prices.upto_4_people || from_price;
+  else if (Number(formData.people) <= 9) price = prices.upto_9_people || prices.upto_4_people || from_price;
+  else if (Number(formData.people) >= 10) price = 0;
   else price = from_price;
 
   const totalPrice =
@@ -61,17 +62,22 @@ export default function TourBookingForm({
     deposit && formData.people ? deposit * Math.max(1, parseInt(formData.people)) : 0;
 
 
-  const checkPriceEmpty = (): boolean => {
-    const isEmpty = (from_price ?? 0) + (prices?.upto_4_people ?? 0) + (prices?.upto_9_people ?? 0);
+const checkPriceEmpty = (): boolean => {
+  // Sum up all possible price fields
+  const totalPriceSum = (from_price ?? 0) + 
+                        (prices?.upto_4_people ?? 0) + 
+                        (prices?.upto_9_people ?? 0);
 
-    if (isEmpty <= 0) {
-      setIsPriceEmpty(false)
-      return false;
-    }
-
-    setIsPriceEmpty(true)
-    return true;
+  // If sum is 0, price is truly empty
+  if (totalPriceSum <= 0) {
+    setIsPriceEmpty(false); // No pricing available
+    return false;
   }
+
+  // If we have at least one price > 0
+  setIsPriceEmpty(true); 
+  return true;
+};
 
 
   const handleChange = (
@@ -109,7 +115,7 @@ export default function TourBookingForm({
       const updated = [result, ...existing];
 
       // Optional: limit saved bookings (example: last 5)
-      const limited = updated.slice(0, 5);
+      const limited = updated.slice(0, 10);
 
       localStorage.setItem("lastBooking", JSON.stringify(limited));
 
@@ -173,21 +179,21 @@ export default function TourBookingForm({
                   <span className="text-xl font-bold">{formatCurrency(from_price || 0)}</span>
                   <span> / person</span>
                 </div>
-                <div className="">
+                {prices.upto_4_people > 0 && <div className="">
                   <div className="text-sm">Group of 2-4</div>
                   <span className="text-xl font-bold">{formatCurrency(prices?.upto_4_people || price || 0)}</span>
                   <span> / person</span>
-                </div>
-                <div className="">
+                </div>}
+                {prices.upto_9_people > 0 && <div className="">
                   <div className="text-sm">Group of 4-9</div>
                   <span className="text-xl font-bold">{formatCurrency(prices?.upto_9_people || price || 0)}</span>
                   <span> / person</span>
-                </div>
-                <div className="">
+                </div>}
+                {prices.upto_9_people > 0 && <div className="">
                   <div className="text-sm">Group of 10+</div>
                   <span className="text-xl font-bold">Contact Sale</span>
                   <span> / person</span>
-                </div>
+                </div>}
               </div>}
             {deposit > 0 && <div className="">
               <div className="text-sm">Deposit Price</div>
@@ -373,11 +379,12 @@ export default function TourBookingForm({
 
             {/* price note */}
 
-            {isPriceEmpty && (
+            {!isPriceEmpty && price_note &&(
               <div className="p-4 bg-yellow-50 text-gray-800 border border-yellow-200 rounded">
                 <strong>Note</strong>
-                <p className="mt-1 text-sm">
-                  {price_note}
+                <p className="mt-1 text-sm prose prose-lg max-w-none remark-content">
+                  {/* {price_note} */}
+                 {price_note && <ReactMarkdown>{price_note}</ReactMarkdown>}
                 </p>
               </div>
             )}

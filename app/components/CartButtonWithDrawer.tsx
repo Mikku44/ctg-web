@@ -55,28 +55,60 @@ export default function CartButtonWithDrawer() {
             >
                 <h2 className="text-xl font-semibold mb-4">Last Booking</h2>
 
-                <div className="grid gap-2 p-3 h-[90%] overflow-auto">
-                    {lastBooking ? lastBooking.map((lastBooking) =>
-                        <div key={lastBooking.id} className="bg-white h-fit rounded-lg p-4 shadow-sm flex flex-col space-y-2">
-                            <p className="text-sm text-gray-800 font-medium">{lastBooking.tourName || "—"}</p>
-
-                            <div className="flex justify-between text-xs text-gray-500">
-                                <span>People: {lastBooking.people}</span>
-                                <span>{lastBooking.date}</span>
-                            </div>
-
-                            <p className="text-xs text-gray-400 truncate">ID: {lastBooking.id}</p>
-
-                            <a
-                                href={`/checkout?id=${lastBooking.id}`}
-                                className="mt-3 text-center bg-[var(--primary-color)] text-white py-2 rounded hover:opacity-90 transition"
+                <div className="grid gap-3 p-3 h-[90%] overflow-auto">
+                    {lastBooking && lastBooking.length > 0 ? (
+                        lastBooking.map((booking) => (
+                            <div
+                                key={booking.id}
+                                className="group bg-white border border-gray-200 h-fit p-4 flex flex-col transition-all hover:border-black"
                             >
-                                Continue to Checkout
-                            </a>
-                        </div>
+                                {/* Header: Tour Name */}
+                                <div className="flex justify-between items-start mb-3">
+                                    <h3 className="text-[13px] font-bold  tracking-tight text-black leading-none">
+                                        {booking.tourName || "TOUR NOT SPECIFIED"}
+                                    </h3>
+                                    {/* <span className="text-[10px] font-medium bg-black text-white px-1.5 py-0.5">
+                                        DRAFT
+                                    </span> */}
+                                </div>
 
+                                {/* Details Grid */}
+                                <div className="grid grid-cols-2 border-y border-gray-100 py-2 mb-3">
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] text-gray-400 uppercase">Pax</span>
+                                        <span className="text-xs font-semibold">{booking.people} People</span>
+                                    </div>
+                                    <div className="flex flex-col border-l border-gray-100 pl-3">
+                                        <span className="text-[10px] text-gray-400 uppercase">Date</span>
+                                        <span className="text-xs font-semibold">{booking.date}</span>
+                                    </div>
+                                </div>
+
+                                {/* Footer: ID & Price */}
+                                <div className="flex justify-between items-end mb-4">
+                                    <div className="flex flex-col">
+                                        <span className="text-[9px] text-gray-300 font-mono">#{booking.id?.slice(-8)}</span>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className="text-[10px] text-gray-400 block leading-none">Total</span>
+                                        <span className="text-sm font-bold text-black">฿{booking.totalPrice?.toLocaleString()}</span>
+                                    </div>
+                                </div>
+
+                                {/* Action */}
+                                <a
+                                    href={`/checkout?id=${booking.id}`}
+                                    className="w-full text-[11px] uppercase tracking-widest font-bold text-center text-(--primary-color)
+                                     border border-(--primary-color) py-2.5 hover:bg-(--primary-color) hover:text-white transition-colors duration-200"
+                                >
+                                    Complete Booking
+                                </a>
+                            </div>
+                        ))
                     ) : (
-                        <p className="text-gray-500">No booking saved.</p>
+                        <div className="text-center py-10">
+                            <p className="text-xs uppercase tracking-widest text-gray-400">No records found</p>
+                        </div>
                     )}
                 </div>
 

@@ -49,7 +49,7 @@ export default function CheckBooking() {
                             maxLength={20}
                             onChange={(e) => setBookingID(e.target.value)}
                             className="input w-full px-4 py-2 border  rounded-lg focus:ring focus:outline-none"
-                            placeholder="e.g. bbOlx8ep0jz2nxXNC3vv (20 characters max)"
+                            placeholder="e.g. CTG-20251208-009 (16 characters max include '-')"
                         />
                     </label>
                     <button

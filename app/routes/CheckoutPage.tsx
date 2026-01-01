@@ -148,18 +148,18 @@ export default function CheckoutPage() {
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Name</span>
                     <span className="text-sm font-medium text-slate-900 max-w-[300px]">
-                      {booking.firstName} {booking.lastName}
+                      {maskName(`${booking.firstName} ${booking.lastName}`)}
                     </span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Email</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.email}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskEmail(booking.email)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Phone</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.contact}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskPhone(booking.contact)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
@@ -290,7 +290,7 @@ export default function CheckoutPage() {
               <div className="mt-6 pt-6 border-t border-slate-200">
                 <p className="text-xs text-slate-600 text-center">
                   Invoice has been sent to <br />
-                  <span className="font-medium text-slate-900">{booking.email}</span>
+                  <span className="font-medium text-slate-900">{maskEmail(booking.email)}</span>
                 </p>
               </div>
 
@@ -380,18 +380,18 @@ export default function CheckoutPage() {
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Name</span>
                     <span className="text-sm font-medium text-slate-900 max-w-[300px]">
-                      {booking.firstName} {booking.lastName}
+                      {maskName(`${booking.firstName} ${booking.lastName}`)}
                     </span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Email</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.email}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskEmail(booking.email)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Phone</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.contact}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskPhone(booking.contact)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
@@ -533,7 +533,7 @@ export default function CheckoutPage() {
               <div className="mt-6 pt-6 border-t border-slate-200">
                 <p className="text-xs text-slate-600 text-center">
                   A confirmation email has been sent to<br />
-                  <span className="font-medium text-slate-900">{booking.email}</span>
+                  <span className="font-medium text-slate-900">{maskEmail(booking.email)}</span>
                 </p>
               </div>
 
@@ -622,18 +622,18 @@ export default function CheckoutPage() {
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Name</span>
                     <span className="text-sm font-medium text-slate-900 max-w-[300px]">
-                      {booking.firstName} {booking.lastName}
+                      {maskName(`${booking.firstName} ${booking.lastName}`)}
                     </span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Email</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.email}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskEmail(booking.email)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Phone</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.contact}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskPhone(booking.contact)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
@@ -944,18 +944,18 @@ export default function CheckoutPage() {
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Name</span>
                     <span className="text-sm font-medium text-slate-900 max-w-[300px]">
-                      {booking.firstName} {booking.lastName}
+                      {maskName(`${booking.firstName} ${booking.lastName}`)}
                     </span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Email</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.email}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskEmail(booking.email)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
                     <span className="text-sm text-slate-600">Phone</span>
-                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{booking.contact}</span>
+                    <span className="text-sm font-medium text-slate-900 max-w-[300px]">{maskPhone(booking.contact)}</span>
                   </div>
 
                   <div className="flex justify-between py-2 border-b border-slate-100">
@@ -1113,7 +1113,7 @@ function CheckoutForm({ booking, id }: { booking: BookingModel, id: string }) {
       if (data.error) {
         setMessage("Something went wrong. Please contact support.");
       } else {
-        toast.success(`Invoice sent to ${booking.email}`);
+        toast.success(`Invoice sent to ${maskEmail(booking.email)}`);
 
 
         await bookingService.updateBooking(id, { invoice: { id: data.invoiceId, url: data.invoiceUrl }, status: "invoiced" });
@@ -1205,3 +1205,28 @@ function CheckoutForm({ booking, id }: { booking: BookingModel, id: string }) {
     </form>
   );
 }
+
+
+const maskEmail = (email: string) => {
+  if (!email || !email.includes("@")) return email;
+  const [name, domain] = email.split("@");
+  if (name.length <= 2) return `${name}***@${domain}`;
+  return `${name.substring(0, 2)}***${name.substring(name.length - 1)}@${domain}`;
+};
+
+const maskPhone = (phone: string) => {
+  if (!phone) return "—";
+  const cleaned = phone.toString().trim();
+  if (cleaned.length < 7) return cleaned; // Too short to mask meaningfully
+  
+  // Shows first 3 digits (often country/area code) and last 3 digits
+  return `${cleaned.slice(0, 3)}****${cleaned.slice(-3)}`;
+};
+
+const maskName = (name: string) => {
+  if (!name) return "—";
+  const parts = name.trim().split(" ");
+  return parts
+    .map(part => `${part.charAt(0)}${"*".repeat(Math.min(part.length - 1, 3))}`)
+    .join(" ");
+};

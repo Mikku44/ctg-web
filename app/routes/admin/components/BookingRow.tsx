@@ -132,6 +132,7 @@ function BookingDetailModal({ open, onClose, onSave, booking }: BookingDetailMod
         setIsLoading(true)
         const updated: Partial<BookingModel> = {
             totalPrice: Number(form.totalPrice),
+            totalDepositPrice : Number(form.totalDepositPrice),
             people: Number(form.people),
             hotel: form.hotel || "",
             special: form.special || "",
@@ -173,6 +174,12 @@ function BookingDetailModal({ open, onClose, onSave, booking }: BookingDetailMod
                     <DetailEditable label="Date" value={form.date} field="date" onChange={handleChange} />
                     <DetailEditable label="People" value={form.people} field="people" onChange={handleChange} />
 
+                    <DetailEditable
+                        label="Deposit Price"
+                        value={form.totalDepositPrice}
+                        field="totalDepositPrice"
+                        onChange={handleChange}
+                    />
                     <DetailEditable
                         label="Total Price"
                         value={form.totalPrice}
