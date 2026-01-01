@@ -349,9 +349,18 @@ export default function AddTourAdminPage() {
 
             {/* price note */}
             <div>
-              <label className="block text-sm font-medium mb-1">Price Note (Optional)</label>
-              <input name="price_note" type="text" value={form.price_note} onChange={handleChange} className="w-full admin-input" />
+              <label className="block text-sm font-medium mb-1">
+                Price Note (Optional)
+              </label>
+              <textarea
+                name="price_note"
+                value={form.price_note}
+                onChange={handleChange}
+                className="w-full admin-input"
+                rows={4}
+              />
             </div>
+
 
             {/*  */}
             <div>
