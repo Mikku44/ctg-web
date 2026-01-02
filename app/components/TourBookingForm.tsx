@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { formatCurrency } from "~/lib/utils/currencyFormator";
 import type { BookingModel } from "~/models/booking";
 import { bookingService } from "~/services/bookingService"; // <-- add import
+import { Alert } from "@mui/material";
+import { VscWarning } from "react-icons/vsc";
 
 export default function TourBookingForm({
   tour,
@@ -62,22 +64,22 @@ export default function TourBookingForm({
     deposit && formData.people ? deposit * Math.max(1, parseInt(formData.people)) : 0;
 
 
-const checkPriceEmpty = (): boolean => {
-  // Sum up all possible price fields
-  const totalPriceSum = (from_price ?? 0) + 
-                        (prices?.upto_4_people ?? 0) + 
-                        (prices?.upto_9_people ?? 0);
+  const checkPriceEmpty = (): boolean => {
+    // Sum up all possible price fields
+    const totalPriceSum = (from_price ?? 0) +
+      (prices?.upto_4_people ?? 0) +
+      (prices?.upto_9_people ?? 0);
 
-  // If sum is 0, price is truly empty
-  if (totalPriceSum <= 0) {
-    setIsPriceEmpty(false); // No pricing available
-    return false;
-  }
+    // If sum is 0, price is truly empty
+    if (totalPriceSum <= 0) {
+      setIsPriceEmpty(false); // No pricing available
+      return false;
+    }
 
-  // If we have at least one price > 0
-  setIsPriceEmpty(true); 
-  return true;
-};
+    // If we have at least one price > 0
+    setIsPriceEmpty(true);
+    return true;
+  };
 
 
   const handleChange = (
@@ -201,7 +203,10 @@ const checkPriceEmpty = (): boolean => {
               <span> / person</span>
             </div>}
 
+
+
             <h3 className="font-semibold text-xl">Contact Us</h3>
+
             <ul className="space-y-3 text-sm">
               <Link to="tel:+66615097533" className="flex items-center gap-2">
                 <Phone size={16} /> +66615097533
@@ -379,12 +384,12 @@ const checkPriceEmpty = (): boolean => {
 
             {/* price note */}
 
-            {!isPriceEmpty && price_note &&(
+            {!isPriceEmpty && price_note && (
               <div className="p-4 bg-yellow-50 text-gray-800 border border-yellow-200 rounded">
                 <strong>Note</strong>
                 <p className="mt-1 text-sm prose prose-lg max-w-none remark-content">
                   {/* {price_note} */}
-                 {price_note && <ReactMarkdown>{price_note}</ReactMarkdown>}
+                  {price_note && <ReactMarkdown>{price_note}</ReactMarkdown>}
                 </p>
               </div>
             )}
@@ -437,6 +442,13 @@ const checkPriceEmpty = (): boolean => {
                 </p>
               </div>
             )}
+
+            <Alert icon={<VscWarning fontSize="inherit" />} severity="info">
+              <div className="font-bold">Dress Code Notice</div>
+              <div className="">Please dress respectfully when visiting temples and royal palaces.
+                Shoulders and knees must be covered. Sleeveless tops, short skirts,
+                and shorts are not permitted. Dress code enforcement is subject to site regulations.</div>
+            </Alert>
 
 
             <button
