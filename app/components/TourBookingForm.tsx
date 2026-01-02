@@ -185,7 +185,7 @@ const checkPriceEmpty = (): boolean => {
                   <span> / person</span>
                 </div>}
                 {prices.upto_9_people > 0 && <div className="">
-                  <div className="text-sm">Group of 4-9</div>
+                  <div className="text-sm">Group of 5-9</div>
                   <span className="text-xl font-bold">{formatCurrency(prices?.upto_9_people || price || 0)}</span>
                   <span> / person</span>
                 </div>}

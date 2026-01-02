@@ -119,7 +119,7 @@ export default function Contact() {
 
 
         <div className="mx-auto w-fit">
-          <div className="">Tel : +6699-321-0694 (WhatsApp)</div>
+          <div className="">Tel : +6661-509-7533 (WhatsApp)</div>
           <div className="">Email : creativetourguru@hotmail.com</div>
         </div>
 
