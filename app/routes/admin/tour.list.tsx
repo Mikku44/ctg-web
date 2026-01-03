@@ -86,16 +86,17 @@ export default function TourListPage() {
           >
             {/* <div className="text-[12px] text-zinc-600">{tour.tid || tour.id}</div> */}
             {/* Left: Image & Info */}
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-20 overflow-hidden">
+            <div className="flex items-start gap-4">
+              <div className="h-14 w-20 min-h-20 overflow-hidden">
                 <img
                   src={tour.featured_image || "/noimage.jpg"}
                   alt={tour.title}
-                  className="h-14 w-20 object-cover rounded-md"
+                  className="h-14 w-20 min-h-20 object-cover rounded-md"
                 />
               </div>
 
               <div className="space-y-1">
+                <p className="text-sm text-gray-500">{tour.tid}</p>
                 <h2 className="font-semibold text-base">{index + 1}.{tour.title}</h2>
                 <p className="text-sm text-gray-500">{tour.location || "-"}</p>
                 <p className="text-sm font-medium text-green-700">

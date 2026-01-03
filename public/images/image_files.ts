@@ -980,6 +980,206 @@ export const images_file = [
     "filename": "chaingmai_old_town (7).jpg"
   },
   {
+    "path": "ctg-15 (1).jpg",
+    "filename": "ctg-15 (1).jpg"
+  },
+  {
+    "path": "ctg-15 (10).jpg",
+    "filename": "ctg-15 (10).jpg"
+  },
+  {
+    "path": "ctg-15 (11).jpg",
+    "filename": "ctg-15 (11).jpg"
+  },
+  {
+    "path": "ctg-15 (12).jpg",
+    "filename": "ctg-15 (12).jpg"
+  },
+  {
+    "path": "ctg-15 (13).jpg",
+    "filename": "ctg-15 (13).jpg"
+  },
+  {
+    "path": "ctg-15 (14).jpg",
+    "filename": "ctg-15 (14).jpg"
+  },
+  {
+    "path": "ctg-15 (2).jpg",
+    "filename": "ctg-15 (2).jpg"
+  },
+  {
+    "path": "ctg-15 (3).jpg",
+    "filename": "ctg-15 (3).jpg"
+  },
+  {
+    "path": "ctg-15 (4).jpg",
+    "filename": "ctg-15 (4).jpg"
+  },
+  {
+    "path": "ctg-15 (5).jpg",
+    "filename": "ctg-15 (5).jpg"
+  },
+  {
+    "path": "ctg-15 (6).jpg",
+    "filename": "ctg-15 (6).jpg"
+  },
+  {
+    "path": "ctg-15 (7).jpg",
+    "filename": "ctg-15 (7).jpg"
+  },
+  {
+    "path": "ctg-15 (8).jpg",
+    "filename": "ctg-15 (8).jpg"
+  },
+  {
+    "path": "ctg-15 (9).jpg",
+    "filename": "ctg-15 (9).jpg"
+  },
+  {
+    "path": "ctg-21 (1).jpg",
+    "filename": "ctg-21 (1).jpg"
+  },
+  {
+    "path": "ctg-21 (10).jpg",
+    "filename": "ctg-21 (10).jpg"
+  },
+  {
+    "path": "ctg-21 (11).jpg",
+    "filename": "ctg-21 (11).jpg"
+  },
+  {
+    "path": "ctg-21 (12).jpg",
+    "filename": "ctg-21 (12).jpg"
+  },
+  {
+    "path": "ctg-21 (13).jpg",
+    "filename": "ctg-21 (13).jpg"
+  },
+  {
+    "path": "ctg-21 (14).jpg",
+    "filename": "ctg-21 (14).jpg"
+  },
+  {
+    "path": "ctg-21 (2).jpg",
+    "filename": "ctg-21 (2).jpg"
+  },
+  {
+    "path": "ctg-21 (3).jpg",
+    "filename": "ctg-21 (3).jpg"
+  },
+  {
+    "path": "ctg-21 (4).jpg",
+    "filename": "ctg-21 (4).jpg"
+  },
+  {
+    "path": "ctg-21 (5).jpg",
+    "filename": "ctg-21 (5).jpg"
+  },
+  {
+    "path": "ctg-21 (6).jpg",
+    "filename": "ctg-21 (6).jpg"
+  },
+  {
+    "path": "ctg-21 (7).jpg",
+    "filename": "ctg-21 (7).jpg"
+  },
+  {
+    "path": "ctg-21 (8).jpg",
+    "filename": "ctg-21 (8).jpg"
+  },
+  {
+    "path": "ctg-21 (9).jpg",
+    "filename": "ctg-21 (9).jpg"
+  },
+  {
+    "path": "ctg-34 (1).jpg",
+    "filename": "ctg-34 (1).jpg"
+  },
+  {
+    "path": "ctg-34 (2).jpg",
+    "filename": "ctg-34 (2).jpg"
+  },
+  {
+    "path": "ctg-34 (3).jpg",
+    "filename": "ctg-34 (3).jpg"
+  },
+  {
+    "path": "ctg-34 (4).jpg",
+    "filename": "ctg-34 (4).jpg"
+  },
+  {
+    "path": "ctg-34 (5).jpg",
+    "filename": "ctg-34 (5).jpg"
+  },
+  {
+    "path": "ctg-34 (6).jpg",
+    "filename": "ctg-34 (6).jpg"
+  },
+  {
+    "path": "ctg-34 (7).jpg",
+    "filename": "ctg-34 (7).jpg"
+  },
+  {
+    "path": "ctg-36 (1).jpg",
+    "filename": "ctg-36 (1).jpg"
+  },
+  {
+    "path": "ctg-36 (2).jpg",
+    "filename": "ctg-36 (2).jpg"
+  },
+  {
+    "path": "ctg-36 (3).jpg",
+    "filename": "ctg-36 (3).jpg"
+  },
+  {
+    "path": "ctg-36 (4).jpg",
+    "filename": "ctg-36 (4).jpg"
+  },
+  {
+    "path": "ctg-36 (5).jpg",
+    "filename": "ctg-36 (5).jpg"
+  },
+  {
+    "path": "ctg-36 (6).jpg",
+    "filename": "ctg-36 (6).jpg"
+  },
+  {
+    "path": "ctg-36 (7).jpg",
+    "filename": "ctg-36 (7).jpg"
+  },
+  {
+    "path": "ctg-36 (8).jpg",
+    "filename": "ctg-36 (8).jpg"
+  },
+  {
+    "path": "ctg-40 (1).jpg",
+    "filename": "ctg-40 (1).jpg"
+  },
+  {
+    "path": "ctg-40 (2).jpg",
+    "filename": "ctg-40 (2).jpg"
+  },
+  {
+    "path": "ctg-40 (3).jpg",
+    "filename": "ctg-40 (3).jpg"
+  },
+  {
+    "path": "ctg-40 (4).jpg",
+    "filename": "ctg-40 (4).jpg"
+  },
+  {
+    "path": "ctg-40 (5).jpg",
+    "filename": "ctg-40 (5).jpg"
+  },
+  {
+    "path": "ctg-40 (6).jpg",
+    "filename": "ctg-40 (6).jpg"
+  },
+  {
+    "path": "ctg-40 (7).jpg",
+    "filename": "ctg-40 (7).jpg"
+  },
+  {
     "path": "elephant (1).jpg",
     "filename": "elephant (1).jpg"
   },
@@ -1442,6 +1642,42 @@ export const images_file = [
   {
     "path": "monkey (4).jpg",
     "filename": "monkey (4).jpg"
+  },
+  {
+    "path": "nakron (1).jpg",
+    "filename": "nakron (1).jpg"
+  },
+  {
+    "path": "nakron (2).jpg",
+    "filename": "nakron (2).jpg"
+  },
+  {
+    "path": "nakron (3).jpg",
+    "filename": "nakron (3).jpg"
+  },
+  {
+    "path": "nakron (4).jpg",
+    "filename": "nakron (4).jpg"
+  },
+  {
+    "path": "nakron (5).jpg",
+    "filename": "nakron (5).jpg"
+  },
+  {
+    "path": "nakron (6).jpg",
+    "filename": "nakron (6).jpg"
+  },
+  {
+    "path": "nakron (7).jpg",
+    "filename": "nakron (7).jpg"
+  },
+  {
+    "path": "nakron (8).jpg",
+    "filename": "nakron (8).jpg"
+  },
+  {
+    "path": "nakron (9).jpg",
+    "filename": "nakron (9).jpg"
   },
   {
     "path": "old_town_phuket (1).jpg",
