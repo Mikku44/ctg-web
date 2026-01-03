@@ -8,6 +8,7 @@ import type { Route } from "./+types/tour.update";
 import JsonPreview from "./components/JsonPreview";
 import { toast } from "sonner";
 import ImageInputs from "~/components/GalleryImage";
+import { TourImageService } from "~/services/imageService";
 
 export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) {
 
@@ -261,7 +262,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
         setImages((prev) => prev.filter((i) => i.id !== imageId));
         setSelectedImages((prev) => prev.filter((u) => u !== images.find((img) => img.id === imageId)?.image_url));
     };
-
+   
     // reorder helper
     const moveImage = (index: number, dir: "up" | "down") => {
         setImages((prev) => {
@@ -335,17 +336,19 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
             const localByUrl = new Map(images.map((li) => [li.image_url, li]));
 
             // Delete images
-            await Promise.all(
+           const deleteImageResult =  await Promise.all(
                 removeImageLocal
                     .map(async (si) => {
                         try {
                             // Assuming tourService.deleteImagesByTour deletes by image ID, not tour ID
-                            await tourService.deleteImagesByTour(si);
+                            await TourImageService.delete(si);
                         } catch (err) {
                             console.warn("Failed to delete image", si, err);
                         }
                     })
             );
+
+            console.log("REMOVE IMAGE : ",deleteImageResult)
 
             // Update or Add images
             await Promise.all(
@@ -394,7 +397,18 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
     };
 
     return (
-        <div className="mx-auto p-6 container-x">
+        <div className="mx-auto p-6 container-x relative">
+            {/* <div className="fixed bottom-0 w-[400px] h-[300px]
+            rounded-xl m-4 right-0 p-2 z-10 bg-white border border-zinc-300">
+                {removeImageLocal?.map((item, index) =>
+                    <div className="p-2 flex w-full justify-between " key={index}>
+                        <div className="">{item}</div>
+                        <button
+                        
+                        className="btn p-2 text-white p-2 bg-red-400 rounded-xl">-</button>
+                    </div>
+                )}
+            </div> */}
             <h1 className="text-2xl font-bold mb-6"> Update Tour: {form.title || tourId}</h1>
 
             {message && (
@@ -575,7 +589,7 @@ export default function UpdateTourAdminPage({ params }: Route.ClientActionArgs) 
                                             <button type="button" onClick={() => moveImage(idx, "up")} className="px-2 py-1 text-xs border rounded">↑</button>
                                             <button type="button" onClick={() => moveImage(idx, "down")} className="px-2 py-1 text-xs border rounded">↓</button>
                                         </div>
-                                        <button type="button" onClick={() => handleRemoveImageLocal(img.id)} className="px-2 py-1 text-xs text-red-600 border rounded">Remove</button>
+                                        <button type="button" onClick={() => handleRemoveImageLocal(img.id)} className="px-2 py-1 text-xs text-red-600 hover:bg-red-600 hover:text-white border rounded">Remove</button>
                                     </div>
                                 </div>
                             ))}

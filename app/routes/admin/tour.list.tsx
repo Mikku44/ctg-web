@@ -32,7 +32,7 @@ export default function TourListPage() {
   const [cursor, setCursor] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
 
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 80;
 
   // Load first page
   useEffect(() => {
@@ -54,11 +54,10 @@ export default function TourListPage() {
 
     setIsLoadingMore(true);
 
-    const res = await tourService.getPaginated(PAGE_SIZE, cursor);
+    const res = await tourService.getAllAdminWithLimit(PAGE_SIZE);
 
-    setTours((prev) => [...prev, ...res.tours]);
-    setCursor(res.nextCursor);
-    setHasMore(res.hasMore);
+    setTours(res);
+    
 
     setIsLoadingMore(false);
   }
