@@ -46,8 +46,8 @@ export const tourService = {
     const tours: Tour[] = [];
     for (const docSnap of snapshot.docs) {
       const tour = { id: docSnap.id, ...docSnap.data() } as Tour;
-      tour.images = await this.getImages(tour.id);
-      tour.packages = await this.getPackages(tour.id);
+      // tour.images = await this.getImages(tour.id);
+      // tour.packages = await this.getPackages(tour.id);
       tours.push(tour);
     }
 
@@ -244,6 +244,7 @@ export const tourService = {
 
       return {
         id: tour.id,
+        tid : tour.tid,
         slug: tour.slug,
         image: tour.featured_image || tour.images?.[0]?.image_url || "",
         title: tour.title,
@@ -258,6 +259,8 @@ export const tourService = {
         tourType: tour.tour_type,
       };
     });
+
+    // console.log("TOURS : ",result)
 
     // 3️⃣ Save to cache (1 minute)
     setCache(cacheKey, result);

@@ -155,15 +155,16 @@ export default function TourListPage() {
 
     
       {hasMore && (
-        <div className="text-center mt-6">
-          <button
-            onClick={loadMore}
-            disabled={isLoadingMore}
-            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
-          >
-            {isLoadingMore ? "Loading..." : "Load More"}
-          </button>
-        </div>
+        // <div className="text-center mt-6">
+        //   <button
+        //     onClick={loadMore}
+        //     disabled={isLoadingMore}
+        //     className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+        //   >
+        //     {isLoadingMore ? "Loading..." : "Load More"}
+        //   </button>
+        // </div>
+        <div></div>
       )}
     </div>
   );

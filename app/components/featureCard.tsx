@@ -18,7 +18,9 @@ export type TourCardProps = {
   route?: string;
   place_location?: string;
   maxPeople?: number;
+  tid : string;
   tourType?: string;
+  itinerary : string[];
   recommended?: boolean;
 };
 
@@ -28,6 +30,7 @@ export function TourCard({
   slug,
   description,
   price,
+  tid,
   rating,
   duration,
   route,
@@ -62,6 +65,7 @@ export function TourCard({
             <RiChatPrivateFill size={16} />{tourType}
           </div>
         )}
+        <div className="text-[12px] text-gray-600">TID : {tid}</div>
         <h3 className="text-base font-bold text-gray-900 leading-tight transition-colors duration-300">
           {title}
         </h3>

@@ -35,7 +35,7 @@ export default function Search() {
   const filteredTours = useMemo(() => {
     if (!query) return [];
     return tourList.filter((tour : TourCardProps) =>
-      [tour.title, tour.description, tour.place_location]
+      [tour.title, tour.description, tour.place_location,tour.tid,tour.tourType,tour.price,tour.itinerary?.join(",")]
         .join(" ")
         .toLowerCase()
         .includes(query)
