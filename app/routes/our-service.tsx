@@ -118,6 +118,7 @@ export default function BoatService() {
                             <ul className="list-disc ml-5 space-y-1">
                                 <li>Private Longtail Boat (1–10 guests)</li>
                                 <li>Private River Speedboat</li>
+                                <li>Solar powered boat</li>
                                 <li>Sunset Cruise (Private)</li>
                                 <li>Canal Life Experience – Bangkok Noi, Khlong Mon, Thonburi</li>
                             </ul>
@@ -157,6 +158,7 @@ export default function BoatService() {
                             "/images/images.jpg",
                             "/images/speedboat.jpeg",
                             "/images/speedboat.webp",
+                            "/images/solar.jpg",
                           
                         ]}
                     />
