@@ -3832,6 +3832,13 @@
   <url>
     <loc>https://creativetourguruthailand.com</loc>
     <image:image>
+      <image:loc>https://creativetourguruthailand.com/images/solar.jpg</image:loc>
+      <image:title>Solar</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://creativetourguruthailand.com</loc>
+    <image:image>
       <image:loc>https://creativetourguruthailand.com/images/speedboat.jpeg</image:loc>
       <image:title>Speedboat</image:title>
     </image:image>

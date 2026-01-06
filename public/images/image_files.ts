@@ -2196,6 +2196,10 @@ export const images_file = [
     "filename": "sitemap_images.xml"
   },
   {
+    "path": "solar.jpg",
+    "filename": "solar.jpg"
+  },
+  {
     "path": "speedboat.jpeg",
     "filename": "speedboat.jpeg"
   },
