@@ -24,7 +24,7 @@ export default function GuideService() {
         email: "",
         subject: "",
         content: "",
-        type : "Guide Service",
+        type: "Guide Service",
     });
 
     // Styles for the standard text fields
@@ -183,6 +183,69 @@ export default function GuideService() {
                     </div>
                 </div>
             </section>
+
+            <section className="w-full h-[520px]">
+                <img src="/images/train (8).jpg" 
+                className="w-full h-full object-cover brightness-75"
+                alt="guid rate cover" />
+            </section>
+
+            <section className="container-x py-14">
+                <div className="max-w-3xl space-y-6 text-gray-700">
+
+                    <h2 className="text-3xl font-bold text-gray-900">
+                        Guide Service Rates
+                    </h2>
+
+                    <p>
+                        Our professional, licensed guide service is available for private sightseeing, cultural experiences, and custom programs.
+                    </p>
+
+                    <div className="space-y-2">
+                        <h3 className="font-semibold text-lg text-gray-900">
+                            Minimum Booking Requirement
+                        </h3>
+                        <p>
+                            A minimum booking of 2 hours is required for all guide services.
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <h3 className="font-semibold text-lg text-gray-900">
+                            Hourly Rates
+                        </h3>
+                        <ul className="list-disc ml-5 space-y-1">
+                            <li>2-hour service: THB 1,500 per hour</li>
+                            <li>3–5 hour service: THB 1,200 per hour</li>
+                        </ul>
+                    </div>
+
+                    <div className="space-y-2">
+                        <h3 className="font-semibold text-lg text-gray-900">
+                            Extended Services
+                        </h3>
+                        <p>
+                            For tours lasting more than 5 hours, we recommend booking a Half-Day or Full-Day guide service.
+                        </p>
+                        <p>
+                            Please contact us for customized pricing and itinerary planning.
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        <h3 className="font-semibold text-lg text-gray-900">
+                            Important Notes
+                        </h3>
+                        <ul className="list-disc ml-5 space-y-1">
+                            <li>Rates are per guide and exclusive of transportation, entrance fees, and meals, unless otherwise stated.</li>
+                            <li>Guide services are provided by licensed, English-speaking local guides.</li>
+                            <li>Pick-up time and meeting location can be arranged based on the customer’s preference.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+
 
 
             {/* cert */}
