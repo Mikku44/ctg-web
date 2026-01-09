@@ -708,6 +708,14 @@ export const images_file = [
     "filename": "boat (9).jpg"
   },
   {
+    "path": "boatservice (1).jpg",
+    "filename": "boatservice (1).jpg"
+  },
+  {
+    "path": "boatservice (2).jpg",
+    "filename": "boatservice (2).jpg"
+  },
+  {
     "path": "canal.jpg",
     "filename": "canal.jpg"
   },

@@ -154,9 +154,9 @@ export default function BoatService() {
                         images={[
                             "/images/longtail1.jpg",
                             "/images/kohphiphi (26).jpg",
-                            "/images/canal.jpg",
-                            "/images/images.jpg",
-                            "/images/speedboat.jpeg",
+                            "/images/boatservice (1).jpg",
+                            "/images/boatservice (2).jpg",
+                            // "/images/speedboat.jpeg",
                             "/images/speedboat.webp",
                             "/images/solar.jpg",
                           

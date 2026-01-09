@@ -1242,6 +1242,20 @@
   <url>
     <loc>https://creativetourguruthailand.com</loc>
     <image:image>
+      <image:loc>https://creativetourguruthailand.com/images/boatservice (1).jpg</image:loc>
+      <image:title>Boatservice (1)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://creativetourguruthailand.com</loc>
+    <image:image>
+      <image:loc>https://creativetourguruthailand.com/images/boatservice (2).jpg</image:loc>
+      <image:title>Boatservice (2)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://creativetourguruthailand.com</loc>
+    <image:image>
       <image:loc>https://creativetourguruthailand.com/images/canal.jpg</image:loc>
       <image:title>Canal</image:title>
     </image:image>
