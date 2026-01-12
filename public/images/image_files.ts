@@ -1356,6 +1356,34 @@ export const images_file = [
     "filename": "ctg-25 (6).jpg"
   },
   {
+    "path": "ctg-26 (1).jpg",
+    "filename": "ctg-26 (1).jpg"
+  },
+  {
+    "path": "ctg-26 (2).jpg",
+    "filename": "ctg-26 (2).jpg"
+  },
+  {
+    "path": "ctg-27 (1).jpg",
+    "filename": "ctg-27 (1).jpg"
+  },
+  {
+    "path": "ctg-27 (2).jpg",
+    "filename": "ctg-27 (2).jpg"
+  },
+  {
+    "path": "ctg-27 (3).jpg",
+    "filename": "ctg-27 (3).jpg"
+  },
+  {
+    "path": "ctg-27 (4).jpg",
+    "filename": "ctg-27 (4).jpg"
+  },
+  {
+    "path": "ctg-27 (5).jpg",
+    "filename": "ctg-27 (5).jpg"
+  },
+  {
     "path": "ctg-34 (1).jpg",
     "filename": "ctg-34 (1).jpg"
   },
