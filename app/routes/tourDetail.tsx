@@ -129,8 +129,10 @@ export default function TourDetailPage() {
       <section className="max-w-4xl mx-auto px-4 py-10 space-y-8">
         <h1 className="text-4xl font-semibold mb-6">{tour.title}</h1>
         <div className="grid md:grid-cols-2 gap-2 ">
-          <div className="">
-            <img src={tour.featured_image} alt="" />
+          <div className="w-full">
+            <img src={tour.featured_image}
+            className="w-full h-full object-cover"
+            alt={tour.title} />
           </div>
 
           {/* right */}
@@ -186,7 +188,7 @@ export default function TourDetailPage() {
 
             {/* image */}
             <div className="">
-              <img src={tour?.images?.[0]?.image_url || tour.featured_image} alt="" />
+              <img src={tour?.images?.[0]?.image_url || tour.featured_image} className="w-full h-full object-cover" alt="" />
             </div>
 
           </div>
