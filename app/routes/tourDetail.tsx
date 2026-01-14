@@ -1,6 +1,5 @@
 
 import FeaturedTours from "~/components/DraggableFeature";
-import CustomViewer from "~/components/CustomViewer";
 import { tourService } from "~/services/tourService";
 import type { Tour, Package, TourImage } from "~/models/tour";
 import { Link, useLoaderData, useLocation, type LoaderFunctionArgs, type MetaFunction } from "react-router";
@@ -187,7 +186,7 @@ export default function TourDetailPage() {
             </div>
 
             {/* image */}
-            <div className="">
+            <div className="w-full h-full">
               <img src={tour?.images?.[0]?.image_url || tour.featured_image} className="w-full h-full object-cover" alt="" />
             </div>
 
@@ -198,8 +197,10 @@ export default function TourDetailPage() {
         {tour.itinerary?.length > 0 && (
           <div className="grid md:grid-cols-2 gap-2">
             {/* image */}
-            <div className="">
-              <img src={tour?.images?.[1]?.image_url || tour.featured_image} alt="" />
+            <div className="w-full h-full max-h-[600px]">
+              <img 
+               className="w-full h-full object-cover"
+              src={tour?.images?.[1]?.image_url || tour.featured_image} alt={tour.title} />
             </div>
             <div>
               <h2 className="text-2xl font-semibold mb-3">Itinerary</h2>
@@ -301,7 +302,7 @@ export default function TourDetailPage() {
 
       <section className="max-w-4xl px-4 mx-auto grid gap-5">
         <ImageViewer
-          className="columns-3"
+          className="columns-2"
           images={tour?.images?.sort((a, b) => {
 
             const indexA = a.order_index ?? Infinity;

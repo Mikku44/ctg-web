@@ -1004,8 +1004,32 @@ export const images_file = [
     "filename": "ctg-1 (4).jpg"
   },
   {
+    "path": "ctg-1 (5).jpg",
+    "filename": "ctg-1 (5).jpg"
+  },
+  {
+    "path": "ctg-1 (6).jpg",
+    "filename": "ctg-1 (6).jpg"
+  },
+  {
+    "path": "ctg-1 (7).jpg",
+    "filename": "ctg-1 (7).jpg"
+  },
+  {
+    "path": "ctg-1.jpg",
+    "filename": "ctg-1.jpg"
+  },
+  {
     "path": "ctg-10 (1).jpg",
     "filename": "ctg-10 (1).jpg"
+  },
+  {
+    "path": "ctg-10 (10).jpg",
+    "filename": "ctg-10 (10).jpg"
+  },
+  {
+    "path": "ctg-10 (11).jpg",
+    "filename": "ctg-10 (11).jpg"
   },
   {
     "path": "ctg-10 (2).jpg",
@@ -1034,6 +1058,10 @@ export const images_file = [
   {
     "path": "ctg-10 (8).jpg",
     "filename": "ctg-10 (8).jpg"
+  },
+  {
+    "path": "ctg-10 (9).jpg",
+    "filename": "ctg-10 (9).jpg"
   },
   {
     "path": "ctg-11 (1).jpg",
@@ -1088,6 +1116,22 @@ export const images_file = [
     "filename": "ctg-14 (1).jpg"
   },
   {
+    "path": "ctg-14 (10).jpg",
+    "filename": "ctg-14 (10).jpg"
+  },
+  {
+    "path": "ctg-14 (10).webp",
+    "filename": "ctg-14 (10).webp"
+  },
+  {
+    "path": "ctg-14 (11).jpg",
+    "filename": "ctg-14 (11).jpg"
+  },
+  {
+    "path": "ctg-14 (12).jpg",
+    "filename": "ctg-14 (12).jpg"
+  },
+  {
     "path": "ctg-14 (2).jpg",
     "filename": "ctg-14 (2).jpg"
   },
@@ -1112,6 +1156,18 @@ export const images_file = [
     "filename": "ctg-14 (7).jpg"
   },
   {
+    "path": "ctg-14 (8).jpg",
+    "filename": "ctg-14 (8).jpg"
+  },
+  {
+    "path": "ctg-14 (9).jpg",
+    "filename": "ctg-14 (9).jpg"
+  },
+  {
+    "path": "ctg-14 (9).png",
+    "filename": "ctg-14 (9).png"
+  },
+  {
     "path": "ctg-15 (1).jpg",
     "filename": "ctg-15 (1).jpg"
   },
@@ -1134,6 +1190,18 @@ export const images_file = [
   {
     "path": "ctg-15 (14).jpg",
     "filename": "ctg-15 (14).jpg"
+  },
+  {
+    "path": "ctg-15 (15).jpeg",
+    "filename": "ctg-15 (15).jpeg"
+  },
+  {
+    "path": "ctg-15 (16).png",
+    "filename": "ctg-15 (16).png"
+  },
+  {
+    "path": "ctg-15 (17).png",
+    "filename": "ctg-15 (17).png"
   },
   {
     "path": "ctg-15 (2).jpg",
@@ -1168,6 +1236,10 @@ export const images_file = [
     "filename": "ctg-15 (9).jpg"
   },
   {
+    "path": "ctg-15.jpg",
+    "filename": "ctg-15.jpg"
+  },
+  {
     "path": "ctg-17 (1).jpg",
     "filename": "ctg-17 (1).jpg"
   },
@@ -1182,6 +1254,26 @@ export const images_file = [
   {
     "path": "ctg-17 (4).jpg",
     "filename": "ctg-17 (4).jpg"
+  },
+  {
+    "path": "ctg-17 (5).jpeg",
+    "filename": "ctg-17 (5).jpeg"
+  },
+  {
+    "path": "ctg-17 (5).jpg",
+    "filename": "ctg-17 (5).jpg"
+  },
+  {
+    "path": "ctg-17 (6).jpg",
+    "filename": "ctg-17 (6).jpg"
+  },
+  {
+    "path": "ctg-17 (7).jpg",
+    "filename": "ctg-17 (7).jpg"
+  },
+  {
+    "path": "ctg-17 (8).jpg",
+    "filename": "ctg-17 (8).jpg"
   },
   {
     "path": "ctg-19 (1).jpg",
@@ -1620,6 +1712,18 @@ export const images_file = [
     "filename": "ctg-38 (4).jpg"
   },
   {
+    "path": "ctg-39 (1).jpg",
+    "filename": "ctg-39 (1).jpg"
+  },
+  {
+    "path": "ctg-39 (2).jpg",
+    "filename": "ctg-39 (2).jpg"
+  },
+  {
+    "path": "ctg-39 (3).jpg",
+    "filename": "ctg-39 (3).jpg"
+  },
+  {
     "path": "ctg-40 (1).jpg",
     "filename": "ctg-40 (1).jpg"
   },
@@ -1670,6 +1774,18 @@ export const images_file = [
   {
     "path": "ctg-7 (3).jpg",
     "filename": "ctg-7 (3).jpg"
+  },
+  {
+    "path": "ctg-8 (1).jpg",
+    "filename": "ctg-8 (1).jpg"
+  },
+  {
+    "path": "ctg-8 (2).jpg",
+    "filename": "ctg-8 (2).jpg"
+  },
+  {
+    "path": "ctg-8 (3).jpg",
+    "filename": "ctg-8 (3).jpg"
   },
   {
     "path": "ctg-9 (1).jpg",

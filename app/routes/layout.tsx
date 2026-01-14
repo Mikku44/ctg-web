@@ -32,6 +32,12 @@ export function meta() {
     { name: "twitter:description", content: description },
     { name: "twitter:image", content: image },
 
+    { rel: "icon", href: "/favicon.ico" },
+    { rel: "apple-touch-icon", href: "/favicon.ico" },
+
+
+
+
     // Canonical URL
     { rel: "canonical", href: url },
   ];
@@ -39,15 +45,15 @@ export function meta() {
 
 
 export default function Layout() {
-    return (
-        <main>
-            <FloatingButtons />
-            <SidebarMenu />
-            {/* <NavigationMenuBase items={menuItems} /> */}
-            {/* <Header /> */}
-            <Outlet />
+  return (
+    <main>
+      <FloatingButtons />
+      <SidebarMenu />
+      {/* <NavigationMenuBase items={menuItems} /> */}
+      {/* <Header /> */}
+      <Outlet />
 
-            <Footer />
-        </main>
-    )
+      <Footer />
+    </main>
+  )
 }
