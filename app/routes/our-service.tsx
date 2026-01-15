@@ -159,6 +159,8 @@ export default function BoatService() {
                             // "/images/speedboat.jpeg",
                             "/images/speedboat.webp",
                             "/images/solar.jpg",
+                            "/images/ctg-32.jpg",
+                            "/images/album911 (53).jpg",
                           
                         ]}
                     />
