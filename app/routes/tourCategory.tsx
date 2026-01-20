@@ -5,6 +5,7 @@ import { tourService } from "~/services/tourService";
 import { Pagination, Stack } from "@mui/material";
 import { useState, useEffect } from "react";
 import type { Tour } from "~/models/tour";
+import { TYPE_MAPPING } from "~/const/app";
 
 // 🧩 Meta (SEO)
 export const meta: MetaFunction<typeof loader> = ({ params }) => {
@@ -18,51 +19,40 @@ export const meta: MetaFunction<typeof loader> = ({ params }) => {
   ];
 };
 
-// 🛠️ Helper: Normalize text for flexible matching (e.g., "walking-tour" matches "Walking Tour")
-const normalizeText = (text: string) => text?.toLowerCase().replace(/[-_]/g, " ").trim() || "";
 
-// 🧠 Loader (Server Side Filtering)
 export async function loader({ params }: LoaderFunctionArgs) {
   try {
     const { type_slug, place } = params;
     const allTours: any = await tourService.getAllForCard();
 
-    // 1. Prepare Search Terms from URL
-    const typeTerm = normalizeText(type_slug || "");
-    const placeTerm = normalizeText(place || "");
+    // 1. Reconstruct the URL path to use as a key
+    const currentPath = `/tours/${type_slug}/${place}`;
+    
+    // 2. Get the specific "Category Name" your data uses (e.g., "Half Day Tours – Bangkok")
+    const targetCategory = TYPE_MAPPING[currentPath];
 
-    // 2. Filter logic
-    const filteredTours = allTours
-      ?.map((tour: Tour) => {
-        const title = normalizeText(tour.title);
-        const description = normalizeText(tour.description);
-        const style = normalizeText(tour.style || "");
-        const tour_type = normalizeText(tour.tour_type || "");
-        const tour_iter = normalizeText(tour.itinerary?.join(",") || "");
+    // console.log("Target Category:", targetCategory);
+    // console.log("currentPath:", currentPath);
 
-        const searchableContent = `${title} ${description} ${style} ${tour_type} ${tour_iter}`;
+    // 3. Filter logic
+    const filteredTours = allTours.filter((tour: any) => {
+      if (!targetCategory) return false;
 
-        const matchesType = !typeTerm || searchableContent.includes(typeTerm);
-        const matchesPlace = !placeTerm || searchableContent.includes(placeTerm);
+      // Normalize both for safety
+      const tourTypeData = tour.tourType || ""; // "Private,Half-Day,Half Day Tours – Bangkok"
 
-        return {
-          tour,
-          matchesType,
-          matchesPlace,
-        };
-      })
-      // 1️⃣ Keep results only if at least one match exists
-      .filter((item : any) => item.matchesPlace || item.matchesType)
-      // 2️⃣ Sort with (both match) first
-      .sort((a :any, b : any) => {
-        const aScore = (a.matchesPlace && a.matchesType) ? 2 : 1;
-        const bScore = (b.matchesPlace && b.matchesType) ? 2 : 1;
-        return bScore - aScore; // higher score first
-      })
-      // 3️⃣ Extract back the tour objects
-      .map((item : any) => item.tour);
 
-    return Response.json({ tours: filteredTours });
+      // console.log("Tour Type :",tourTypeData, tourTypeData.includes(targetCategory));
+      
+      // Check if the specific Category Name exists within that comma-separated string
+      return tourTypeData.includes(targetCategory);
+
+    });
+
+    return Response.json({ 
+      tours: filteredTours,
+      categoryName: targetCategory 
+    });
   } catch (error) {
     console.error("Failed to load tours:", error);
     throw new Response("Failed to load tours", { status: 500 });
@@ -94,6 +84,8 @@ export default function TourCategory({ params }: { params: { type_slug?: string;
   };
 
   const { type_slug, place } = params;
+  const currentPath = `/tours/${type_slug}/${place}`;
+   const targetCategory = TYPE_MAPPING[currentPath];
 
   return (
     <main className="min-h-screen">
@@ -103,7 +95,8 @@ export default function TourCategory({ params }: { params: { type_slug?: string;
           <section className="flex flex-col md:flex-row justify-between items-center mb-6">
             <div>
               <h1 className="text-4xl font-semibold mt-5 capitalize">
-                {type_slug?.replace(/-/g, " ")} in {place?.replace(/-/g, " ")}
+                {targetCategory}
+                {/* {type_slug?.replace(/-/g, " ")} in {place?.replace(/-/g, " ")} */}
               </h1>
               <p className="text-zinc-500 mt-2">
                 {tours.length} result{tours.length !== 1 && "s"} found based on your selection.

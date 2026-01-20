@@ -10,7 +10,7 @@ export const MENU_LIST = [
 export const menuConfig = [
   {
     label: "Half Day Tours",
-    layout: "grid", // Suitable for a concise list
+    layout: "grid",
     links: [
       { href: "/tours/half-day/bangkok", title: "Bangkok", description: "Quick sights and highlights." },
       { href: "/tours/half-day/chiang-mai", title: "Chiang Mai", description: "Morning or afternoon exploration." },
@@ -19,23 +19,24 @@ export const menuConfig = [
   },
   {
     label: "One Day Tours",
-    layout: "grid", // Suitable for a slightly longer list
+    layout: "grid",
     links: [
       { href: "/tours/full-day/bangkok", title: "Bangkok City & Culture", description: "Full-day BKK immersion." },
+      { href: "/tours/full-day/ayutthaya", title: "Ayutthaya", description: "Ancient temples and river cruises." }, // ADDED
       { href: "/tours/full-day/kanchanaburi", title: "Kanchanaburi", description: "River Kwai and historical sites." },
       { href: "/tours/full-day/pattaya", title: "Pattaya", description: "Coastal city escape." },
       { href: "/tours/full-day/chiang-mai", title: "Chiang Mai Exploration", description: "Doi Suthep and local villages." },
       { href: "/tours/full-day/phuket", title: "Phuket Island Hopping", description: "Beaches and viewpoints." },
+      { href: "/tours/full-day/other-provinces", title: "Other Provinces", description: "Explore hidden gems across Thailand." }, // ADDED
     ],
   },
   {
     label: "Specialty Tours",
-    layout: "flex", // Good for a mixed list of unique tours
+    layout: "flex",
     links: [
       { href: "/tours/specialty/walking", title: "Walking Tour", description: "Discover hidden local neighborhoods." },
       { href: "/tours/specialty/local-transport", title: "Local Transport Tour", description: "Experience Bangkok like a local." },
       { href: "/tours/specialty/tuk-tuk", title: "Food Tour with Tuk Tuk", description: "Night market hopping on a Tuk Tuk." },
-
     ],
   },
   {
@@ -45,17 +46,17 @@ export const menuConfig = [
       {
         href: "/tours/unseen/night-tour",
         title: "Night Tour",
-        description: "Discover hidden temples, local eateries, and markets that only come alive after dark."
+        description: "Discover hidden temples and markets that come alive after dark."
       },
       {
         href: "/tours/discover/thailand",
         title: "Around Thailand Tour",
-        description: "Curated multi-day journeys exploring remote provinces, hidden beaches, and authentic regional culture."
+        description: "Curated multi-day journeys exploring authentic regional culture."
       },
       {
         href: "/guide-service",
         title: "Your Private Local Expert",
-        description: "Hire a certified, dedicated guide to customize your itinerary and unlock local secrets."
+        description: "Hire a dedicated guide to customize your itinerary."
       },
     ],
   },
@@ -67,7 +68,6 @@ export const menuConfig = [
       { href: "/tours/dinner-cruise/ayutthaya", title: "Dinner Cruise: Ayutthaya", description: "Sunset dining among ancient ruins." },
     ],
   },
-  // You can keep a direct link, perhaps to a main booking page or contacts
   { label: "Check Your Booking", href: "/check-your-booking" },
   { label: "Book Now", href: "/contact" },
 ];
@@ -99,6 +99,7 @@ export const menuItems = [
         title: "Ayutthaya",
         description: "Step into history with ancient temples and river cruises.",
       },
+     
     ],
   },
   {
@@ -124,6 +125,7 @@ export const menuItems = [
         title: "Water Sports",
         description: "Jet-ski, kayak, and enjoy adrenaline-packed beach fun.",
       },
+      
     ],
   },
   {
@@ -356,3 +358,34 @@ export const CATEGORY_OPTIONS = [
   { id: "unseen", label: "Unseen" },
   { id: "dinner-cruise", label: "Dinner Cruise" },
 ];
+
+
+export const TYPE_MAPPING: Record<string, string> = {
+  // Half Day
+  "/tours/half-day/bangkok": "Half Day Tours – Bangkok",
+  "/tours/half-day/chiang-mai": "Half Day Tours – Chiang Mai",
+  "/tours/half-day/phuket": "Half Day Tours – Phuket",
+
+  // One Day / Full Day
+  "/tours/full-day/bangkok": "One Day Tours – Bangkok City & Culture",
+  "/tours/full-day/ayutthaya": "One Day Tours – Ayutthaya",
+  "/tours/full-day/kanchanaburi": "One Day Tours – Kanchanaburi",
+  "/tours/full-day/chiang-mai": "One Day Tours – Chiang Mai",
+  "/tours/full-day/phuket": "One Day Tours – Phuket",
+  "/tours/full-day/pattaya": "One Day Tours – Pattaya",
+  "/tours/full-day/other-provinces": "One Day Tours – Other Provinces",
+
+  // Specialty & Local
+  "/tours/specialty/local-experience": "Specialty Tours – Local Experience",
+  "/tours/specialty/walking": "Specialty Tours – Walking Tour",
+  "/tours/specialty/tuk-tuk": "Specialty Tours – Food Tour with Tuk Tuk",
+
+  // Unseen & Services
+  "/tours/unseen/night-tour": "Unseen Tours & Services – Night Tour",
+  "/tours/discover/thailand": "Unseen Tours & Services – Around Thailand Tour",
+  "/guide-service": "Unseen Tours & Services – Your Private Local Expert",
+
+  // Dinner Cruises
+  "/tours/dinner-cruise/bangkok": "Dinner Cruise – Bangkok",
+  "/tours/dinner-cruise/ayutthaya": "Dinner Cruise – Ayutthaya",
+};
