@@ -2271,6 +2271,13 @@
   <url>
     <loc>https://creativetourguruthailand.com</loc>
     <image:image>
+      <image:loc>https://creativetourguruthailand.com/images/ctg-19.jpg</image:loc>
+      <image:title>Ctg 19</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://creativetourguruthailand.com</loc>
+    <image:image>
       <image:loc>https://creativetourguruthailand.com/images/ctg-20 (1).jpg</image:loc>
       <image:title>Ctg 20 (1)</image:title>
     </image:image>

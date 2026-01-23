@@ -35,8 +35,8 @@ export const menuConfig = [
     layout: "flex",
     links: [
       { href: "/tours/specialty/walking", title: "Walking Tour", description: "Discover hidden local neighborhoods." },
-      { href: "/tours/specialty/local-transport", title: "Local Transport Tour", description: "Experience Bangkok like a local." },
-      { href: "/tours/specialty/tuk-tuk", title: "Food Tour with Tuk Tuk", description: "Night market hopping on a Tuk Tuk." },
+      { href: "/tours/specialty/local-experience", title: "Local Transport Tour", description: "Experience Bangkok like a local." },
+      // { href: "/tours/specialty/tuk-tuk", title: "Food Tour with Tuk Tuk", description: "Night market hopping on a Tuk Tuk." },
     ],
   },
   {

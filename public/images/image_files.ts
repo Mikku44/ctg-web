@@ -1296,6 +1296,10 @@ export const images_file = [
     "filename": "ctg-19 (5).jpg"
   },
   {
+    "path": "ctg-19.jpg",
+    "filename": "ctg-19.jpg"
+  },
+  {
     "path": "ctg-20 (1).jpg",
     "filename": "ctg-20 (1).jpg"
   },

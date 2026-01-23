@@ -62,7 +62,7 @@ export default function TourDetailPage() {
   const pathnames = location.pathname.split("/").filter(Boolean);
 
 
-
+  tour.featured_image = tour.featured_image || (images.length > 0 ? images[0].image_url : "/logo/ctg-logo-modern.jpg");
 
   const scrollToBottom = () => {
     const el = document.getElementById("booking");
@@ -129,7 +129,7 @@ export default function TourDetailPage() {
         <h1 className="text-4xl font-semibold mb-6">{tour.title}</h1>
         <div className="grid md:grid-cols-2 gap-2 ">
           <div className="w-full">
-            <img src={tour.featured_image}
+            <img src={tour?.featured_image || "/logo/ctg-logo-modern.jpg"}
             className="w-full h-full object-cover"
             alt={tour.title} />
           </div>
