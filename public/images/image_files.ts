@@ -1756,6 +1756,46 @@ export const images_file = [
     "filename": "ctg-40 (7).jpg"
   },
   {
+    "path": "ctg-41 (1).jpg",
+    "filename": "ctg-41 (1).jpg"
+  },
+  {
+    "path": "ctg-41 (10).jpg",
+    "filename": "ctg-41 (10).jpg"
+  },
+  {
+    "path": "ctg-41 (2).jpg",
+    "filename": "ctg-41 (2).jpg"
+  },
+  {
+    "path": "ctg-41 (3).jpg",
+    "filename": "ctg-41 (3).jpg"
+  },
+  {
+    "path": "ctg-41 (4).jpg",
+    "filename": "ctg-41 (4).jpg"
+  },
+  {
+    "path": "ctg-41 (5).jpg",
+    "filename": "ctg-41 (5).jpg"
+  },
+  {
+    "path": "ctg-41 (6).jpg",
+    "filename": "ctg-41 (6).jpg"
+  },
+  {
+    "path": "ctg-41 (7).jpg",
+    "filename": "ctg-41 (7).jpg"
+  },
+  {
+    "path": "ctg-41 (8).jpg",
+    "filename": "ctg-41 (8).jpg"
+  },
+  {
+    "path": "ctg-41 (9).jpg",
+    "filename": "ctg-41 (9).jpg"
+  },
+  {
     "path": "ctg-5 (1).jpg",
     "filename": "ctg-5 (1).jpg"
   },

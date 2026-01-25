@@ -142,7 +142,7 @@ export const tourService = {
     for (const docSnap of snapshot.docs) {
       const tour = { id: docSnap.id, ...docSnap.data() } as Tour;
       tour.images = await this.getImages(tour.id);
-      tour.packages = await this.getPackages(tour.id);
+      // tour.packages = await this.getPackages(tour.id);
       tours.push(tour);
     }
 
