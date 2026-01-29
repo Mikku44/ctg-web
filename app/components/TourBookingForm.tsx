@@ -9,10 +9,10 @@ import type { BookingModel } from "~/models/booking";
 import { bookingService } from "~/services/bookingService"; // <-- add import
 import { Alert } from "@mui/material";
 import { VscWarning } from "react-icons/vsc";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 
-import "react-datepicker/dist/react-datepicker.css";
-import { BsCalendar2Date } from "react-icons/bs";
+// import "react-datepicker/dist/react-datepicker.css";
+// import { BsCalendar2Date } from "react-icons/bs";
 
 export default function TourBookingForm({
   tour,
@@ -332,16 +332,16 @@ export default function TourBookingForm({
                 <label className="text-sm font-medium text-gray-700 mb-1">
                   Tour Date <span className="text-red-600">*</span>
                 </label>
-                {/* <input
+                <input
                   type="date"
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
                   className="input"
                   required
-                /> */}
+                />
 
-                <DatePicker
+                {/* <DatePicker
                   showIcon
                   toggleCalendarOnIconClick
                   className="input date-input"
@@ -359,7 +359,7 @@ export default function TourBookingForm({
                   isClearable
                   dateFormat="dd/MM/yyyy"
                   required
-                />
+                /> */}
 
               </div>
 

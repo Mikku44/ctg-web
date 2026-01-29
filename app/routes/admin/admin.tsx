@@ -63,6 +63,12 @@ export default function AdminLayout() {
   };
 
 
+  const getTourNameById = (id: string) => {
+    const tour = tourList.find(t => t.id === id);
+    return tour ? tour.tid : 'Unknown Tour';
+  }
+
+
   useEffect(() => {
     // Fetch booking data here if needed
     bookingService.getAllBookings().then((data) => {
@@ -158,10 +164,10 @@ export default function AdminLayout() {
                 <div className={`p-3 rounded-lg ${stat.bg} ${stat.color}`}>
                   <stat.icon size={24} />
                 </div>
-                <span className="flex items-center text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                {/* <span className="flex items-center text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
                   <TrendingUp size={14} className="mr-1" />
                   {stat.change}
-                </span>
+                </span> */}
               </div>
               <p className="text-slate-500 text-sm font-medium">{stat.label}</p>
               {loadingItems[index] ? <h3 className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</h3> : 
@@ -196,7 +202,7 @@ export default function AdminLayout() {
                   {bookingList.map((booking) => (
                     <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-4 text-sm font-medium text-slate-900">{booking.firstName}</td>
-                      <td className="px-6 py-4 text-sm text-slate-600">{booking.tour}</td>
+                      <td className="px-6 py-4 text-sm text-slate-600">{getTourNameById(booking.tour)}</td>
                       <td className="px-6 py-4 text-sm text-slate-500">{booking.date}</td>
                       <td className="px-6 py-4 text-sm font-medium text-slate-900">{formatCurrency(booking.totalPrice)}</td>
                       <td className="px-6 py-4">
@@ -218,7 +224,7 @@ export default function AdminLayout() {
           <div className="space-y-6">
             {/* Popular Tours */}
             <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
-               <PopularTours bookingList={bookingList} />
+               <PopularTours tourList={tourList} bookingList={bookingList} />
               <button
                 onClick={() => navigate('/admin/tour/list')}
                 className="w-full mt-6 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
@@ -228,7 +234,7 @@ export default function AdminLayout() {
             </div>
 
             {/* System Status or Notifications */}
-            <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-xl p-6 text-white shadow-lg">
+            {/* <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-xl p-6 text-white shadow-lg">
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-bold text-lg">System Update</h3>
@@ -241,7 +247,7 @@ export default function AdminLayout() {
               <button className="mt-4 text-xs bg-white text-blue-700 px-3 py-1.5 rounded-md font-bold hover:bg-blue-50 transition-colors">
                 Read Changelog
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -257,7 +263,13 @@ interface PopularToursProps {
   bookingList: BookingModel[];
 }
 
- function PopularTours({ bookingList }: PopularToursProps) {
+ function PopularTours({ tourList, bookingList }: PopularToursProps & { tourList: Tour[] }) {
+
+   const getTourNameById = (id: string) => {
+    const tour = tourList.find(t => t.id === id);
+    return tour ? tour.tid : 'Unknown Tour';
+  }
+
 
   const popularTours = useMemo(() => {
     const now = new Date();
@@ -354,7 +366,7 @@ interface PopularToursProps {
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-slate-900 truncate pr-2">
                     {/* This now displays the 'tour' field */}
-                    {item.name} 
+                    {getTourNameById(item.name)} 
                   </p>
                   <p className="text-xs text-slate-500">
                     {item.bookings} bookings this month
