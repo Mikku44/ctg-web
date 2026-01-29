@@ -91,6 +91,11 @@
   width: 0; /* Ensures no width is reserved for the scrollbar */
 }
 
+.date-input {
+  height: 42px !important;
+  padding:  6px 10px 5px 35px !important;
+}
+
 
 html,
 body {
