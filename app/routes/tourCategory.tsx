@@ -20,38 +20,69 @@ export const meta: MetaFunction<typeof loader> = ({ params }) => {
 };
 
 
+
 export async function loader({ params }: LoaderFunctionArgs) {
   try {
     const { type_slug, place } = params;
     const allTours: any = await tourService.getAllForCard();
 
-    // 1. Reconstruct the URL path to use as a key
-    const currentPath = `/tours/${type_slug}/${place}`;
+    // 1. Check if it's an "all" request
+    const isAllRequest = place === "all";
+
+    // 2. Reconstruct the base category path
+    const basePath = `/tours/${type_slug}`;
     
-    // 2. Get the specific "Category Name" your data uses (e.g., "Half Day Tours – Bangkok")
-    const targetCategory = TYPE_MAPPING[currentPath];
+    // 3. Get category name(s) to filter by
+    let targetCategories: string[] = [];
 
-    // console.log("Target Category:", targetCategory);
-    // console.log("currentPath:", currentPath);
+    if (isAllRequest) {
+      // Fetch all tours matching the type_slug across all places
+      // Find all TYPE_MAPPING entries that start with the base path
+      targetCategories = Object.entries(TYPE_MAPPING)
+        .filter(([path]) => path.startsWith(basePath) && path !== basePath)
+        .map(([_, category]) => category);
+      
+      // Remove duplicates if any
+      targetCategories = [...new Set(targetCategories)];
+    } else {
+      // Original behavior: fetch tours for specific place
+      const currentPath = `${basePath}/${place}`;
+      const targetCategory = TYPE_MAPPING[currentPath];
+      
+      if (targetCategory) {
+        targetCategories = [targetCategory];
+      }
+    }
 
-    // 3. Filter logic
+    // 4. Filter logic
     const filteredTours = allTours.filter((tour: any) => {
-      if (!targetCategory) return false;
+      if (targetCategories.length === 0) return false;
 
-      // Normalize both for safety
       const tourTypeData = tour.tourType || ""; // "Private,Half-Day,Half Day Tours – Bangkok"
 
-
-      // console.log("Tour Type :",tourTypeData, tourTypeData.includes(targetCategory));
-      
-      // Check if the specific Category Name exists within that comma-separated string
-      return tourTypeData.includes(targetCategory);
-
+      // Check if any of the target categories exist within that comma-separated string
+      return targetCategories.some(category => 
+        tourTypeData.includes(category)
+      );
     });
 
-    return Response.json({ 
+    // 5. Determine the display name
+    let displayName = "";
+    if (isAllRequest) {
+      // Extract the category type from type_slug (e.g., "half-day" -> "Half Day Tours")
+      displayName = `All ${type_slug
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")}`;
+    } else {
+      displayName = targetCategories[0] || "Tours";
+    }
+
+    return Response.json({
       tours: filteredTours,
-      categoryName: targetCategory 
+      categoryName: displayName,
+      isAllRequest,
+      appliedCategories: targetCategories,
     });
   } catch (error) {
     console.error("Failed to load tours:", error);

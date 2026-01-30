@@ -241,115 +241,6 @@ export const popularDestinations = [
 ];
 
 
-// mock up tour data
-export const tourList = [
-  // --- Classic Temple & History Tours (Full/Half Day) ---
-
-  {
-    // ID added for consistency
-    id: 1,
-    image: "https://images.unsplash.com/photo-1546228139-87f5312cac42?ixlib=rb-4.1.0&auto=format&fit=crop&q=80&w=687",
-    title: "Bangkok Temple Thailand",
-    // Corrected Description to match the Bangkok title
-    description: "Explore the Grand Palace, Wat Arun (Temple of Dawn), and the city's ancient temples.",
-    price: "5,900",
-    rating: 4.7,
-    route: "Bangkok to Chiangmai",
-    maxPeople: 18,
-    duration: "3 Days 2 Nights"
-  },
-  {
-    // ID added for consistency
-    id: 2,
-    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=500",
-    title: "Road Trip: Bangkok to Chiangmai",
-    description: "Experience the ultimate road trip adventure from Bangkok to Chiangmai.",
-    price: "12,900",
-    rating: 4.8,
-    duration: "5 Days",
-    route: "Bangkok to Chiangmai",
-    maxPeople: 18,
-    tourType: "Private"
-  },
-  {
-    // ID added for consistency
-    id: 3,
-    image: "https://images.unsplash.com/photo-1528181304800-259b08848526?w=500",
-    title: "Phuket Beach Paradise",
-    description: "Discover pristine beaches, crystal clear waters, and vibrant nightlife.",
-    price: "7,500",
-    rating: 4.6,
-    duration: "4 Days 3 Nights"
-  },
-
-  {
-    // ID added for consistency
-    id: 6,
-    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=500",
-    title: "Chiang Rai Golden Triangle",
-    description: "Explore the mysterious Golden Triangle and visit local hill tribes.",
-    price: "6,800",
-    rating: 4.4,
-    duration: "2 Days 1 Night"
-  },
-  {
-    // ID added for consistency
-    id: 7,
-    image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=500",
-    title: "Koh Samui Luxury Escape",
-    description: "Indulge in luxury resorts, pristine beaches, and world-class dining.",
-    price: "15,900",
-    rating: 4.8,
-    duration: "5 Days 4 Nights",
-    tourType: "Private"
-  },
-  // --- Active & Unique Experiences ---
-  {
-    id: 8,
-    image: "https://aws-tiqets-cdn.imgix.net/images/content/bff62bd61b52460887a71a4f25d00ba1.jpeg?auto=format%2Ccompress&fit=crop&ixlib=python-4.0.0&q=70&w=600&s=274920a29b751621bb8c83e39b5df583",
-    title: "Bangkok Hidden Gems Bicycle Tour",
-    description: "Cycle through the narrow alleys, green spaces, and local communities of Bangkok and Thonburi, discovering sights unreachable by car or bus.",
-    price: "1,450",
-    priceUSD: "$40",
-    rating: 4.7,
-    duration: "4 Hours (Morning)",
-    category: "Active & Local Life",
-  },
-  {
-    id: 9,
-    image: "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/0b/1f/d2/28.jpg",
-    title: "Thai Cooking Class with Market Visit",
-    description: "Learn to cook classic Thai dishes like Pad Thai and Green Curry with a local chef. Includes a fresh market shopping trip to select ingredients.",
-    price: "1,900",
-    priceUSD: "$53",
-    rating: 4.9,
-    duration: "3 Hours (Half Day)",
-    category: "Cooking & Workshop",
-  },
-  {
-    id: 10,
-    image: "https://image.kkday.com/v2/image/get/c_fit%2Cq_55%2Ct_webp%2Cw_960/s1.kkday.com/product_152948/20250822090156_tJzaI/png",
-    title: "Rajadamnern Stadium Muay Thai Boxing Tickets",
-    description: "Experience the electric atmosphere of a live professional Muay Thai match at the legendary Rajadamnern Boxing Stadium. VIP seating available.",
-    price: "2,000",
-    priceUSD: "$55",
-    rating: 4.5,
-    duration: "3 Hours (Evening)",
-    category: "Night & Entertainment",
-  },
-  // --- Day Trips & Extended Excursions ---
-  {
-    id: 11,
-    image: "https://www.bangkokbeyond.com/en/wp-content/uploads/2019/09/river-kwai-bridge-by-bangkokbeyond.com_.jpg",
-    title: "Kanchanaburi & Bridge Over the River Kwai Day Tour",
-    description: "Visit the famous Bridge Over the River Kwai, the War Cemetery, and learn about the WWII history of this area west of Bangkok.",
-    price: "2,300",
-    priceUSD: "$63",
-    rating: 4.6,
-    duration: "10 Hours (Full Day)",
-    category: "Day Trip & History",
-  },
-];
 
 export const CATEGORY_OPTIONS = [
   { id: "half-day", label: "Half Day" },
@@ -362,11 +253,13 @@ export const CATEGORY_OPTIONS = [
 
 export const TYPE_MAPPING: Record<string, string> = {
   // Half Day
+  "/tours/half-day/all": "Half Day Tours – All",
   "/tours/half-day/bangkok": "Half Day Tours – Bangkok",
   "/tours/half-day/chiang-mai": "Half Day Tours – Chiang Mai",
   "/tours/half-day/phuket": "Half Day Tours – Phuket",
 
   // One Day / Full Day
+  "/tours/full-day/all": "One Day Tours – All",
   "/tours/full-day/bangkok": "One Day Tours – Bangkok City & Culture",
   "/tours/full-day/ayutthaya": "One Day Tours – Ayutthaya",
   "/tours/full-day/kanchanaburi": "One Day Tours – Kanchanaburi",
