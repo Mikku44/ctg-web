@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaArrowUp, FaWhatsapp } from "react-icons/fa";
+import { FaArrowUp, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
+import { SiLine } from "react-icons/si"; 
 import CartButtonWithDrawer from "./CartButtonWithDrawer";
 
 export default function FloatingButtons() {
@@ -16,16 +17,42 @@ export default function FloatingButtons() {
   };
 
   const openWhatsApp = () => {
-    // format number for WhatsApp (remove spaces and leading 0)
-    const phone = "+66615097533"; // Thailand country code +66
+    const phone = "+66615097533";
     const message = encodeURIComponent("Hello! I would like to ask for more information.");
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
   };
 
+  const openLine = () => {
+    window.open("https://line.me/ti/p/Z-jqyT7THX", "_blank");
+  };
+
+  const makeCall = () => {
+    window.location.href = "tel:+66615097533";
+  };
+
   return (
     <div className="fixed bottom-5 right-5 flex flex-col items-end gap-3 z-[99]">
-      {/* cart */}
+      {/* Cart Button */}
       <CartButtonWithDrawer />
+
+      {/* Phone Call Button */}
+      <button
+        onClick={makeCall}
+        className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg rounded-full p-4 transition-all duration-300 flex items-center justify-center"
+        title="Call us"
+      >
+        <FaPhoneAlt className="text-xl" />
+      </button>
+
+      {/* Line Button */}
+      <button
+        onClick={openLine}
+        className="bg-[#06C755] hover:bg-[#05b34c] text-white shadow-lg rounded-full p-4 transition-all duration-300 flex items-center justify-center"
+        title="Add us on LINE"
+      >
+        <SiLine className="text-2xl" />
+      </button>
+
       {/* WhatsApp Button */}
       <button
         onClick={openWhatsApp}
