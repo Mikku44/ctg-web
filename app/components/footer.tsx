@@ -28,6 +28,7 @@ export default function Footer() {
     { name: "Phuket", path: "/search?query=phuket" },
     { name: "Ayutthaya", path: "/search?query=ayutthaya" },
     { name: "Kanchanaburi", path: "/search?query=kanchanaburi" },
+    { name: "Nakhon Si Thammarat Heritage", path: "/search?query=Nakhon Si Thammarat Heritage" },
     // { name: "Chiang Rai", path: "/search?query=chiang-rai" },
   ];
 

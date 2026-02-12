@@ -178,19 +178,69 @@ export const bookingService = {
   async sendLineNotify(booking: BookingModel) {
 
     // console.log("BOOKING : ", bookingData)
-    const base_url =  import.meta.env.VITE_BASE_URL
+    const base_url = import.meta.env.VITE_BASE_URL
     // const base_url = "http://localhost:5173"
 
-    const text = `แจ้งเตือนการจองจากเว็บ Creative Tour Guru Thailand\nรหัสการจอง : ${booking.id}\nทัวร์ : ${booking.tourName}\nชื่อ : ${booking.firstName + " "  + booking.lastName}\nจำนวนคน : ${booking.people}\nวันที่ : ${booking.date}\nราคารวม : ${booking.totalPrice}\nติดต่อ : ${booking.contact}\nตรวจสอบที่ https://www.creativetourguruthailand.com/admin/bookings`
+    const text = `แจ้งเตือนการจองจากเว็บ Creative Tour Guru Thailand
+    รหัสการจอง : ${booking.id}
+    ทัวร์ : ${booking.tourName}
+    ชื่อ : ${booking.firstName + " " + booking.lastName}
+    จำนวนคน : ${booking.people}
+    วันที่ : ${booking.date}
+    ราคารวม : ${booking.totalPrice}
+    ติดต่อ : ${booking.contact}
+    Email : ${booking.email}
+    ตรวจสอบที่ https://www.creativetourguruthailand.com/admin/bookings`
 
     const res = await fetch(`${base_url}/api/line-message-api`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key" : `uiouoilakjddaljsawfhalsdfhjakle`
+        "x-api-key": `uiouoilakjddaljsawfhalsdfhjakle`
       },
-      
-      body: JSON.stringify({text : text}),
+
+      body: JSON.stringify({ text: text }),
+    });
+
+    return res;
+  },
+
+  async sendEmailNotify(booking: BookingModel) {
+    const base_url = import.meta.env.VITE_BASE_URL;
+
+    const emailBody = `
+    <h2>New Booking Notification</h2>
+    <p>A new tour booking has been received from Creative Tour Guru Thailand website.</p>
+    
+    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <p><strong>Booking Reference:</strong> ${booking.id}</p>
+      <p><strong>Tour Name:</strong> ${booking.tourName}</p>
+      <p><strong>Guest Name:</strong> ${booking.firstName} ${booking.lastName}</p>
+      <p><strong>Number of People:</strong> ${booking.people}</p>
+      <p><strong>Tour Date:</strong> ${booking.date}</p>
+      <p><strong>Total Price:</strong> ${booking.totalPrice}</p>
+      <p><strong>Contact:</strong> ${booking.contact}</p>
+    </div>
+
+    <p>
+      <a href="https://www.creativetourguruthailand.com/admin/bookings" 
+         style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">
+        View Booking Details
+      </a>
+    </p>
+  `;
+
+    const res = await fetch(`${base_url}/api/send-email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": `uiouoilakjddaljsawfhalsdfhjakle`,
+      },
+      body: JSON.stringify({
+        to: "creativetourguru@hotmail.com", // Admin email
+        subject: `New Booking - ${booking.tourName} (Ref: ${booking.id})`,
+        html: emailBody,
+      }),
     });
 
     return res;

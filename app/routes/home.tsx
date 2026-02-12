@@ -2,7 +2,7 @@ import type { Route } from "./+types/home";
 import DesCard from "~/components/destinationCard";
 import AutoFadeImage from "~/components/AutoSlideImage";
 import { Link, useLoaderData, useLocation, useNavigate } from "react-router";
-import { popularDestinations, tourList } from "~/const/app";
+import { popularDestinations } from "~/const/app";
 import FadeImageSlideshow from "~/components/FadeImage";
 import { motion } from "framer-motion";
 import { Calendar, Camera, Check, Compass, EqualApproximately, Heart, MapPin, Users, Utensils } from "lucide-react";

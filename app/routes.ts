@@ -33,6 +33,7 @@ export default [
         route("/api/payment-status", "api/paymentStatus.tsx"),
         route("/api/create-invoice", "api/invoiceItem.tsx"),
         route("/api/line-message-api", "api/line-message-api.tsx"),
+        route("/api/send-email", "api/send-email.tsx"),
     ]),
     // admin
     route("/admin/login", "routes/admin/login.tsx"),

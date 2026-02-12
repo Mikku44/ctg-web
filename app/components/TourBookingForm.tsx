@@ -126,6 +126,8 @@ export default function TourBookingForm({
       localStorage.setItem("lastBooking", JSON.stringify(limited));
 
       await bookingService.sendLineNotify(result as BookingModel);
+      //TODO wait for complete PASSWORD EMAIL
+      // await bookingService.sendEmailNotify(result as BookingModel);
 
       toast.success("Your booking request has been sent!");
 
@@ -315,7 +317,7 @@ export default function TourBookingForm({
             {/* Contact */}
             <div className="flex flex-col mt-4">
               <label className="text-sm font-medium text-gray-700 mb-1">
-                Contact Number <span className="text-red-600">*</span>
+                Contact Number / WhatsApp <span className="text-red-600">*</span>
               </label>
               <input
                 name="contact"
