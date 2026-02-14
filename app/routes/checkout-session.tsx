@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import Loading from "~/components/Loading";
+import { createUserConfirmBooking } from "~/lib/templates/email";
 import type { BookingModel } from "~/models/booking";
 import { bookingService } from "~/services/bookingService";
 
 export default function CheckoutSession() {
+
   const [status, setStatus] = useState<
     "loading" | "succeeded" | "processing" | "failed" | "requires_action" | "requires_payment_method"
   >("loading");
@@ -43,10 +45,64 @@ export default function CheckoutSession() {
       setStatus(data.status);
       setMessage(data.message);
 
+
+
       if (data.status == "succeeded") {
         await handleSuccessPayment(data.bookingID, data.paymentId, data.paymentMethod, data.paymentDate);
+
       }
 
+    };
+
+    const triggerConfirmationEmail = async (booking: BookingModel) => {
+      try {
+        await fetch("/api/send-email", { // This matches your first email action route
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "uiouoilakjddaljsawfhalsdfhjakle",
+          },
+          body: JSON.stringify({
+            to: booking.email, // User's email from booking data
+            cc: "creativetourguru@hotmail.com", // Copying you
+            subject: `Booking Confirmed: ${booking.tourName} (${booking.id})`,
+            html: createUserConfirmBooking(booking),
+          }),
+        });
+      } catch (error) {
+        console.error("Silent Email Failure:", error);
+      }
+    };
+    
+    const triggerConfirmationEmailForAdmin = async (booking: BookingModel) => {
+      try {
+        await fetch("/api/send-email", { // This matches your first email action route
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "uiouoilakjddaljsawfhalsdfhjakle",
+          },
+          body: JSON.stringify({
+            to: "creativetourguru@hotmail.com", // User's email from booking data
+            subject: `Booking Confirmed: ${booking.tourName} (${booking.id})`,
+            html: `
+              <div style="font-family: sans-serif; line-height: 1.5;">
+                <h2>Booking Confirmed!</h2>
+                <p>Hi ${booking.firstName},</p>
+                <p>Your payment for <b>${booking.tourName}</b> has been received.</p>
+                <ul>
+                  <li><b>Booking ID:</b> ${booking.id}</li>
+                  <li><b>Date:</b> ${booking.date}</li>
+                  <li><b>Travelers:</b> ${booking.people}</li>
+                </ul>
+                <p>Thank you for booking with Creative Tour Guru Thailand!</p>
+              </div>
+            `,
+          }),
+        });
+      } catch (error) {
+        console.error("Silent Email Failure:", error);
+      }
     };
 
 
@@ -68,6 +124,23 @@ export default function CheckoutSession() {
         paymentMethod,
         paymentDate
       });
+
+      await triggerConfirmationEmail({
+        ...booking,
+        status: "paid",
+        paymentId,
+        paymentMethod,
+        paymentDate,
+      } as BookingModel);
+      // await triggerConfirmationEmailForAdmin({
+      //   ...booking,
+      //   status: "paid",
+      //   paymentId,
+      //   paymentMethod,
+      //   paymentDate,
+      // } as BookingModel);
+
+
     };
 
     fetchStatus();

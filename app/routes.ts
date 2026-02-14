@@ -24,6 +24,8 @@ export default [
         route("/tours/:type_slug/:place", "routes/tourCategory.tsx"),
         route("/license/dbd", "routes/dbd.tsx"),
 
+        route("/test","routes/test.tsx"),
+
 
 
         route("*", "components/NotFound.tsx"),

@@ -9,7 +9,7 @@ const VALID_API_KEY = process.env.API_KEY || "uiouoilakjddaljsawfhalsdfhjakle";
 const transporter = nodemailer.createTransport({
     service: "gmail", // or your email service
     auth: {
-        user: "creativetourguruthailand@gmail.com",
+        user: "creativetourguru@gmail.com",
         pass: process.env.GOOGLE_APP_PASSWORD,
     },
 });

@@ -16,6 +16,7 @@ import {
 import { db } from "~/lib/firebase/config";
 import type { BookingModel } from "~/models/booking";
 import { tourService } from "./tourService";
+import { createBookingEmail } from "~/lib/templates/email";
 
 
 const BOOKINGS_COLLECTION = "bookings";
@@ -188,7 +189,7 @@ export const bookingService = {
     จำนวนคน : ${booking.people}
     วันที่ : ${booking.date}
     ราคารวม : ${booking.totalPrice}
-    ติดต่อ : ${booking.contact}
+    Phone / WhatsApp / LINE : ${booking.contact}
     Email : ${booking.email}
     ตรวจสอบที่ https://www.creativetourguruthailand.com/admin/bookings`
 
@@ -208,27 +209,7 @@ export const bookingService = {
   async sendEmailNotify(booking: BookingModel) {
     const base_url = import.meta.env.VITE_BASE_URL;
 
-    const emailBody = `
-    <h2>New Booking Notification</h2>
-    <p>A new tour booking has been received from Creative Tour Guru Thailand website.</p>
-    
-    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-      <p><strong>Booking Reference:</strong> ${booking.id}</p>
-      <p><strong>Tour Name:</strong> ${booking.tourName}</p>
-      <p><strong>Guest Name:</strong> ${booking.firstName} ${booking.lastName}</p>
-      <p><strong>Number of People:</strong> ${booking.people}</p>
-      <p><strong>Tour Date:</strong> ${booking.date}</p>
-      <p><strong>Total Price:</strong> ${booking.totalPrice}</p>
-      <p><strong>Contact:</strong> ${booking.contact}</p>
-    </div>
-
-    <p>
-      <a href="https://www.creativetourguruthailand.com/admin/bookings" 
-         style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">
-        View Booking Details
-      </a>
-    </p>
-  `;
+    const emailBody = createBookingEmail(booking);
 
     const res = await fetch(`${base_url}/api/send-email`, {
       method: "POST",
@@ -244,5 +225,7 @@ export const bookingService = {
     });
 
     return res;
-  }
+  },
+
+
 };
