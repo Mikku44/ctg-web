@@ -16,7 +16,7 @@ import {
 import { db } from "~/lib/firebase/config";
 import type { BookingModel } from "~/models/booking";
 import { tourService } from "./tourService";
-import { createBookingEmail } from "~/lib/templates/email";
+import { createAdminNotificationBooking, createBookingEmail } from "~/lib/templates/email";
 
 
 const BOOKINGS_COLLECTION = "bookings";
@@ -210,6 +210,7 @@ export const bookingService = {
     const base_url = import.meta.env.VITE_BASE_URL;
 
     const emailBody = createBookingEmail(booking);
+    const adminBody = createAdminNotificationBooking(booking);
 
     const res = await fetch(`${base_url}/api/send-email`, {
       method: "POST",
@@ -220,9 +221,21 @@ export const bookingService = {
       body: JSON.stringify({
         to: "creativetourguru@hotmail.com", // Admin email
         subject: `New Booking - ${booking.tourName} (Ref: ${booking.id})`,
-        html: emailBody,
+        html: adminBody,
       }),
     });
+    // const res2 = await fetch(`${base_url}/api/send-email`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "x-api-key": `uiouoilakjddaljsawfhalsdfhjakle`,
+    //   },
+    //   body: JSON.stringify({
+    //     to: "khain.app@gmail.com", // Admin email
+    //     subject: `New Booking - ${booking.tourName} (Ref: ${booking.id})`,
+    //     html: adminBody,
+    //   }),
+    // });
 
     return res;
   },
