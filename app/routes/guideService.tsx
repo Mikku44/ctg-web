@@ -300,9 +300,16 @@ export default function GuideService() {
                     <img
                         src="/licenese/cert.jpg"
                         alt="Tourism business license - Creative Tour Guru"
-                        className="rounded-lg shadow-lg border"
+                        className="rounded-lg shadow-lg border border-zinc-100"
                     />
                 </div>
+                {/* <div className="flex justify-center">
+                    <img
+                        src="/licenese/cert_2.jpg"
+                        alt="Tourism business license - Creative Tour Guru"
+                        className="rounded-lg shadow-lg border border-zinc-100"
+                    />
+                </div> */}
             </section>
 
 
