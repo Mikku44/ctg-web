@@ -292,7 +292,7 @@ export default function GuideService() {
                     </p>
 
                     <p>
-                        <strong>Validity:</strong> 7 April 2026 - 16 April  2028
+                        <strong>Validity:</strong> 17 April 2026 - 16 April  2028
                     </p>
                 </div>
 
